@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43A8940A7D7D37A06C6F8672 /* Pods_DDU_DO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71F430898EF5F434671BCC2 /* Pods_DDU_DO.framework */; };
 		F1F12F2B2964250D00D8CE21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */; };
 		F1F12F2D2964250D00D8CE21 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */; };
 		F1F12F2F2964250D00D8CE21 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F12F2E2964250D00D8CE21 /* ViewController.swift */; };
@@ -16,6 +17,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11D1CA5D34E1731FD2BFD91D /* Pods-DDU-DO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DDU-DO.release.xcconfig"; path = "Target Support Files/Pods-DDU-DO/Pods-DDU-DO.release.xcconfig"; sourceTree = "<group>"; };
+		A318449B941398CD5EFAE4C2 /* Pods-DDU-DO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DDU-DO.debug.xcconfig"; path = "Target Support Files/Pods-DDU-DO/Pods-DDU-DO.debug.xcconfig"; sourceTree = "<group>"; };
+		A71F430898EF5F434671BCC2 /* Pods_DDU_DO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DDU_DO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1F12F272964250D00D8CE21 /* DDU-DO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DDU-DO.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -31,17 +35,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43A8940A7D7D37A06C6F8672 /* Pods_DDU_DO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		74DD8DCB20719AA8B9BC1E05 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A71F430898EF5F434671BCC2 /* Pods_DDU_DO.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C1B871FB058521CB15A0F68D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A318449B941398CD5EFAE4C2 /* Pods-DDU-DO.debug.xcconfig */,
+				11D1CA5D34E1731FD2BFD91D /* Pods-DDU-DO.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		F1F12F1E2964250D00D8CE21 = {
 			isa = PBXGroup;
 			children = (
 				F1F12F292964250D00D8CE21 /* DDU-DO */,
 				F1F12F282964250D00D8CE21 /* Products */,
+				C1B871FB058521CB15A0F68D /* Pods */,
+				74DD8DCB20719AA8B9BC1E05 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,9 +99,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F1F12F3B2964251000D8CE21 /* Build configuration list for PBXNativeTarget "DDU-DO" */;
 			buildPhases = (
+				D679BB4AA3945A6D049A6018 /* [CP] Check Pods Manifest.lock */,
 				F1F12F232964250D00D8CE21 /* Sources */,
 				F1F12F242964250D00D8CE21 /* Frameworks */,
 				F1F12F252964250D00D8CE21 /* Resources */,
+				617A6585197F97E942FBB54D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -132,6 +159,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		617A6585197F97E942FBB54D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DDU-DO/Pods-DDU-DO-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DDU-DO/Pods-DDU-DO-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DDU-DO/Pods-DDU-DO-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D679BB4AA3945A6D049A6018 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DDU-DO-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F1F12F232964250D00D8CE21 /* Sources */ = {
@@ -284,6 +353,7 @@
 		};
 		F1F12F3C2964251000D8CE21 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A318449B941398CD5EFAE4C2 /* Pods-DDU-DO.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -312,6 +382,7 @@
 		};
 		F1F12F3D2964251000D8CE21 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 11D1CA5D34E1731FD2BFD91D /* Pods-DDU-DO.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
