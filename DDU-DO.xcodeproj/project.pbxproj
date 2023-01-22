@@ -13,6 +13,11 @@
 		F15FFBFB297BD9A500EF2E69 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBFA297BD9A500EF2E69 /* UITableView+.swift */; };
 		F15FFBFF297BEC3F00EF2E69 /* CalendarDateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBFE297BEC3F00EF2E69 /* CalendarDateHeaderView.swift */; };
 		F15FFC01297BEEE600EF2E69 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC00297BEEE600EF2E69 /* UIView+.swift */; };
+		F15FFC06297D498900EF2E69 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC05297D498900EF2E69 /* Entity.swift */; };
+		F15FFC08297D498E00EF2E69 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC07297D498E00EF2E69 /* Repository.swift */; };
+		F15FFC0A297D4A2600EF2E69 /* TodoEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC09297D4A2600EF2E69 /* TodoEntity.swift */; };
+		F15FFC0C297D4A2C00EF2E69 /* TodoObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC0B297D4A2C00EF2E69 /* TodoObject.swift */; };
+		F15FFC0E297D4A3000EF2E69 /* TodoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC0D297D4A3000EF2E69 /* TodoRepository.swift */; };
 		F1F12F2B2964250D00D8CE21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */; };
 		F1F12F2D2964250D00D8CE21 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */; };
 		F1F12F342964251000D8CE21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1F12F332964251000D8CE21 /* Assets.xcassets */; };
@@ -31,6 +36,11 @@
 		F15FFBFA297BD9A500EF2E69 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 		F15FFBFE297BEC3F00EF2E69 /* CalendarDateHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateHeaderView.swift; sourceTree = "<group>"; };
 		F15FFC00297BEEE600EF2E69 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		F15FFC05297D498900EF2E69 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		F15FFC07297D498E00EF2E69 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		F15FFC09297D4A2600EF2E69 /* TodoEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoEntity.swift; sourceTree = "<group>"; };
+		F15FFC0B297D4A2C00EF2E69 /* TodoObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoObject.swift; sourceTree = "<group>"; };
+		F15FFC0D297D4A3000EF2E69 /* TodoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoRepository.swift; sourceTree = "<group>"; };
 		F1F12F272964250D00D8CE21 /* DDU-DO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DDU-DO.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +91,26 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		F15FFC03297D474400EF2E69 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				F15FFC05297D498900EF2E69 /* Entity.swift */,
+				F15FFC07297D498E00EF2E69 /* Repository.swift */,
+				F15FFC04297D476100EF2E69 /* Todo */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		F15FFC04297D476100EF2E69 /* Todo */ = {
+			isa = PBXGroup;
+			children = (
+				F15FFC09297D4A2600EF2E69 /* TodoEntity.swift */,
+				F15FFC0B297D4A2C00EF2E69 /* TodoObject.swift */,
+				F15FFC0D297D4A3000EF2E69 /* TodoRepository.swift */,
+			);
+			path = Todo;
+			sourceTree = "<group>";
+		};
 		F1F12F1E2964250D00D8CE21 = {
 			isa = PBXGroup;
 			children = (
@@ -102,10 +132,11 @@
 		F1F12F292964250D00D8CE21 /* DDU-DO */ = {
 			isa = PBXGroup;
 			children = (
-				F15FFBF7297BD97A00EF2E69 /* Extension */,
-				F1F12F92297BCAF400D8CE21 /* Calendar */,
 				F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */,
 				F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */,
+				F15FFC03297D474400EF2E69 /* Service */,
+				F15FFBF7297BD97A00EF2E69 /* Extension */,
+				F1F12F92297BCAF400D8CE21 /* Calendar */,
 				F1F12F332964251000D8CE21 /* Assets.xcassets */,
 				F1F12F352964251000D8CE21 /* LaunchScreen.storyboard */,
 				F1F12F382964251000D8CE21 /* Info.plist */,
@@ -244,11 +275,16 @@
 				F15FFBF9297BD99600EF2E69 /* UICollectionView+.swift in Sources */,
 				F15FFBFB297BD9A500EF2E69 /* UITableView+.swift in Sources */,
 				F15FFC01297BEEE600EF2E69 /* UIView+.swift in Sources */,
+				F15FFC0E297D4A3000EF2E69 /* TodoRepository.swift in Sources */,
 				F1F12F94297BCB0E00D8CE21 /* CalendarViewController.swift in Sources */,
 				F1F12F2B2964250D00D8CE21 /* AppDelegate.swift in Sources */,
+				F15FFC06297D498900EF2E69 /* Entity.swift in Sources */,
 				F15FFBF6297BCE6100EF2E69 /* CalendarDateCell.swift in Sources */,
 				F15FFBFF297BEC3F00EF2E69 /* CalendarDateHeaderView.swift in Sources */,
+				F15FFC0C297D4A2C00EF2E69 /* TodoObject.swift in Sources */,
 				F1F12F2D2964250D00D8CE21 /* SceneDelegate.swift in Sources */,
+				F15FFC08297D498E00EF2E69 /* Repository.swift in Sources */,
+				F15FFC0A297D4A2600EF2E69 /* TodoEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
