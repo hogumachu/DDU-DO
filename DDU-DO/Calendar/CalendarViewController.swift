@@ -74,7 +74,7 @@ extension CalendarViewController: CalendarViewDelegate {
     }
     
     func calendarSizeForMonths(_ calendar: JTACMonthView?) -> MonthSize? {
-        return MonthSize(defaultSize: 30)
+        return MonthSize(defaultSize: 60)
     }
     
 }
