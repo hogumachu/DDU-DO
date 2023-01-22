@@ -11,7 +11,7 @@ protocol Repository {
     
     associatedtype EntityType = Entity
     
-    func getAll() -> [EntityType]
+    func getAll(where predicate: NSPredicate?) -> [EntityType]
     func insert(item: EntityType) throws
     func update(item: EntityType) throws
     func delete(item: EntityType) throws
