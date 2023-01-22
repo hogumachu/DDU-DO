@@ -64,11 +64,11 @@ extension CalendarViewController: CalendarViewDelegate {
     }
     
     func calendar(_ calendar: JTACMonthView, headerViewForDateRange range: (start: Date, end: Date), at indexPath: IndexPath) -> JTACMonthReusableView {
+        guard let view = calendar.dequeueReusableView(view: CalendarDateHeaderView.self, for: indexPath) else { return JTACMonthReusableView() }
         let formatter = DateFormatter().then {
             $0.dateFormat = "yyyy년 MM월"
             $0.locale = Locale(identifier: "ko_kr")
         }
-        guard let view = calendar.dequeueReusableView(view: CalendarDateHeaderView.self, for: indexPath) else { return JTACMonthReusableView() }
         view.configure(formatter.string(from: range.start))
         return view
     }
@@ -97,6 +97,5 @@ extension CalendarViewController: CalendarViewDataSource {
             hasStrictBoundaries: true
         )
     }
-    
     
 }
