@@ -26,18 +26,52 @@ final class CalendarDateHeaderView: JTACMonthReusableView {
     }
     
     private func setupLayout() {
+        self.addSubview(self.weekStackView)
+        self.weekStackView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(15)
+        }
+        self.weekLabel.forEach { self.weekStackView.addArrangedSubview($0) }
+        
         self.addSubview(self.monthLabel)
         self.monthLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.top.equalToSuperview().offset(5)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(self.weekStackView.snp.top).offset(-5)
         }
     }
     
     private func setupAttributes() {
+        self.weekLabel.enumerated().forEach {
+            switch $0.offset {
+            case 0:         $0.element.textColor = .red
+            case 6:         $0.element.textColor = .blue
+            default:        $0.element.textColor = .black
+            }
+            $0.element.text = self.week[safe: $0.offset]
+            $0.element.textAlignment = .center
+            $0.element.font = .systemFont(ofSize: 12, weight: .regular)
+        }
+        
+        self.weekStackView.do {
+            $0.axis = .horizontal
+            $0.alignment = .center
+            $0.distribution = .fillEqually
+        }
+        
         self.monthLabel.do {
             $0.font = .systemFont(ofSize: 15, weight: .bold)
+            $0.textAlignment = .center
         }
     }
     
+    private let week = ["일", "월", "화", "수", "목", "금", "토"]
+    private lazy var weekLabel: [UILabel] = {
+        self.week.map { _ -> UILabel in
+            return UILabel(frame: .zero)
+        }
+    }()
     private let monthLabel = UILabel(frame: .zero)
+    private let weekStackView = UIStackView(frame: .zero)
     
 }

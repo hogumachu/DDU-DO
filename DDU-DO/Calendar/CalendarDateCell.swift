@@ -30,8 +30,19 @@ final class CalendarDateCell: JTACDayCell {
     
     func configure(_ state: CellState) {
         self.dateLabel.text = state.text
-        self.dateLabel.textColor = state.dateBelongsTo == .thisMonth ? .black : .gray
         self.containerView.backgroundColor = state.isSelected ? .systemPink : .white
+        switch state.day {
+        case .sunday:
+            self.dateLabel.textColor = .red
+        case .saturday:
+            self.dateLabel.textColor = .blue
+        default:
+            self.dateLabel.textColor = .black
+        }
+        
+        if state.dateBelongsTo != .thisMonth {
+            self.dateLabel.textColor = .gray
+        }
     }
     
     private func setupLayout() {
