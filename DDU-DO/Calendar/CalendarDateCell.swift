@@ -22,17 +22,16 @@ final class CalendarDateCell: JTACDayCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(_ state: CellState) {
-        self.dateLabel.text = state.text
-        if state.dateBelongsTo == .thisMonth {
-            self.dateLabel.textColor = .black
-        } else {
-            self.dateLabel.textColor = .gray
-        }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.dateLabel.textColor = .black
+        self.containerView.backgroundColor = .white
     }
     
-    func updateSelection(_ isSelected: Bool) {
-        self.containerView.backgroundColor = isSelected ? .systemPink : .white
+    func configure(_ state: CellState) {
+        self.dateLabel.text = state.text
+        self.dateLabel.textColor = state.dateBelongsTo == .thisMonth ? .black : .gray
+        self.containerView.backgroundColor = state.isSelected ? .systemPink : .white
     }
     
     private func setupLayout() {

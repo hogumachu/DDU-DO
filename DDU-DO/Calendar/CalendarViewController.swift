@@ -51,7 +51,12 @@ extension CalendarViewController: CalendarViewDelegate {
     
     func calendar(_ calendar: JTACMonthView, didSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
         guard let cell = cell as? CalendarDateCell else { return }
-        cell.updateSelection(cellState.isSelected)
+        cell.configure(cellState)
+    }
+    
+    func calendar(_ calendar: JTACMonthView, didDeselectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
+        guard let cell = cell as? CalendarDateCell else { return }
+        cell.configure(cellState)
     }
     
     func calendar(_ calendar: JTACMonthView, shouldSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) -> Bool {
@@ -59,11 +64,11 @@ extension CalendarViewController: CalendarViewDelegate {
     }
     
     func calendar(_ calendar: JTACMonthView, headerViewForDateRange range: (start: Date, end: Date), at indexPath: IndexPath) -> JTACMonthReusableView {
+        guard let view = calendar.dequeueReusableView(view: CalendarDateHeaderView.self, for: indexPath) else { return JTACMonthReusableView() }
         let formatter = DateFormatter().then {
             $0.dateFormat = "yyyy년 MM월"
             $0.locale = Locale(identifier: "ko_kr")
         }
-        guard let view = calendar.dequeueReusableView(view: CalendarDateHeaderView.self, for: indexPath) else { return JTACMonthReusableView() }
         view.configure(formatter.string(from: range.start))
         return view
     }
@@ -92,6 +97,5 @@ extension CalendarViewController: CalendarViewDataSource {
             hasStrictBoundaries: true
         )
     }
-    
     
 }
