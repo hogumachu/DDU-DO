@@ -18,9 +18,14 @@ final class TodoRepository<RepositoryObject>: Repository where RepositoryObject:
         self.realm = try! Realm()
     }
     
-    func getAll() -> [RepositoryObject] {
-        return realm
-            .objects(ObjectType.self)
+    func getAll(where predicate: NSPredicate?) -> [RepositoryObject] {
+        var objects = realm.objects(ObjectType.self)
+        
+        if let predicate = predicate {
+            objects = objects.filter(predicate)
+        }
+        
+        return objects
             .compactMap { $0 }
             .compactMap { $0.model as? RepositoryObject }
     }
