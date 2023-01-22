@@ -47,6 +47,8 @@ final class CalendarView: UIView {
             $0.scrollDirection = .horizontal
             $0.scrollingMode = .stopAtEachCalendarFrame
             $0.showsHorizontalScrollIndicator = false
+            $0.allowsMultipleSelection = false
+            $0.allowsRangedSelection = false
         }
     }
     

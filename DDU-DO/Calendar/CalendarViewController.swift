@@ -51,7 +51,12 @@ extension CalendarViewController: CalendarViewDelegate {
     
     func calendar(_ calendar: JTACMonthView, didSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
         guard let cell = cell as? CalendarDateCell else { return }
-        cell.updateSelection(cellState.isSelected)
+        cell.configure(cellState)
+    }
+    
+    func calendar(_ calendar: JTACMonthView, didDeselectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
+        guard let cell = cell as? CalendarDateCell else { return }
+        cell.configure(cellState)
     }
     
     func calendar(_ calendar: JTACMonthView, shouldSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) -> Bool {
