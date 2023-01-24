@@ -9,6 +9,14 @@ import UIKit
 import SnapKit
 import Then
 
+struct HomeScheduleTableViewCellModel {
+    
+}
+
 final class HomeScheduleTableViewCell: UITableViewCell {
+    
+    func configure(_ model: HomeScheduleTableViewCellModel) {
+        
+    }
     
 }
