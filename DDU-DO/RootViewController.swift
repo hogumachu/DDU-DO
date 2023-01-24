@@ -84,7 +84,8 @@ final class RootViewController: UITabBarController {
     }()
     
     private lazy var calendarViewController: UINavigationController = {
-        let viewController = CalendarViewController().then {
+        let viewModel = CalendarViewModel()
+        let viewController = CalendarViewController(viewModel: viewModel).then {
             $0.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "calendar"), selectedImage: nil)
             $0.tabBarItem.title = "캘린더"
         }
