@@ -25,12 +25,12 @@ final class CalendarDateCell: JTACDayCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.dateLabel.textColor = .black
-        self.containerView.backgroundColor = .white
+        self.circleView.backgroundColor = .white
     }
     
     func configure(_ state: CellState) {
         self.dateLabel.text = state.text
-        self.containerView.backgroundColor = state.isSelected ? .systemPink : .white
+        self.circleView.backgroundColor = state.isSelected ? .systemPink : .white
         switch state.day {
         case .sunday:
             self.dateLabel.textColor = .red
@@ -51,6 +51,12 @@ final class CalendarDateCell: JTACDayCell {
             make.edges.equalToSuperview()
         }
         
+        self.containerView.addSubview(self.circleView)
+        self.circleView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGSize(width: 25, height: 25))
+        }
+        
         self.containerView.addSubview(self.dateLabel)
         self.dateLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -60,7 +66,11 @@ final class CalendarDateCell: JTACDayCell {
     private func setupAttributes() {
         self.containerView.do {
             $0.backgroundColor = .white
-            $0.layer.cornerRadius = 15
+        }
+        
+        self.circleView.do {
+            $0.backgroundColor = .white
+            $0.layer.cornerRadius = 25 / 2
         }
         
         self.dateLabel.do {
@@ -69,6 +79,7 @@ final class CalendarDateCell: JTACDayCell {
     }
     
     private let containerView = UIView(frame: .zero)
+    private let circleView = UIView(frame: .zero)
     private let dateLabel = UILabel(frame: .zero)
     
 }
