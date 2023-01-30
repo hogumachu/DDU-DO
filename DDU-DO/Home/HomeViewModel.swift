@@ -63,14 +63,23 @@ final class HomeViewModel {
     }
     
     private func makeScheduleSection() -> Section {
-        var items: [Item] = []
-        items.append(.title("Test Schedule Section"))
-        items.append(.schedule(.init()))
-        return .schedule(items)
+        let today = Date()
+        let targetDate = calculator.date(
+            year: calculator.year(from: today),
+            month: calculator.month(from: today),
+            day: calculator.day(from: today)
+        )
+        let nextDate = calculator.date(byAddingDayValue: 1, to: targetDate!)
+        let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", targetDate! as NSDate, nextDate! as NSDate)
+        let items = self.todoRepository
+            .getAll(where: predicate)
+            .map { Item.schedule(.init(text: $0.todo)) }
+        return .schedule([.title("오늘 할일")] + items)
     }
     
     private var sections: [Section] = []
     private let todoRepository: TodoRepository<TodoEntity>
+    private let calculator = CalendarCalculator()
     private let viewModelEventRelay = PublishRelay<HomeViewModelEvent>()
     private let disposeBag = DisposeBag()
     
