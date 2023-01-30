@@ -10,7 +10,10 @@ import SnapKit
 import Then
 
 struct CalendarListTableViewCellModel {
+    
     let text: String?
+    let targetDate: Date
+    
 }
 
 final class CalendarListTableViewCell: UITableViewCell {
@@ -53,8 +56,8 @@ final class CalendarListTableViewCell: UITableViewCell {
         
         self.contentLabel.do {
             $0.font = .systemFont(ofSize: 12, weight: .regular)
-            $0.numberOfLines = 0
-            $0.lineBreakMode = .byCharWrapping
+            $0.numberOfLines = 1
+            $0.lineBreakMode = .byTruncatingTail
         }
     }
     
