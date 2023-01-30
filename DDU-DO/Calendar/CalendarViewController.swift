@@ -146,7 +146,14 @@ extension CalendarViewController: CalendarViewDataSource {
 extension CalendarViewController: CalendarListViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.viewModel.didSelectRow(at: indexPath)
+//        self.viewModel.didSelectRow(at: indexPath)
+        print("##")
+        let repository = TodoRepository<TodoEntity>()
+        let date = Date()
+        let recordViewModel = RecordViewModel(todoRepository: repository, targetDate: date)
+        let recordViewController = RecordViewController(viewModel: recordViewModel)
+        recordViewController.delegate = self
+        recordViewController.presentWithAnimation(from: self)
     }
     
 }
@@ -172,4 +179,19 @@ extension CalendarViewController: CalendarListViewDataSource {
         }
     }
     
+}
+
+extension CalendarViewController: RecordViewControllerDelegate {
+    
+    func recordViewControllerDidFinishRecord(_ viewController: RecordViewController, targetDate: Date) {
+        print("## recordViewControllerDidFinishRecord: \(targetDate)")
+    }
+    
+    func recordViewControllerDidFailRecord(_ viewController: RecordViewController, message: String) {
+        print("## recordViewControllerDidFailRecord:", message)
+    }
+    
+    func recordViewControllerDidCancelRecord(_ viewController: RecordViewController) {
+        print("## recordViewControllerDidCancelRecord")
+    }
 }
