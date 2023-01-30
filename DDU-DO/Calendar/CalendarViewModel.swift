@@ -10,7 +10,10 @@ import RxSwift
 import RxRelay
 
 enum CalendarViewModelEvent {
+    
     case reloadData
+    case showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date)
+    
 }
 
 final class CalendarViewModel {
@@ -29,9 +32,9 @@ final class CalendarViewModel {
         case content(CalendarListTableViewCellModel)
     }
     
-    init() {
-        self.sections = self.makeSections()
-        self.viewModelEventRelay.accept(.reloadData)
+    init(todoRepository: TodoRepository<TodoEntity>) {
+        self.todoRepository = todoRepository
+        self.refresh()
     }
     
     var viewModelEvent: Observable<CalendarViewModelEvent> {
@@ -40,6 +43,23 @@ final class CalendarViewModel {
     
     var numberOfSections: Int {
         self.sections.count
+    }
+    
+    func refresh() {
+        if let date = currentDate {
+            self.fetchTodoList(date: date)
+        } else {
+            let date = Date()
+            self.currentDate = date
+            self.fetchTodoList(date: date)
+        }
+        
+        self.viewModelEventRelay.accept(.reloadData)
+    }
+    
+    func createButtonDidTap() {
+        guard let date = self.currentDate else { return }
+        self.viewModelEventRelay.accept(.showRecordView(repository: self.todoRepository, targetDate: date))
     }
     
     func numberOfRowsInSection(_ section: Int) -> Int {
@@ -55,34 +75,34 @@ final class CalendarViewModel {
     }
     
     func didSelectDate(date: Date) {
+        self.currentDate = date
         self.fetchTodoList(date: date)
         self.viewModelEventRelay.accept(.reloadData)
     }
     
     private func fetchTodoList(date: Date) {
-        // TODO: - Repository 에서 Date 를 통해 값 가져오기
         let formatter = DateFormatter().then {
             $0.dateFormat = "yyyy년 MM월 dd일"
             $0.locale = Locale(identifier: "ko_kr")
         }
-        self.sections = [.content([.content(.init(text: formatter.string(from: date)))])]
+        let targetDate = calculator.date(
+            year: calculator.year(from: date),
+            month: calculator.month(from: date),
+            day: calculator.day(from: date)
+        )
+        let nextDate = calculator.date(byAddingDayValue: 1, to: targetDate!)
+        let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", targetDate! as NSDate, nextDate! as NSDate)
+        let items = self.todoRepository.getAll(where: predicate)
+            .map { CalendarListTableViewCellModel(text: $0.todo) }
+            .map { Item.content($0) }
+        self.sections = [.content([.content(.init(text: formatter.string(from: date)))]), .content(items)]
     }
     
-    private func makeSections() -> [Section] {
-        var sections: [Section] = []
-        sections.append(self.makeContentSection())
-        return sections
-    }
-    
-    private func makeContentSection() -> Section {
-        var items: [Item] = []
-        items.append(.content(.init(text: "Test Test 1")))
-        items.append(.content(.init(text: "Test Test 2")))
-        items.append(.content(.init(text: "Test Test 3")))
-        return .content(items)
-    }
+    private var currentDate: Date?
     
     private var sections: [Section] = []
+    private let todoRepository: TodoRepository<TodoEntity>
+    private let calculator = CalendarCalculator()
     private let viewModelEventRelay = PublishRelay<CalendarViewModelEvent>()
     private let disposeBag = DisposeBag()
     
