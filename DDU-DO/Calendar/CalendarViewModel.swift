@@ -13,6 +13,7 @@ enum CalendarViewModelEvent {
     
     case reloadData
     case showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date)
+    case showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity)
     
 }
 
@@ -71,7 +72,13 @@ final class CalendarViewModel {
     }
     
     func didSelectRow(at indexPath: IndexPath) {
-        // TODO: - Do Something
+        guard let section = self.sections[safe: indexPath.section], let item = section.items[safe: indexPath.row] else { return }
+        switch item {
+        case .content(let model):
+            let predicate = NSPredicate(format: "targetDate == %@", model.targetDate as NSDate)
+            guard let entity = self.todoRepository.getAll(where: predicate).first else { return }
+            self.viewModelEventRelay.accept(.showDetailView(repository: self.todoRepository, entity: entity))
+        }
     }
     
     func didSelectDate(date: Date) {
@@ -81,10 +88,10 @@ final class CalendarViewModel {
     }
     
     private func fetchTodoList(date: Date) {
-        let formatter = DateFormatter().then {
-            $0.dateFormat = "yyyy년 MM월 dd일"
-            $0.locale = Locale(identifier: "ko_kr")
-        }
+//        let formatter = DateFormatter().then {
+//            $0.dateFormat = "yyyy년 MM월 dd일"
+//            $0.locale = Locale(identifier: "ko_kr")
+//        }
         let targetDate = calculator.date(
             year: calculator.year(from: date),
             month: calculator.month(from: date),
@@ -93,9 +100,9 @@ final class CalendarViewModel {
         let nextDate = calculator.date(byAddingDayValue: 1, to: targetDate!)
         let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", targetDate! as NSDate, nextDate! as NSDate)
         let items = self.todoRepository.getAll(where: predicate)
-            .map { CalendarListTableViewCellModel(text: $0.todo) }
+            .map { CalendarListTableViewCellModel(text: $0.todo, targetDate: $0.targetDate) }
             .map { Item.content($0) }
-        self.sections = [.content([.content(.init(text: formatter.string(from: date)))]), .content(items)]
+        self.sections = [.content(items)]
     }
     
     private var currentDate: Date?

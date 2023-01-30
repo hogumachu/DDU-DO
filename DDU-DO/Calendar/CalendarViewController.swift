@@ -40,6 +40,9 @@ final class CalendarViewController: UIViewController {
             
         case let .showRecordView(repository, targetDate):
             self.showRecordView(repository: repository, targetDate: targetDate)
+            
+        case let .showDetailView(repository, entity):
+            self.showDetailView(repository: repository, entity: entity)
         }
     }
     
@@ -93,6 +96,15 @@ final class CalendarViewController: UIViewController {
         let recordViewController = RecordViewController(viewModel: recordViewModel)
         recordViewController.delegate = self
         recordViewController.presentWithAnimation(from: self)
+    }
+    
+    private func showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity) {
+        let detailViewModel = TodoDetailViewModel(repository: repository, entity: entity)
+        let detailViewController = TodoDetailViewController(viewModel: detailViewModel)
+        let navigationController = UINavigationController(rootViewController: detailViewController).then {
+            $0.modalPresentationStyle = .overFullScreen
+        }
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     private let calendarView = CalendarView(frame: .zero)
