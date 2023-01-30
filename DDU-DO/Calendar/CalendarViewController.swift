@@ -37,6 +37,9 @@ final class CalendarViewController: UIViewController {
         switch event {
         case .reloadData:
             self.calendarListView.reloadData()
+            
+        case let .showRecordView(repository, targetDate):
+            self.showRecordView(repository: repository, targetDate: targetDate)
         }
     }
     
@@ -53,6 +56,12 @@ final class CalendarViewController: UIViewController {
             make.top.equalTo(self.calendarView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
+        
+        self.view.addSubview(self.createButton)
+        self.createButton.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 40, height: 40))
+            make.trailing.bottom.equalToSuperview().inset(30)
+        }
     }
     
     private func setupAttributes() {
@@ -67,10 +76,28 @@ final class CalendarViewController: UIViewController {
             $0.dataSource = self
             $0.backgroundColor = .white
         }
+        
+        self.createButton.do {
+            $0.layer.cornerRadius = 40 / 2
+            $0.backgroundColor = .systemOrange
+            $0.addTarget(self, action: #selector(createButtonDidTap(_:)), for: .touchUpInside)
+        }
+    }
+    
+    @objc private func createButtonDidTap(_ sender: UIButton) {
+        self.viewModel.createButtonDidTap()
+    }
+    
+    private func showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date) {
+        let recordViewModel = RecordViewModel(todoRepository: repository, targetDate: targetDate)
+        let recordViewController = RecordViewController(viewModel: recordViewModel)
+        recordViewController.delegate = self
+        recordViewController.presentWithAnimation(from: self)
     }
     
     private let calendarView = CalendarView(frame: .zero)
     private let calendarListView = CalendarListView(frame: .zero)
+    private let createButton = UIButton(frame: .zero)
     private let viewModel: CalendarViewModel
     private let disposeBag = DisposeBag()
     
@@ -146,14 +173,7 @@ extension CalendarViewController: CalendarViewDataSource {
 extension CalendarViewController: CalendarListViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.viewModel.didSelectRow(at: indexPath)
-        print("##")
-        let repository = TodoRepository<TodoEntity>()
-        let date = Date()
-        let recordViewModel = RecordViewModel(todoRepository: repository, targetDate: date)
-        let recordViewController = RecordViewController(viewModel: recordViewModel)
-        recordViewController.delegate = self
-        recordViewController.presentWithAnimation(from: self)
+        self.viewModel.didSelectRow(at: indexPath)
     }
     
 }
@@ -184,7 +204,7 @@ extension CalendarViewController: CalendarListViewDataSource {
 extension CalendarViewController: RecordViewControllerDelegate {
     
     func recordViewControllerDidFinishRecord(_ viewController: RecordViewController, targetDate: Date) {
-        print("## recordViewControllerDidFinishRecord: \(targetDate)")
+        self.viewModel.refresh()
     }
     
     func recordViewControllerDidFailRecord(_ viewController: RecordViewController, message: String) {
