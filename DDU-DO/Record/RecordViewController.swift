@@ -112,12 +112,6 @@ final class RecordViewController: UIViewController {
         }
     }
     
-    @objc private func backgroundViewDidTap(_ sender: UIView) {
-        self.dismissWithAnimation {
-            self.delegate?.recordViewControllerDidCancelRecord(self)
-        }
-    }
-    
     private func setupKeyboardNotification() {
         NotificationCenter.default.addObserver(
             self,
@@ -147,6 +141,12 @@ final class RecordViewController: UIViewController {
         self.recordViewBottomConstraint?.update(offset: 0)
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc private func backgroundViewDidTap(_ sender: UIView) {
+        self.dismissWithAnimation {
+            self.delegate?.recordViewControllerDidCancelRecord(self)
         }
     }
     
