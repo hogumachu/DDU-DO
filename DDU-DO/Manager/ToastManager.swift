@@ -12,7 +12,7 @@ enum ToastManager {
     
     static func showToast(_ model: ToastModel) {
         guard let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-        let height: CGFloat = 42
+        let height: CGFloat = 35
         let viewSize = keyWindow.bounds.size
         let topSafeArea = UIScreen.topSafeAreaInset
         let toast = Toast(frame: CGRect(x: 20, y: topSafeArea, width: viewSize.width - 40, height: height))
