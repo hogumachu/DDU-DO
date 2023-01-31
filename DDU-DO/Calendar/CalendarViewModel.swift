@@ -12,6 +12,7 @@ import RxRelay
 enum CalendarViewModelEvent {
     
     case reloadData
+    case reloadDataWithDate(date: Date)
     case showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date)
     case showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity)
     
@@ -87,17 +88,46 @@ final class CalendarViewModel {
         self.viewModelEventRelay.accept(.reloadData)
     }
     
+    func willDisplay(date: Date) {
+        guard self.isLoading == false else { return }
+        if self.calculator.isEqualYearAndMonth(date, self.startDate) {
+            self.loadMoreStartDateDataIfEnabled(date: date)
+        }
+        
+        if self.calculator.isEqualYearAndMonth(date, self.endDate) {
+           self.loadMoreEndDateDateIfEnabled(date: date)
+       }
+    }
+    
+    private func loadMoreStartDateDataIfEnabled(date: Date) {
+        guard let newStartDate = self.calculator.date(byAddingMonthValue: -6, to: self.startDate) else { return }
+        self.isLoading = true
+        let previousDate = self.startDate
+        self.startDate = newStartDate
+        DispatchQueue.main.async {
+            self.viewModelEventRelay.accept(.reloadDataWithDate(date: previousDate))
+            self.isLoading = false
+        }
+    }
+    
+    private func loadMoreEndDateDateIfEnabled(date: Date) {
+        guard let newEndDate = self.calculator.date(byAddingMonthValue: 6, to: self.endDate) else { return }
+        self.isLoading = true
+        let previousEndDate = self.endDate
+        self.endDate = newEndDate
+        DispatchQueue.main.async {
+            self.viewModelEventRelay.accept(.reloadDataWithDate(date: previousEndDate))
+            self.isLoading = false
+        }
+    }
+    
     private func fetchTodoList(date: Date) {
-//        let formatter = DateFormatter().then {
-//            $0.dateFormat = "yyyy년 MM월 dd일"
-//            $0.locale = Locale(identifier: "ko_kr")
-//        }
-        let targetDate = calculator.date(
-            year: calculator.year(from: date),
-            month: calculator.month(from: date),
-            day: calculator.day(from: date)
+        let targetDate = self.calculator.date(
+            year: self.calculator.year(from: date),
+            month: self.calculator.month(from: date),
+            day: self.calculator.day(from: date)
         )
-        let nextDate = calculator.date(byAddingDayValue: 1, to: targetDate!)
+        let nextDate = self.calculator.date(byAddingDayValue: 1, to: targetDate!)
         let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", targetDate! as NSDate, nextDate! as NSDate)
         let items = self.todoRepository.getAll(where: predicate)
             .map { CalendarListTableViewCellModel(text: $0.todo, targetDate: $0.targetDate) }
@@ -105,6 +135,9 @@ final class CalendarViewModel {
         self.sections = [.content(items)]
     }
     
+    private var isLoading = false
+    private(set) lazy var startDate = self.calculator.date(byAddingMonthValue: -6, to: Date())!
+    private(set) lazy var endDate = self.calculator.date(byAddingMonthValue: 6, to: Date())!
     private var currentDate: Date?
     
     private var sections: [Section] = []

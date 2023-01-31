@@ -33,6 +33,20 @@ final class CalendarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func reloadData(date: Date) {
+        UIView.performWithoutAnimation {
+            self.monthView.reloadData(withAnchor: date, completionHandler: nil)
+        }
+    }
+    
+    func scrollToDate(_ date: Date, animated: Bool = false) {
+        self.monthView.scrollToDate(date, animateScroll: animated)
+    }
+    
+    func selectDates(_ dates: [Date]) {
+        self.monthView.selectDates(dates)
+    }
+    
     private func setupLayout() {
         self.addSubview(self.monthView)
         self.monthView.snp.makeConstraints { make in
