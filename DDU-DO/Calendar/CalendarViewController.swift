@@ -216,14 +216,18 @@ extension CalendarViewController: CalendarListViewDataSource {
 extension CalendarViewController: RecordViewControllerDelegate {
     
     func recordViewControllerDidFinishRecord(_ viewController: RecordViewController, targetDate: Date) {
+        let toastModel = ToastModel(message: "추가되었습니다", type: .success)
+        ToastManager.showToast(toastModel)
         self.viewModel.refresh()
     }
     
     func recordViewControllerDidFailRecord(_ viewController: RecordViewController, message: String) {
-        print("## recordViewControllerDidFailRecord:", message)
+        let toastModel = ToastModel(message: message, type: .fail)
+        ToastManager.showToast(toastModel)
     }
     
     func recordViewControllerDidCancelRecord(_ viewController: RecordViewController) {
         print("## recordViewControllerDidCancelRecord")
     }
+    
 }

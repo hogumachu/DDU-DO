@@ -38,6 +38,10 @@
 		F1BD6B972987C48F00BE6825 /* TodoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BD6B962987C48F00BE6825 /* TodoDetailViewController.swift */; };
 		F1BD6B992987C49500BE6825 /* TodoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BD6B982987C49500BE6825 /* TodoDetailViewModel.swift */; };
 		F1BD6B9B2987C49A00BE6825 /* TodoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BD6B9A2987C49A00BE6825 /* TodoDetailView.swift */; };
+		F1BD6B9D2988D60300BE6825 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BD6B9C2988D60300BE6825 /* Toast.swift */; };
+		F1BD6BA02988E13A00BE6825 /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BD6B9F2988E13A00BE6825 /* ToastManager.swift */; };
+		F1BD6BA22988E19900BE6825 /* UIScreen+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BD6BA12988E19900BE6825 /* UIScreen+.swift */; };
+		F1BD6BA42988E2DC00BE6825 /* ToastCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BD6BA32988E2DC00BE6825 /* ToastCenter.swift */; };
 		F1F12F2B2964250D00D8CE21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */; };
 		F1F12F2D2964250D00D8CE21 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */; };
 		F1F12F342964251000D8CE21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1F12F332964251000D8CE21 /* Assets.xcassets */; };
@@ -81,6 +85,10 @@
 		F1BD6B962987C48F00BE6825 /* TodoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewController.swift; sourceTree = "<group>"; };
 		F1BD6B982987C49500BE6825 /* TodoDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewModel.swift; sourceTree = "<group>"; };
 		F1BD6B9A2987C49A00BE6825 /* TodoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailView.swift; sourceTree = "<group>"; };
+		F1BD6B9C2988D60300BE6825 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		F1BD6B9F2988E13A00BE6825 /* ToastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
+		F1BD6BA12988E19900BE6825 /* UIScreen+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+.swift"; sourceTree = "<group>"; };
+		F1BD6BA32988E2DC00BE6825 /* ToastCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastCenter.swift; sourceTree = "<group>"; };
 		F1F12F272964250D00D8CE21 /* DDU-DO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DDU-DO.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +137,7 @@
 				F15FFBF8297BD99600EF2E69 /* UICollectionView+.swift */,
 				F15FFC00297BEEE600EF2E69 /* UIView+.swift */,
 				F15FFC28297D638100EF2E69 /* UIViewController+.swift */,
+				F1BD6BA12988E19900BE6825 /* UIScreen+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -177,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				F15FFC1D297D550C00EF2E69 /* TextOnlyTableViewCell.swift */,
+				F1BD6B9C2988D60300BE6825 /* Toast.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -228,6 +238,15 @@
 			path = Detail;
 			sourceTree = "<group>";
 		};
+		F1BD6B9E2988E12400BE6825 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				F1BD6B9F2988E13A00BE6825 /* ToastManager.swift */,
+				F1BD6BA32988E2DC00BE6825 /* ToastCenter.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		F1F12F1E2964250D00D8CE21 = {
 			isa = PBXGroup;
 			children = (
@@ -255,6 +274,7 @@
 				F15FFC03297D474400EF2E69 /* Service */,
 				F15FFBF7297BD97A00EF2E69 /* Extension */,
 				F15FFC1B297D54FD00EF2E69 /* Common */,
+				F1BD6B9E2988E12400BE6825 /* Manager */,
 				F15FFC14297D515F00EF2E69 /* Home */,
 				F1F12F92297BCAF400D8CE21 /* Calendar */,
 				F15FFC36298529D600EF2E69 /* Record */,
@@ -407,7 +427,9 @@
 				F15FFC3229800A6B00EF2E69 /* CalendarListView.swift in Sources */,
 				F15FFC01297BEEE600EF2E69 /* UIView+.swift in Sources */,
 				F15FFC0E297D4A3000EF2E69 /* TodoRepository.swift in Sources */,
+				F1BD6BA02988E13A00BE6825 /* ToastManager.swift in Sources */,
 				F15FFC3C298529FF00EF2E69 /* RecordView.swift in Sources */,
+				F1BD6BA22988E19900BE6825 /* UIScreen+.swift in Sources */,
 				F15FFC13297D512700EF2E69 /* RootViewController.swift in Sources */,
 				F1F12F94297BCB0E00D8CE21 /* CalendarViewController.swift in Sources */,
 				F15FFC3A298529F900EF2E69 /* RecordViewModel.swift in Sources */,
@@ -419,12 +441,14 @@
 				F15FFC24297D630200EF2E69 /* TopScrollable.swift in Sources */,
 				F1BD6B912987BA1E00BE6825 /* CalendarCalculator.swift in Sources */,
 				F15FFBFF297BEC3F00EF2E69 /* CalendarDateHeaderView.swift in Sources */,
+				F1BD6B9D2988D60300BE6825 /* Toast.swift in Sources */,
 				F1BD6B9B2987C49A00BE6825 /* TodoDetailView.swift in Sources */,
 				F15FFC0C297D4A2C00EF2E69 /* TodoObject.swift in Sources */,
 				F1BD6B972987C48F00BE6825 /* TodoDetailViewController.swift in Sources */,
 				F1F12F2D2964250D00D8CE21 /* SceneDelegate.swift in Sources */,
 				F15FFC1E297D550C00EF2E69 /* TextOnlyTableViewCell.swift in Sources */,
 				F15FFC08297D498E00EF2E69 /* Repository.swift in Sources */,
+				F1BD6BA42988E2DC00BE6825 /* ToastCenter.swift in Sources */,
 				F15FFC0A297D4A2600EF2E69 /* TodoEntity.swift in Sources */,
 				F15FFC1A297D517000EF2E69 /* HomeView.swift in Sources */,
 				F15FFC2D297D649800EF2E69 /* Array+.swift in Sources */,

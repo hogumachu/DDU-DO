@@ -33,7 +33,7 @@ final class RecordViewModel {
             try self.todoRepository.insert(item: entity)
             self.viewModelEventRelay.accept(.didFinishRecord(targetDate: self.targetDate))
         } catch {
-            self.viewModelEventRelay.accept(.didFailRecord(message: "저장에 실패했습니다."))
+            self.viewModelEventRelay.accept(.didFailRecord(message: "저장에 실패했습니다"))
         }
     }
     
