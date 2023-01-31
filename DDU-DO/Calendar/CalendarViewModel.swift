@@ -136,11 +136,6 @@ final class CalendarViewModel {
     }
     
     private var isLoading = false
-    
-    private let formatter = DateFormatter().then {
-        $0.dateFormat = "yyyy MM dd"
-        $0.locale = Locale(identifier: "ko_kr")
-    }
     private(set) lazy var startDate = self.calculator.date(byAddingMonthValue: -6, to: Date())!
     private(set) lazy var endDate = self.calculator.date(byAddingMonthValue: 6, to: Date())!
     private var currentDate: Date?
