@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Then
 
 final class CalendarCalculator {
     
@@ -28,6 +27,14 @@ final class CalendarCalculator {
     
     func date(byAddingDayValue value: Int, to base: Date) -> Date? {
         self.calendar.date(byAdding: .day, value: value, to: base)
+    }
+    
+    func date(byAddingMonthValue value: Int, to base: Date) -> Date? {
+        self.calendar.date(byAdding: .month, value: value, to: base)
+    }
+    
+    func isEqualYearAndMonth(_ compare1: Date, _ compare2: Date) -> Bool {
+        self.year(from: compare1) == self.year(from: compare2) && self.month(from: compare1) == self.month(from: compare2)
     }
     
     private let calendar = Calendar(identifier: .gregorian)

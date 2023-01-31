@@ -25,6 +25,13 @@ final class CalendarViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let date = Date()
+        self.calendarView.scrollToDate(date)
+        self.calendarView.selectDates([date])
+    }
+    
     private func bind(_ viewModel: CalendarViewModel) {
         viewModel
             .viewModelEvent
@@ -37,6 +44,9 @@ final class CalendarViewController: UIViewController {
         switch event {
         case .reloadData:
             self.calendarListView.reloadData()
+            
+        case .reloadDataWithDate(let date):
+            self.calendarView.reloadData(date: date)
             
         case let .showRecordView(repository, targetDate):
             self.showRecordView(repository: repository, targetDate: targetDate)
@@ -159,22 +169,21 @@ extension CalendarViewController: CalendarViewDelegate {
         return MonthSize(defaultSize: 60)
     }
     
+    func calendar(_ calendar: JTACMonthView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
+        guard let date = visibleDates.monthDates.first?.date else { return }
+        self.viewModel.willDisplay(date: date)
+    }
+    
 }
 
 extension CalendarViewController: CalendarViewDataSource {
     
     func configureCalendar(_ calendar: JTACMonthView) -> ConfigurationParameters {
-        let formatter = DateFormatter().then {
-            $0.dateFormat = "yyyy MM dd"
-            $0.locale = Locale(identifier: "ko_kr")
-        }
-        let startDate = formatter.date(from: "2022 12 01")!
-        let endDate = Date()
         return ConfigurationParameters(
-            startDate: startDate,
-            endDate: endDate,
+            startDate: self.viewModel.startDate,
+            endDate: self.viewModel.endDate,
             numberOfRows: 6,
-            generateInDates: .forFirstMonthOnly,
+            generateInDates: .forAllMonths,
             generateOutDates: .tillEndOfRow,
             hasStrictBoundaries: true
         )
