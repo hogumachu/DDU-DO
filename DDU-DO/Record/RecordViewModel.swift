@@ -28,6 +28,11 @@ final class RecordViewModel {
     }
     
     func record(_ text: String) {
+        guard text.isEmpty == false else {
+            self.viewModelEventRelay.accept(.didFailRecord(message: "내용이 없습니다"))
+            return
+        }
+        
         do {
             let entity = TodoEntity(todo: text, isComplete: false, createAt: Date(), targetDate: self.targetDate)
             try self.todoRepository.insert(item: entity)

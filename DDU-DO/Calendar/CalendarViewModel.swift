@@ -48,20 +48,12 @@ final class CalendarViewModel {
     }
     
     func refresh() {
-        if let date = currentDate {
-            self.fetchTodoList(date: date)
-        } else {
-            let date = Date()
-            self.currentDate = date
-            self.fetchTodoList(date: date)
-        }
-        
+        self.fetchTodoList(date: self.currentDate)
         self.viewModelEventRelay.accept(.reloadData)
     }
     
     func createButtonDidTap() {
-        guard let date = self.currentDate else { return }
-        self.viewModelEventRelay.accept(.showRecordView(repository: self.todoRepository, targetDate: date))
+        self.viewModelEventRelay.accept(.showRecordView(repository: self.todoRepository, targetDate: self.currentDate))
     }
     
     func numberOfRowsInSection(_ section: Int) -> Int {
@@ -138,7 +130,7 @@ final class CalendarViewModel {
     private var isLoading = false
     private(set) lazy var startDate = self.calculator.date(byAddingMonthValue: -6, to: Date())!
     private(set) lazy var endDate = self.calculator.date(byAddingMonthValue: 6, to: Date())!
-    private var currentDate: Date?
+    private var currentDate: Date = Date()
     
     private var sections: [Section] = []
     private let todoRepository: TodoRepository<TodoEntity>

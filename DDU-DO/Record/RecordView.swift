@@ -13,6 +13,7 @@ protocol RecordViewDelegate: AnyObject {
     
     func recordView(_ view: RecordView, didUpdateText text: String)
     func recordViewDidTapRecordButton(_ view: RecordView, text: String)
+    func recordViewDidReturn(_ view: RecordView, text: String)
     
 }
 
@@ -87,6 +88,10 @@ extension RecordView: RecordInputViewDelegate {
     
     func recordInputView(_ view: RecordInputView, didUpdateText text: String) {
         self.delegate?.recordView(self, didUpdateText: text)
+    }
+    
+    func recordInputViewDidReturn(_ view: RecordInputView) {
+        self.delegate?.recordViewDidReturn(self, text: self.recordInputView.text ?? "")
     }
     
 }

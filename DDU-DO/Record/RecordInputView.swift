@@ -12,6 +12,7 @@ import Then
 protocol RecordInputViewDelegate: AnyObject {
     
     func recordInputView(_ view: RecordInputView, didUpdateText text: String)
+    func recordInputViewDidReturn(_ view: RecordInputView)
     
 }
 
@@ -88,7 +89,8 @@ extension RecordInputView: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        self.delegate?.recordInputViewDidReturn(self)
+        return textField.resignFirstResponder()
     }
     
 }

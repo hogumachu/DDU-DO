@@ -170,4 +170,8 @@ extension RecordViewController: RecordViewDelegate {
         self.viewModel.record(text)
     }
     
+    func recordViewDidReturn(_ view: RecordView, text: String) {
+        self.viewModel.record(text)
+    }
+    
 }
