@@ -57,9 +57,15 @@ final class CalendarViewController: UIViewController {
     }
     
     private func setupLayout() {
+        self.view.addSubview(self.statusView)
+        self.statusView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(self.view.safeArea.top)
+        }
+        
         self.view.addSubview(self.calendarView)
         self.calendarView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeArea.top)
+            make.top.equalTo(self.statusView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(35 * 7)
         }
@@ -78,6 +84,10 @@ final class CalendarViewController: UIViewController {
     }
     
     private func setupAttributes() {
+        self.statusView.do {
+            $0.backgroundColor = .white
+        }
+        
         self.calendarView.do {
             $0.delegate = self
             $0.dataSource = self
@@ -117,6 +127,7 @@ final class CalendarViewController: UIViewController {
         self.present(navigationController, animated: true, completion: nil)
     }
     
+    private let statusView = UIView(frame: .zero)
     private let calendarView = CalendarView(frame: .zero)
     private let calendarListView = CalendarListView(frame: .zero)
     private let createButton = UIButton(frame: .zero)
