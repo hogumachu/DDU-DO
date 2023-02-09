@@ -12,7 +12,6 @@ import Then
 struct CalendarListTableViewCellModel {
     
     let text: String?
-    let targetDate: Date
     
 }
 

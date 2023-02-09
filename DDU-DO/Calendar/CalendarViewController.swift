@@ -224,7 +224,7 @@ extension CalendarViewController: CalendarListViewDataSource {
         guard let item = self.viewModel.cellItem(at: indexPath) else { return UITableViewCell() }
         
         switch item {
-        case .content(let model):
+        case .content(let model, _):
             guard let cell = tableView.dequeueReusableCell(cell: CalendarListTableViewCell.self, for: indexPath) else { return UITableViewCell() }
             cell.configure(model)
             return cell

@@ -31,7 +31,7 @@ final class CalendarViewModel {
     }
     
     enum Item {
-        case content(CalendarListTableViewCellModel)
+        case content(CalendarListTableViewCellModel, createdAt: Date)
     }
     
     init(todoRepository: TodoRepository<TodoEntity>) {
@@ -67,8 +67,8 @@ final class CalendarViewModel {
     func didSelectRow(at indexPath: IndexPath) {
         guard let section = self.sections[safe: indexPath.section], let item = section.items[safe: indexPath.row] else { return }
         switch item {
-        case .content(let model):
-            let predicate = NSPredicate(format: "targetDate == %@", model.targetDate as NSDate)
+        case .content(_, let createdAt):
+            let predicate = NSPredicate(format: "createdAt == %@", createdAt as NSDate)
             guard let entity = self.todoRepository.getAll(where: predicate).first else { return }
             self.viewModelEventRelay.accept(.showDetailView(repository: self.todoRepository, entity: entity))
         }
@@ -122,8 +122,7 @@ final class CalendarViewModel {
         let nextDate = self.calculator.date(byAddingDayValue: 1, to: targetDate!)
         let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", targetDate! as NSDate, nextDate! as NSDate)
         let items = self.todoRepository.getAll(where: predicate)
-            .map { CalendarListTableViewCellModel(text: $0.todo, targetDate: $0.targetDate) }
-            .map { Item.content($0) }
+            .map { Item.content(CalendarListTableViewCellModel(text: $0.todo), createdAt: $0.createAt) }
         self.sections = [.content(items)]
     }
     
