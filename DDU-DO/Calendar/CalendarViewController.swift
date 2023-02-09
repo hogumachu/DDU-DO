@@ -121,10 +121,7 @@ final class CalendarViewController: UIViewController {
     private func showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity) {
         let detailViewModel = TodoDetailViewModel(repository: repository, entity: entity)
         let detailViewController = TodoDetailViewController(viewModel: detailViewModel)
-        let navigationController = UINavigationController(rootViewController: detailViewController).then {
-            $0.modalPresentationStyle = .overFullScreen
-        }
-        self.present(navigationController, animated: true, completion: nil)
+        detailViewController.presentWithAnimation(from: self)
     }
     
     private let statusView = UIView(frame: .zero)

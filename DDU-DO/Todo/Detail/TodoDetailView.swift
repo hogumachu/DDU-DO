@@ -12,8 +12,9 @@ import Then
 protocol TodoDetailViewDelegate: AnyObject {
     
     var todo: String? { get }
-    func todoDetailViewDidTapSaveButton(_ view: TodoDetailView)
-    func todoDetailViewDidTapCancelButton(_ view: TodoDetailView)
+    func todoDetailViewDidTapEdit(_ view: TodoDetailView)
+    func todoDetailViewDidTapRemove(_ view: TodoDetailView)
+    func todoDetailViewDidTapQuickChange(_ view: TodoDetailView)
     
 }
 
@@ -36,19 +37,19 @@ final class TodoDetailView: UIView {
     }
     
     private func setupLayout() {
-        self.addSubview(self.buttonStackView)
-        self.buttonStackView.snp.makeConstraints { make in
+        self.addSubview(self.contentStackView)
+        self.contentStackView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
-            make.height.equalTo(60)
         }
         
-        self.buttonStackView.addArrangedSubview(self.cancelButton)
-        self.buttonStackView.addArrangedSubview(self.saveButton)
+        self.contentStackView.addArrangedSubview(self.editView)
+        self.contentStackView.addArrangedSubview(self.removeView)
+        self.contentStackView.addArrangedSubview(self.quickChangeView)
         
         self.addSubview(self.contentLabel)
         self.contentLabel.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(self.buttonStackView.snp.top)
+            make.bottom.equalTo(self.contentStackView.snp.top)
         }
     }
     
@@ -59,37 +60,51 @@ final class TodoDetailView: UIView {
             $0.text = self.delegate?.todo
             $0.textColor = .black
             $0.numberOfLines = 0
+            $0.textAlignment = .center
         }
         
-        self.buttonStackView.do {
-            $0.axis = .horizontal
-            $0.spacing = 5
+        self.contentStackView.do {
+            $0.axis = .vertical
+            $0.spacing = 3
             $0.distribution = .fillEqually
         }
         
-        self.cancelButton.do {
-            $0.backgroundColor = .red
-            $0.addTarget(self, action: #selector(cancelButtonDidTap(_:)), for: .touchUpInside)
+        self.editView.do {
+            $0.configure(.init(imageName: "pencil.circle.fill", title: "수정하기"))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(editViewDidTap))
+            $0.addGestureRecognizer(tapGesture)
         }
         
-        self.saveButton.do {
-            $0.backgroundColor = .blue
-            $0.addTarget(self, action: #selector(saveButtonDidTap(_:)), for: .touchUpInside)
+        self.removeView.do {
+            $0.configure(.init(imageName: "trash.circle.fill", title: "삭제하기"))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(editViewDidTap))
+            $0.addGestureRecognizer(tapGesture)
+        }
+        
+        self.quickChangeView.do {
+            $0.configure(.init(imageName: "calendar.circle.fill", title: "날짜 변경하기"))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(editViewDidTap))
+            $0.addGestureRecognizer(tapGesture)
         }
     }
     
-    @objc private func cancelButtonDidTap(_ sender: UIButton) {
-        self.delegate?.todoDetailViewDidTapCancelButton(self)
+    @objc private func editViewDidTap(_ sender: UIView) {
+        self.delegate?.todoDetailViewDidTapEdit(self)
     }
     
-    @objc private func saveButtonDidTap(_ sender: UIButton) {
-        self.delegate?.todoDetailViewDidTapSaveButton(self)
+    @objc private func removeViewDidTap(_ sender: UIButton) {
+        self.delegate?.todoDetailViewDidTapRemove(self)
     }
     
-    private let buttonStackView = UIStackView(frame: .zero)
+    @objc private func quickChangeViewDidTap(_ sender: UIButton) {
+        self.delegate?.todoDetailViewDidTapQuickChange(self)
+    }
+    
+    private let contentStackView = UIStackView(frame: .zero)
     
     private let contentLabel = UILabel(frame: .zero)
-    private let cancelButton = UIButton(frame: .zero)
-    private let saveButton = UIButton(frame: .zero)
+    private let editView = TodoDetailContentView(frame: .zero)
+    private let removeView = TodoDetailContentView(frame: .zero)
+    private let quickChangeView = TodoDetailContentView(frame: .zero)
     
 }
