@@ -236,7 +236,6 @@ extension CalendarViewController: RecordViewControllerDelegate {
     func recordViewControllerDidFinishRecord(_ viewController: RecordViewController, targetDate: Date) {
         let toastModel = ToastModel(message: "추가되었습니다", type: .success)
         ToastManager.showToast(toastModel)
-        self.viewModel.refresh()
     }
     
     func recordViewControllerDidFailRecord(_ viewController: RecordViewController, message: String) {
@@ -255,7 +254,6 @@ extension CalendarViewController: TodoDetailViewControllerDelegate {
     func todoDetailViewControllerDidFinish(_ viewController: TodoDetailViewController, message: String) {
         let toastModel = ToastModel(message: message, type: .success)
         ToastManager.showToast(toastModel)
-        self.viewModel.refresh()
     }
     
     func todoDetailViewControllerDidFail(_ viewController: TodoDetailViewController, message: String) {

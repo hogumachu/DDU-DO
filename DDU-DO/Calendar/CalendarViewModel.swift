@@ -36,6 +36,7 @@ final class CalendarViewModel {
     
     init(todoRepository: TodoRepository<TodoEntity>) {
         self.todoRepository = todoRepository
+        self.observeTodoRepositoryUpdatedEvent()
         self.refresh()
     }
     
@@ -124,6 +125,12 @@ final class CalendarViewModel {
         let items = self.todoRepository.getAll(where: predicate)
             .map { Item.content(CalendarListTableViewCellModel(text: $0.todo), createdAt: $0.createAt) }
         self.sections = [.content(items)]
+    }
+    
+    private func observeTodoRepositoryUpdatedEvent() {
+        NotificationCenter.default.addObserver(forName: .todoRepositoryUpdated, object: nil, queue: nil) { [weak self] _ in
+            self?.refresh()
+        }
     }
     
     private var isLoading = false
