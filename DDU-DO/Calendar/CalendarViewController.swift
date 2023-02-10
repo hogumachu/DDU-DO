@@ -122,6 +122,7 @@ final class CalendarViewController: UIViewController {
         let detailViewModel = TodoDetailViewModel(repository: repository, entity: entity)
         let detailViewController = TodoDetailViewController(viewModel: detailViewModel)
         detailViewController.presentWithAnimation(from: self)
+        detailViewController.delegate = self
     }
     
     private let statusView = UIView(frame: .zero)
@@ -245,6 +246,21 @@ extension CalendarViewController: RecordViewControllerDelegate {
     
     func recordViewControllerDidCancelRecord(_ viewController: RecordViewController) {
         print("## recordViewControllerDidCancelRecord")
+    }
+    
+}
+
+extension CalendarViewController: TodoDetailViewControllerDelegate {
+    
+    func todoDetailViewControllerDidFinish(_ viewController: TodoDetailViewController, message: String) {
+        let toastModel = ToastModel(message: message, type: .success)
+        ToastManager.showToast(toastModel)
+        self.viewModel.refresh()
+    }
+    
+    func todoDetailViewControllerDidFail(_ viewController: TodoDetailViewController, message: String) {
+        let toastModel = ToastModel(message: message, type: .fail)
+        ToastManager.showToast(toastModel)
     }
     
 }

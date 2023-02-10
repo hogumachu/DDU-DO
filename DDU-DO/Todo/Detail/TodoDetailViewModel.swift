@@ -12,6 +12,9 @@ import Then
 
 enum TodoDetailViewModelEvent {
     
+    case didFinish(message: String)
+    case didFail(message: String)
+    
 }
 
 final class TodoDetailViewModel {
@@ -27,6 +30,24 @@ final class TodoDetailViewModel {
     
     var todo: String {
         self.entity.todo
+    }
+    
+    func didTapEdit() {
+        
+    }
+    
+    func didTapRemove() {
+        do {
+            try self.repository.delete(item: self.entity)
+            self.viewModelEventRelay.accept(.didFinish(message: "삭제되었습니다"))
+        } catch {
+            print("# ERROR: \(error.localizedDescription)")
+            self.viewModelEventRelay.accept(.didFail(message: "삭제에 실패했습니다"))
+        }
+    }
+    
+    func didTapQuickChange() {
+        
     }
     
     private var entity: TodoEntity
