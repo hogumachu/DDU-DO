@@ -32,8 +32,8 @@ final class HomeViewModel {
     
     init(todoRepository: TodoRepository<TodoEntity>) {
         self.todoRepository = todoRepository
-        self.sections = self.makeSections()
-        self.viewModelEventRelay.accept(.reloadData)
+        self.observeTodoRepositoryUpdatedEvent()
+        self.refresh()
     }
     
     var viewModelEvent: Observable<HomeViewModelEvent> {
@@ -56,6 +56,11 @@ final class HomeViewModel {
         // TODO: - Do Something
     }
     
+    func refresh() {
+        self.sections = self.makeSections()
+        self.viewModelEventRelay.accept(.reloadData)
+    }
+    
     private func makeSections() -> [Section] {
         var sections: [Section] = []
         sections.append(self.makeScheduleSection())
@@ -75,6 +80,12 @@ final class HomeViewModel {
             .getAll(where: predicate)
             .map { Item.schedule(.init(text: $0.todo)) }
         return .schedule([.title("오늘 할일")] + items)
+    }
+    
+    private func observeTodoRepositoryUpdatedEvent() {
+        NotificationCenter.default.addObserver(forName: .todoRepositoryUpdated, object: nil, queue: nil) { [weak self] _ in
+            self?.refresh()
+        }
     }
     
     private var sections: [Section] = []

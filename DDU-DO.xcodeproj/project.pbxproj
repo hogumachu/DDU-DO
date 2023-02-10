@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		43A8940A7D7D37A06C6F8672 /* Pods_DDU_DO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71F430898EF5F434671BCC2 /* Pods_DDU_DO.framework */; };
 		F13798A92994D8F50053DE9C /* TodoDetailContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798A82994D8F50053DE9C /* TodoDetailContentView.swift */; };
+		F13798AB299683BE0053DE9C /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798AA299683BE0053DE9C /* NotificationName.swift */; };
 		F15FFBF6297BCE6100EF2E69 /* CalendarDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */; };
 		F15FFBF9297BD99600EF2E69 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBF8297BD99600EF2E69 /* UICollectionView+.swift */; };
 		F15FFBFB297BD9A500EF2E69 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBFA297BD9A500EF2E69 /* UITableView+.swift */; };
@@ -57,6 +58,7 @@
 		A318449B941398CD5EFAE4C2 /* Pods-DDU-DO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DDU-DO.debug.xcconfig"; path = "Target Support Files/Pods-DDU-DO/Pods-DDU-DO.debug.xcconfig"; sourceTree = "<group>"; };
 		A71F430898EF5F434671BCC2 /* Pods_DDU_DO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DDU_DO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F13798A82994D8F50053DE9C /* TodoDetailContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailContentView.swift; sourceTree = "<group>"; };
+		F13798AA299683BE0053DE9C /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateCell.swift; sourceTree = "<group>"; };
 		F15FFBF8297BD99600EF2E69 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		F15FFBFA297BD9A500EF2E69 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				F15FFC00297BEEE600EF2E69 /* UIView+.swift */,
 				F15FFC28297D638100EF2E69 /* UIViewController+.swift */,
 				F1BD6BA12988E19900BE6825 /* UIScreen+.swift */,
+				F13798AA299683BE0053DE9C /* NotificationName.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 				F1BD6B912987BA1E00BE6825 /* CalendarCalculator.swift in Sources */,
 				F15FFBFF297BEC3F00EF2E69 /* CalendarDateHeaderView.swift in Sources */,
 				F1BD6B9D2988D60300BE6825 /* Toast.swift in Sources */,
+				F13798AB299683BE0053DE9C /* NotificationName.swift in Sources */,
 				F1BD6B9B2987C49A00BE6825 /* TodoDetailView.swift in Sources */,
 				F15FFC0C297D4A2C00EF2E69 /* TodoObject.swift in Sources */,
 				F1BD6B972987C48F00BE6825 /* TodoDetailViewController.swift in Sources */,
