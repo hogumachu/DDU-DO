@@ -77,13 +77,13 @@ final class TodoDetailView: UIView {
         
         self.removeView.do {
             $0.configure(.init(imageName: "trash.circle.fill", title: "삭제하기"))
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(editViewDidTap))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeViewDidTap))
             $0.addGestureRecognizer(tapGesture)
         }
         
         self.quickChangeView.do {
             $0.configure(.init(imageName: "calendar.circle.fill", title: "날짜 변경하기"))
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(editViewDidTap))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(quickChangeViewDidTap))
             $0.addGestureRecognizer(tapGesture)
         }
     }

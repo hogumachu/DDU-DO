@@ -10,7 +10,16 @@ import SnapKit
 import Then
 import RxSwift
 
+protocol TodoDetailViewControllerDelegate: AnyObject {
+    
+    func todoDetailViewControllerDidFinish(_ viewController: TodoDetailViewController, message: String)
+    func todoDetailViewControllerDidFail(_ viewController: TodoDetailViewController, message: String)
+    
+}
+
 final class TodoDetailViewController: UIViewController {
+    
+    weak var delegate: TodoDetailViewControllerDelegate?
     
     init(viewModel: TodoDetailViewModel) {
         self.viewModel = viewModel
@@ -48,7 +57,15 @@ final class TodoDetailViewController: UIViewController {
     
     private func handle(_ event: TodoDetailViewModelEvent) {
         switch event {
-            // TODO: - DO SOMETHING
+        case .didFinish(let message):
+            self.dismissWithAnimation {
+                self.delegate?.todoDetailViewControllerDidFinish(self, message: message)
+            }
+            
+        case .didFail(let message):
+            self.dismissWithAnimation {
+                self.delegate?.todoDetailViewControllerDidFail(self, message: message)
+            }
         }
     }
     
@@ -92,11 +109,9 @@ final class TodoDetailViewController: UIViewController {
         }
     }
     
-    
     @objc private func backgroundViewDidTap(_ sender: UIView) {
         self.dismissWithAnimation()
     }
-    
     
     private var detailViewTopConstraint: Constraint?
     private var detailViewBottomConstraint: Constraint?
@@ -115,15 +130,15 @@ extension TodoDetailViewController: TodoDetailViewDelegate {
     }
     
     func todoDetailViewDidTapEdit(_ view: TodoDetailView) {
-        print("# - TODO EDIT")
+        self.viewModel.didTapEdit()
     }
     
     func todoDetailViewDidTapRemove(_ view: TodoDetailView) {
-        print("# - TODO REMOVE")
+        self.viewModel.didTapRemove()
     }
     
     func todoDetailViewDidTapQuickChange(_ view: TodoDetailView) {
-        print("# - TODO QUICK CHANGE")
+        self.viewModel.didTapQuickChange()
     }
     
 }
