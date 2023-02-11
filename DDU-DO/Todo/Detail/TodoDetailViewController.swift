@@ -26,6 +26,7 @@ final class TodoDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.setupLayout()
         self.setupAttributes()
+        self.setupKeyboardNotification()
         self.bind(viewModel)
     }
     
@@ -57,6 +58,9 @@ final class TodoDetailViewController: UIViewController {
     
     private func handle(_ event: TodoDetailViewModelEvent) {
         switch event {
+        case .updateEditButtonState(let isEnabled):
+            self.detailView.updateEditButtonState(isEnabled: isEnabled)
+            
         case .didFinish(let message):
             self.dismissWithAnimation {
                 self.delegate?.todoDetailViewControllerDidFinish(self, message: message)
@@ -109,6 +113,38 @@ final class TodoDetailViewController: UIViewController {
         }
     }
     
+    private func setupKeyboardNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        
+        self.detailViewBottomConstraint?.update(offset: -keyboardSize.height)
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.view.layoutIfNeeded()
+        }
+    }
+
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        self.detailViewBottomConstraint?.update(offset: 0)
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.view.layoutIfNeeded()
+        }
+    }
+    
     @objc private func backgroundViewDidTap(_ sender: UIView) {
         self.dismissWithAnimation()
     }
@@ -129,8 +165,12 @@ extension TodoDetailViewController: TodoDetailViewDelegate {
         self.viewModel.todo
     }
     
-    func todoDetailViewDidTapEdit(_ view: TodoDetailView) {
-        self.viewModel.didTapEdit()
+    func todoDetailViewDidUpdateText(_ view: TodoDetailView, text: String) {
+        self.viewModel.updateText(text: text)
+    }
+    
+    func todoDetailViewDidTapEdit(_ view: TodoDetailView, text: String?) {
+        self.viewModel.didTapEdit(text: text)
     }
     
     func todoDetailViewDidTapRemove(_ view: TodoDetailView) {
