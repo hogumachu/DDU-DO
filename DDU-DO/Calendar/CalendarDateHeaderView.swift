@@ -36,7 +36,7 @@ final class CalendarDateHeaderView: JTACMonthReusableView {
         self.addSubview(self.monthLabel)
         self.monthLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(5)
-            make.leading.trailing.equalToSuperview()
+            make.leading.equalToSuperview().inset(20)
             make.bottom.equalTo(self.weekStackView.snp.top).offset(-5)
         }
     }
@@ -60,8 +60,8 @@ final class CalendarDateHeaderView: JTACMonthReusableView {
         }
         
         self.monthLabel.do {
-            $0.font = .systemFont(ofSize: 15, weight: .bold)
-            $0.textAlignment = .center
+            $0.textColor = .black
+            $0.font = .systemFont(ofSize: 21, weight: .bold)
         }
     }
     
