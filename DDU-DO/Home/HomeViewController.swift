@@ -77,7 +77,8 @@ extension HomeViewController: HomeViewDataSource {
         switch item {
         case .title(let title):
             guard let cell = tableView.dequeueReusableCell(cell: TextOnlyTableViewCell.self, for: indexPath) else { return UITableViewCell() }
-            cell.configure(.init(text: title))
+            let model = TextOnlyTableViewCellModel(text: title, font: .systemFont(ofSize: 22, weight: .bold))
+            cell.configure(model, inset: UIEdgeInsets(top: 0, left: 20, bottom: 10, right: 20))
             return cell
             
         case .schedule(let model):

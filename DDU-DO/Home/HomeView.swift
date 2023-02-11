@@ -46,6 +46,8 @@ final class HomeView: UIView {
     private func setupAttributes() {
         self.tableView.do {
             $0.backgroundColor = .white
+            $0.separatorStyle = .none
+            $0.showsVerticalScrollIndicator = false
             $0.registerCell(cell: TextOnlyTableViewCell.self)
             $0.registerCell(cell: HomeScheduleTableViewCell.self)
         }
