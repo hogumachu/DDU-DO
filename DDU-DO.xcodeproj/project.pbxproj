@@ -11,6 +11,7 @@
 		F13798A92994D8F50053DE9C /* TodoDetailContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798A82994D8F50053DE9C /* TodoDetailContentView.swift */; };
 		F13798AB299683BE0053DE9C /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798AA299683BE0053DE9C /* NotificationName.swift */; };
 		F13798AD29974E8B0053DE9C /* CalendarListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798AC29974E8B0053DE9C /* CalendarListEmptyView.swift */; };
+		F13798AF299774760053DE9C /* CalendarDateBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798AE299774760053DE9C /* CalendarDateBadgeView.swift */; };
 		F15FFBF6297BCE6100EF2E69 /* CalendarDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */; };
 		F15FFBF9297BD99600EF2E69 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBF8297BD99600EF2E69 /* UICollectionView+.swift */; };
 		F15FFBFB297BD9A500EF2E69 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBFA297BD9A500EF2E69 /* UITableView+.swift */; };
@@ -61,6 +62,7 @@
 		F13798A82994D8F50053DE9C /* TodoDetailContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailContentView.swift; sourceTree = "<group>"; };
 		F13798AA299683BE0053DE9C /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		F13798AC29974E8B0053DE9C /* CalendarListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarListEmptyView.swift; sourceTree = "<group>"; };
+		F13798AE299774760053DE9C /* CalendarDateBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateBadgeView.swift; sourceTree = "<group>"; };
 		F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateCell.swift; sourceTree = "<group>"; };
 		F15FFBF8297BD99600EF2E69 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		F15FFBFA297BD9A500EF2E69 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
@@ -298,12 +300,13 @@
 		F1F12F92297BCAF400D8CE21 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				F1BD6B902987BA1E00BE6825 /* CalendarCalculator.swift */,
 				F1F12F93297BCB0E00D8CE21 /* CalendarViewController.swift */,
 				F1F12F97297BCB1C00D8CE21 /* CalendarViewModel.swift */,
 				F1F12F95297BCB1500D8CE21 /* CalendarView.swift */,
 				F15FFBFE297BEC3F00EF2E69 /* CalendarDateHeaderView.swift */,
 				F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */,
-				F1BD6B902987BA1E00BE6825 /* CalendarCalculator.swift */,
+				F13798AE299774760053DE9C /* CalendarDateBadgeView.swift */,
 				F15FFC3329800B0B00EF2E69 /* List */,
 			);
 			path = Calendar;
@@ -426,6 +429,7 @@
 				F1F12F98297BCB1C00D8CE21 /* CalendarViewModel.swift in Sources */,
 				F15FFC18297D516D00EF2E69 /* HomeViewModel.swift in Sources */,
 				F15FFC29297D638100EF2E69 /* UIViewController+.swift in Sources */,
+				F13798AF299774760053DE9C /* CalendarDateBadgeView.swift in Sources */,
 				F15FFC38298529F200EF2E69 /* RecordViewController.swift in Sources */,
 				F1F12F96297BCB1500D8CE21 /* CalendarView.swift in Sources */,
 				F15FFBF9297BD99600EF2E69 /* UICollectionView+.swift in Sources */,

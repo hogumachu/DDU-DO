@@ -10,6 +10,13 @@ import SnapKit
 import Then
 import JTAppleCalendar
 
+struct CalendarDateCellModel {
+    
+    let state: CellState
+    let numberOfItems: Int
+    
+}
+
 final class CalendarDateCell: JTACDayCell {
     
     override init(frame: CGRect) {
@@ -26,12 +33,13 @@ final class CalendarDateCell: JTACDayCell {
         super.prepareForReuse()
         self.dateLabel.textColor = .black
         self.circleView.backgroundColor = .white
+        self.badgeView.configure(count: 0)
     }
     
-    func configure(_ state: CellState) {
-        self.dateLabel.text = state.text
-        self.circleView.backgroundColor = state.isSelected ? .systemPink : .white
-        switch state.day {
+    func configure(_ model: CalendarDateCellModel) {
+        self.dateLabel.text = model.state.text
+        self.circleView.backgroundColor = model.state.isSelected ? .systemPink : .white
+        switch model.state.day {
         case .sunday:
             self.dateLabel.textColor = .red
         case .saturday:
@@ -40,8 +48,11 @@ final class CalendarDateCell: JTACDayCell {
             self.dateLabel.textColor = .black
         }
         
-        if state.dateBelongsTo != .thisMonth {
+        if model.state.dateBelongsTo != .thisMonth {
             self.dateLabel.textColor = .gray
+            self.badgeView.configure(count: 0)
+        } else {
+            self.badgeView.configure(count: model.numberOfItems)
         }
     }
     
@@ -60,6 +71,11 @@ final class CalendarDateCell: JTACDayCell {
         self.containerView.addSubview(self.dateLabel)
         self.dateLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
+        }
+        
+        self.containerView.addSubview(self.badgeView)
+        self.badgeView.snp.makeConstraints { make in
+            make.top.trailing.equalToSuperview()
         }
     }
     
@@ -81,5 +97,6 @@ final class CalendarDateCell: JTACDayCell {
     private let containerView = UIView(frame: .zero)
     private let circleView = UIView(frame: .zero)
     private let dateLabel = UILabel(frame: .zero)
+    private let badgeView = CalendarDateBadgeView(frame: .zero)
     
 }
