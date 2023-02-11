@@ -11,6 +11,7 @@ import Then
 
 protocol RecordViewDelegate: AnyObject {
     
+    var dateString: String? { get }
     func recordView(_ view: RecordView, didUpdateText text: String)
     func recordViewDidTapRecordButton(_ view: RecordView, text: String)
     func recordViewDidReturn(_ view: RecordView, text: String)
@@ -19,7 +20,11 @@ protocol RecordViewDelegate: AnyObject {
 
 final class RecordView: UIView {
     
-    weak var delegate: RecordViewDelegate?
+    weak var delegate: RecordViewDelegate? {
+        didSet {
+            self.dateLabel.text = self.delegate?.dateString
+        }
+    }
     
     @discardableResult
     override func becomeFirstResponder() -> Bool {
@@ -55,14 +60,25 @@ final class RecordView: UIView {
         
         self.containerView.addSubview(self.recordInputView)
         self.recordInputView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(self.recordButton.snp.top)
             make.height.equalTo(80)
+        }
+        
+        self.containerView.addSubview(self.dateLabel)
+        self.dateLabel.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview().inset(20)
+            make.bottom.equalTo(self.recordInputView.snp.top)
         }
     }
     
     private func setupAttributes() {
         self.containerView.backgroundColor = .white
+        
+        self.dateLabel.do {
+            $0.textColor = .black
+        }
+        
         self.recordInputView.do {
             $0.delegate = self
         }
@@ -78,6 +94,7 @@ final class RecordView: UIView {
         self.delegate?.recordViewDidTapRecordButton(self, text: self.recordInputView.text ?? "")
     }
     
+    private let dateLabel = UILabel(frame: .zero)
     private let containerView = UIView(frame: .zero)
     private let recordInputView = TextInputView(frame: .zero)
     private let recordButton = UIButton(frame: .zero)

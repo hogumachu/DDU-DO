@@ -23,6 +23,10 @@ final class RecordViewModel {
         self.targetDate = targetDate
     }
     
+    var dateString: String? {
+        self.formatter.string(from: self.targetDate)
+    }
+    
     var viewModelEvent: Observable<RecordViewModelEvent> {
         self.viewModelEventRelay.asObservable()
     }
@@ -44,6 +48,10 @@ final class RecordViewModel {
     
     private let targetDate: Date
     private let todoRepository: TodoRepository<TodoEntity>
+    private let formatter = DateFormatter().then {
+        $0.dateFormat = "yyyy년 MM월 dd일"
+        $0.locale = Locale(identifier: "ko_kr")
+    }
     private let viewModelEventRelay = PublishRelay<RecordViewModelEvent>()
     
 }

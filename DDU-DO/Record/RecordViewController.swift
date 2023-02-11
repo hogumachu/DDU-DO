@@ -162,6 +162,10 @@ final class RecordViewController: UIViewController {
 
 extension RecordViewController: RecordViewDelegate {
     
+    var dateString: String? {
+        self.viewModel.dateString
+    }
+    
     func recordView(_ view: RecordView, didUpdateText text: String) {
         
     }
