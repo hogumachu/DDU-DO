@@ -29,7 +29,7 @@ final class CalendarViewController: UIViewController {
         super.viewDidLoad()
         let date = Date()
         self.calendarView.scrollToDate(date)
-        self.calendarView.selectDates([date])
+        self.calendarView.selectDate(date)
     }
     
     private func bind(_ viewModel: CalendarViewModel) {
@@ -47,6 +47,12 @@ final class CalendarViewController: UIViewController {
             
         case .reloadDataWithDate(let date):
             self.calendarView.reloadData(date: date)
+            
+        case .scrollToDate(let date, let animated):
+            self.calendarView.scrollToDate(date, animated: animated)
+            
+        case .selectDates(let date):
+            self.calendarView.selectDate(date)
             
         case let .showRecordView(repository, targetDate):
             self.showRecordView(repository: repository, targetDate: targetDate)
@@ -81,6 +87,12 @@ final class CalendarViewController: UIViewController {
             make.size.equalTo(CGSize(width: 40, height: 40))
             make.trailing.bottom.equalToSuperview().inset(30)
         }
+        
+        self.view.addSubview(self.todayButton)
+        self.todayButton.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 40, height: 40))
+            make.leading.bottom.equalToSuperview().inset(30)
+        }
     }
     
     private func setupAttributes() {
@@ -105,10 +117,20 @@ final class CalendarViewController: UIViewController {
             $0.backgroundColor = .systemOrange
             $0.addTarget(self, action: #selector(createButtonDidTap(_:)), for: .touchUpInside)
         }
+        
+        self.todayButton.do {
+            $0.layer.cornerRadius = 40 / 2
+            $0.backgroundColor = .systemPink
+            $0.addTarget(self, action: #selector(todayButtonDidTap(_:)), for: .touchUpInside)
+        }
     }
     
     @objc private func createButtonDidTap(_ sender: UIButton) {
         self.viewModel.createButtonDidTap()
+    }
+    
+    @objc private func todayButtonDidTap(_ sender: UIButton) {
+        self.viewModel.todayButtonDidTap()
     }
     
     private func showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date) {
@@ -129,6 +151,7 @@ final class CalendarViewController: UIViewController {
     private let calendarView = CalendarView(frame: .zero)
     private let calendarListView = CalendarListView(frame: .zero)
     private let createButton = UIButton(frame: .zero)
+    private let todayButton = UIButton(frame: .zero)
     private let viewModel: CalendarViewModel
     private let disposeBag = DisposeBag()
     
