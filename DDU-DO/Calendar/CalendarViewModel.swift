@@ -17,6 +17,7 @@ enum CalendarViewModelEvent {
     case selectDates(date: Date)
     case showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date)
     case showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity)
+    case updateEmptyView(isHidden: Bool)
     
 }
 
@@ -132,7 +133,11 @@ final class CalendarViewModel {
         let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", targetDate! as NSDate, nextDate! as NSDate)
         let items = self.todoRepository.getAll(where: predicate)
             .map { Item.content(CalendarListTableViewCellModel(text: $0.todo), createdAt: $0.createAt) }
-        self.sections = [.content(items)]
+        if items.isEmpty {
+            self.sections = []
+        } else {
+            self.sections = [.content(items)]
+        }
     }
     
     private func observeTodoRepositoryUpdatedEvent() {
@@ -146,7 +151,13 @@ final class CalendarViewModel {
     private(set) lazy var endDate = self.calculator.date(byAddingMonthValue: 6, to: Date())!
     private var currentDate: Date = Date()
     
-    private var sections: [Section] = []
+    private var sections: [Section] = [] {
+        didSet {
+            let isHidden = !self.sections.isEmpty
+            self.viewModelEventRelay.accept(.updateEmptyView(isHidden: isHidden))
+        }
+    }
+    
     private let todoRepository: TodoRepository<TodoEntity>
     private let calculator = CalendarCalculator()
     private let viewModelEventRelay = PublishRelay<CalendarViewModelEvent>()

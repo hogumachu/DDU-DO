@@ -59,6 +59,13 @@ final class CalendarViewController: UIViewController {
             
         case let .showDetailView(repository, entity):
             self.showDetailView(repository: repository, entity: entity)
+            
+        case .updateEmptyView(let isHidden):
+            if isHidden {
+                self.calendarListView.hideEmptyView()
+            } else {
+                self.calendarListView.showEmptyView()
+            }
         }
     }
     
