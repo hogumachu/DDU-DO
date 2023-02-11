@@ -81,7 +81,7 @@ final class CalendarViewController: UIViewController {
         self.calendarView.snp.makeConstraints { make in
             make.top.equalTo(self.statusView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(35 * 7)
+            make.height.equalTo(40 * 7)
         }
         
         self.view.addSubview(self.calendarListView)
