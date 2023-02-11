@@ -12,11 +12,13 @@ import Then
 struct TextOnlyTableViewCellModel {
     let text: String
     let textColor: UIColor?
+    let backgroundColor: UIColor?
     let font: UIFont?
     
-    init(text: String, textColor: UIColor? = .black, font: UIFont? = .systemFont(ofSize: 12)) {
+    init(text: String, textColor: UIColor? = .black, backgroundColor: UIColor? = .white, font: UIFont? = .systemFont(ofSize: 12)) {
         self.text = text
         self.textColor = textColor
+        self.backgroundColor = backgroundColor
         self.font = font
     }
 }
@@ -40,12 +42,16 @@ final class TextOnlyTableViewCell: UITableViewCell {
             $0.font = model.font
         }
         
+        self.backgroundColor = model.backgroundColor
+        
         self.titleLabel.snp.remakeConstraints { make in
             make.edges.equalToSuperview().inset(inset)
         }
     }
     
     private func setupLabel() {
+        self.selectionStyle = .none
+        
         self.contentView.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview()
