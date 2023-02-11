@@ -33,6 +33,10 @@ final class CalendarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func reloadData() {
+        self.monthView.reloadData()
+    }
+    
     func reloadData(date: Date) {
         UIView.performWithoutAnimation {
             self.monthView.reloadData(withAnchor: date, completionHandler: nil)

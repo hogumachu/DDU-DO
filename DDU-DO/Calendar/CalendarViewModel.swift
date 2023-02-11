@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxRelay
+import JTAppleCalendar
 
 enum CalendarViewModelEvent {
     
@@ -99,6 +100,13 @@ final class CalendarViewModel {
         if self.calculator.isEqualYearAndMonth(date, self.endDate) {
            self.loadMoreEndDateDateIfEnabled(date: date)
        }
+    }
+    
+    func calendarItem(state: CellState) -> CalendarDateCellModel {
+        let nextDate = self.calculator.date(byAddingDayValue: 1, to: state.date)
+        let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", state.date as NSDate, nextDate! as NSDate)
+        let items = self.todoRepository.getAll(where: predicate)
+        return CalendarDateCellModel(state: state, numberOfItems: items.count)
     }
     
     private func loadMoreStartDateDataIfEnabled(date: Date) {

@@ -43,6 +43,7 @@ final class CalendarViewController: UIViewController {
     private func handle(_ event: CalendarViewModelEvent) {
         switch event {
         case .reloadData:
+            self.calendarView.reloadData()
             self.calendarListView.reloadData()
             
         case .reloadDataWithDate(let date):
@@ -170,24 +171,28 @@ extension CalendarViewController: CalendarViewDelegate {
         guard let cell = calendar.dequeueReusableCell(cell: CalendarDateCell.self, for: indexPath) else {
             return JTACDayCell()
         }
-        cell.configure(cellState)
+        let item = self.viewModel.calendarItem(state: cellState)
+        cell.configure(item)
         return cell
     }
     
     func calendar(_ calendar: JTACMonthView, willDisplay cell: JTACDayCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
         guard let cell = cell as? CalendarDateCell else { return }
-        cell.configure(cellState)
+        let item = self.viewModel.calendarItem(state: cellState)
+        cell.configure(item)
     }
     
     func calendar(_ calendar: JTACMonthView, didSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
         guard let cell = cell as? CalendarDateCell else { return }
-        cell.configure(cellState)
+        let item = self.viewModel.calendarItem(state: cellState)
+        cell.configure(item)
         self.viewModel.didSelectDate(date: date)
     }
     
     func calendar(_ calendar: JTACMonthView, didDeselectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
         guard let cell = cell as? CalendarDateCell else { return }
-        cell.configure(cellState)
+        let item = self.viewModel.calendarItem(state: cellState)
+        cell.configure(item)
     }
     
     func calendar(_ calendar: JTACMonthView, shouldSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) -> Bool {
