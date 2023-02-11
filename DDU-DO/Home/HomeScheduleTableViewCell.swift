@@ -9,11 +9,24 @@ import UIKit
 import SnapKit
 import Then
 
+protocol HomeScheduleTableViewCellDelegate: AnyObject {
+    
+    func homeScheduleTableViewCellDidSelectComplete(_ cell: HomeScheduleTableViewCell, didSelectAt indexPath: IndexPath)
+    
+}
+
 struct HomeScheduleTableViewCellModel {
+    
     let text: String?
+    let isComplete: Bool
+    
 }
 
 final class HomeScheduleTableViewCell: UITableViewCell {
+    
+    var indexPath: IndexPath?
+    
+    weak var delegate: HomeScheduleTableViewCellDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,10 +40,13 @@ final class HomeScheduleTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         self.scheduleLabel.text = nil
+        self.indexPath = nil
     }
     
     func configure(_ model: HomeScheduleTableViewCellModel) {
         self.scheduleLabel.text = model.text
+        self.completeButton.setTitle(model.isComplete ? "취소하기" : "완료하기", for: .normal)
+        self.completeButton.backgroundColor = model.isComplete ? .systemGray : .systemPink
     }
     
     private func setupLayout() {
@@ -87,7 +103,13 @@ final class HomeScheduleTableViewCell: UITableViewCell {
             $0.setTitleColor(.white, for: .normal)
             $0.backgroundColor = .systemPink
             $0.layer.cornerRadius = 6
+            $0.addTarget(self, action: #selector(completeButtonDidTap(_:)), for: .touchUpInside)
         }
+    }
+    
+    @objc private func completeButtonDidTap(_ sender: UIButton) {
+        guard let indexPath = self.indexPath else { return }
+        self.delegate?.homeScheduleTableViewCellDidSelectComplete(self, didSelectAt: indexPath)
     }
     
     private let containerView = UIView(frame: .zero)
