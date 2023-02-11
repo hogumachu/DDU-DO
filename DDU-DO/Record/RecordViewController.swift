@@ -35,6 +35,12 @@ final class RecordViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.recordView.maskRoundedRect(cornerRadius: 20, corners: [.topLeft, .topRight])
+    }
+    
     func presentWithAnimation(from viewController: UIViewController) {
         self.modalPresentationStyle = .overFullScreen
         
@@ -164,6 +170,10 @@ extension RecordViewController: RecordViewDelegate {
     
     var dateString: String? {
         self.viewModel.dateString
+    }
+    
+    var weekday: Weekday? {
+        self.viewModel.weekday
     }
     
     func recordView(_ view: RecordView, didUpdateText text: String) {

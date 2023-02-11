@@ -46,12 +46,12 @@ final class TextInputView: UIView {
     private func setupLayout() {
         self.addSubview(self.textFieldContainerView)
         self.textFieldContainerView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(20)
+            make.edges.equalToSuperview()
         }
         
         self.textFieldContainerView.addSubview(self.textField)
         self.textField.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(3)
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 3, left: 10, bottom: 3, right: 10))
         }
     }
     
@@ -64,6 +64,8 @@ final class TextInputView: UIView {
         }
         
         self.textField.do {
+            $0.returnKeyType = .done
+            $0.textColor = .black
             $0.backgroundColor = .white
             $0.delegate = self
             $0.addTarget(self, action: #selector(textFieldDidChangeText(_:)), for: .editingChanged)

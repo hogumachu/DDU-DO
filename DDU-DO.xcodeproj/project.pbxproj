@@ -13,6 +13,8 @@
 		F13798AD29974E8B0053DE9C /* CalendarListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798AC29974E8B0053DE9C /* CalendarListEmptyView.swift */; };
 		F13798AF299774760053DE9C /* CalendarDateBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798AE299774760053DE9C /* CalendarDateBadgeView.swift */; };
 		F13798B129977D0A0053DE9C /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798B029977D0A0053DE9C /* Date+.swift */; };
+		F13798B5299795FB0053DE9C /* Date+Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798B4299795FB0053DE9C /* Date+Weekday.swift */; };
+		F13798B729979B290053DE9C /* NSMutableAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798B629979B290053DE9C /* NSMutableAttributedString+.swift */; };
 		F15FFBF6297BCE6100EF2E69 /* CalendarDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */; };
 		F15FFBF9297BD99600EF2E69 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBF8297BD99600EF2E69 /* UICollectionView+.swift */; };
 		F15FFBFB297BD9A500EF2E69 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBFA297BD9A500EF2E69 /* UITableView+.swift */; };
@@ -65,6 +67,8 @@
 		F13798AC29974E8B0053DE9C /* CalendarListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarListEmptyView.swift; sourceTree = "<group>"; };
 		F13798AE299774760053DE9C /* CalendarDateBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateBadgeView.swift; sourceTree = "<group>"; };
 		F13798B029977D0A0053DE9C /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		F13798B4299795FB0053DE9C /* Date+Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Weekday.swift"; sourceTree = "<group>"; };
+		F13798B629979B290053DE9C /* NSMutableAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+.swift"; sourceTree = "<group>"; };
 		F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateCell.swift; sourceTree = "<group>"; };
 		F15FFBF8297BD99600EF2E69 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		F15FFBFA297BD9A500EF2E69 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 				F1BD6BA12988E19900BE6825 /* UIScreen+.swift */,
 				F13798AA299683BE0053DE9C /* NotificationName.swift */,
 				F13798B029977D0A0053DE9C /* Date+.swift */,
+				F13798B4299795FB0053DE9C /* Date+Weekday.swift */,
+				F13798B629979B290053DE9C /* NSMutableAttributedString+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -460,10 +466,12 @@
 				F13798AD29974E8B0053DE9C /* CalendarListEmptyView.swift in Sources */,
 				F1BD6B912987BA1E00BE6825 /* CalendarCalculator.swift in Sources */,
 				F15FFBFF297BEC3F00EF2E69 /* CalendarDateHeaderView.swift in Sources */,
+				F13798B5299795FB0053DE9C /* Date+Weekday.swift in Sources */,
 				F1BD6B9D2988D60300BE6825 /* Toast.swift in Sources */,
 				F13798AB299683BE0053DE9C /* NotificationName.swift in Sources */,
 				F1BD6B9B2987C49A00BE6825 /* TodoDetailView.swift in Sources */,
 				F15FFC0C297D4A2C00EF2E69 /* TodoObject.swift in Sources */,
+				F13798B729979B290053DE9C /* NSMutableAttributedString+.swift in Sources */,
 				F1BD6B972987C48F00BE6825 /* TodoDetailViewController.swift in Sources */,
 				F1F12F2D2964250D00D8CE21 /* SceneDelegate.swift in Sources */,
 				F15FFC1E297D550C00EF2E69 /* TextOnlyTableViewCell.swift in Sources */,

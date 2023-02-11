@@ -60,6 +60,7 @@ final class CalendarView: UIView {
     
     private func setupAttributes() {
         self.monthView.do {
+            $0.backgroundColor = .white
             $0.registerCell(cell: CalendarDateCell.self)
             $0.registerReusableView(view: CalendarDateHeaderView.self)
             $0.scrollDirection = .horizontal

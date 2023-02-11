@@ -14,6 +14,20 @@ extension UIView {
         self.safeAreaLayoutGuide.snp
     }
     
+    func maskRoundedRect(cornerRadius: CGFloat, corners: UIRectCorner) {
+        let roundedRect = self.bounds
+        let cornerRadii = CGSize(width: cornerRadius, height: cornerRadius)
+        let path = UIBezierPath(
+            roundedRect: roundedRect,
+            byRoundingCorners: corners,
+            cornerRadii: cornerRadii
+        )
+        
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
+    }
+    
     func applyShadow(color: UIColor, opacity: Float, offset: CGSize, blur: CGFloat, spread: CGFloat = 0, cornerRadius: CGFloat = 0) {
         self.layer.shadowColor = color.cgColor
         self.layer.shadowOpacity = opacity

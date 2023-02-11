@@ -14,4 +14,9 @@ extension Date {
         return calendar.isDateInToday(self)
     }
     
+    var dayOfWeek: Int? {
+        let calendar = Calendar.current
+        return calendar.dateComponents([.weekday], from: self).weekday
+    }
+    
 }
