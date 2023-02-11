@@ -27,7 +27,7 @@ final class HomeViewModel {
     
     enum Item {
         case title(String)
-        case schedule(HomeScheduleTableViewCellModel)
+        case schedule(HomeScheduleTableViewCellModel, createdAt: Date)
     }
     
     init(todoRepository: TodoRepository<TodoEntity>) {
@@ -56,6 +56,33 @@ final class HomeViewModel {
         // TODO: - Do Something
     }
     
+    func didSelectComplete(at indexPath: IndexPath) {
+        guard let section = self.sections[safe: indexPath.section],
+              let item = section.items[safe: indexPath.row]
+        else {
+            return
+        }
+        
+        switch item {
+        case .schedule(let model, let createdAt):
+            let predicate = NSPredicate(format: "createdAt == %@", createdAt as NSDate)
+            guard let entity = self.todoRepository.getAll(where: predicate).first else {
+                // TODO: - Handle Error
+                return
+            }
+            let newEntity = TodoEntity(todo: entity.todo, isComplete: !model.isComplete, createAt: entity.createAt, targetDate: entity.targetDate)
+            do {
+                try self.todoRepository.update(item: newEntity)
+                self.refresh()
+            } catch {
+                // TODO: Handle Error
+            }
+            
+        default:
+            return
+        }
+    }
+    
     func refresh() {
         self.sections = self.makeSections()
         self.viewModelEventRelay.accept(.reloadData)
@@ -79,7 +106,8 @@ final class HomeViewModel {
         let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", targetDate! as NSDate, tomorrow! as NSDate)
         let items = self.todoRepository
             .getAll(where: predicate)
-            .map { Item.schedule(.init(text: $0.todo)) }
+            .sorted(by: { $0.createAt > $1.createAt })
+            .map { Item.schedule(.init(text: $0.todo, isComplete: $0.isComplete), createdAt: $0.createAt) }
         return .schedule([.title("오늘 할일")] + items)
     }
     
@@ -95,7 +123,8 @@ final class HomeViewModel {
         let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", tomorrow! as NSDate, dayAfterTomorrow! as NSDate)
         let items = self.todoRepository
             .getAll(where: predicate)
-            .map { Item.schedule(.init(text: $0.todo)) }
+            .sorted(by: { $0.createAt > $1.createAt })
+            .map { Item.schedule(.init(text: $0.todo, isComplete: $0.isComplete), createdAt: $0.createAt) }
         return .schedule([.title("내일 할일")] + items)
     }
     

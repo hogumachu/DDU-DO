@@ -81,11 +81,21 @@ extension HomeViewController: HomeViewDataSource {
             cell.configure(model, inset: UIEdgeInsets(top: 0, left: 20, bottom: 10, right: 20))
             return cell
             
-        case .schedule(let model):
+        case .schedule(let model, _):
             guard let cell = tableView.dequeueReusableCell(cell: HomeScheduleTableViewCell.self, for: indexPath) else { return UITableViewCell() }
             cell.configure(model)
+            cell.delegate = self
+            cell.indexPath = indexPath
             return cell
         }
+    }
+    
+}
+
+extension HomeViewController: HomeScheduleTableViewCellDelegate {
+    
+    func homeScheduleTableViewCellDidSelectComplete(_ cell: HomeScheduleTableViewCell, didSelectAt indexPath: IndexPath) {
+        self.viewModel.didSelectComplete(at: indexPath)
     }
     
 }
