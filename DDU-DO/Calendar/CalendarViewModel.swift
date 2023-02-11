@@ -13,6 +13,8 @@ enum CalendarViewModelEvent {
     
     case reloadData
     case reloadDataWithDate(date: Date)
+    case scrollToDate(date: Date, animated: Bool)
+    case selectDates(date: Date)
     case showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date)
     case showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity)
     
@@ -55,6 +57,12 @@ final class CalendarViewModel {
     
     func createButtonDidTap() {
         self.viewModelEventRelay.accept(.showRecordView(repository: self.todoRepository, targetDate: self.currentDate))
+    }
+    
+    func todayButtonDidTap() {
+        self.currentDate = Date()
+        self.viewModelEventRelay.accept(.scrollToDate(date: self.currentDate, animated: true))
+        self.viewModelEventRelay.accept(.selectDates(date: self.currentDate))
     }
     
     func numberOfRowsInSection(_ section: Int) -> Int {

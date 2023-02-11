@@ -43,8 +43,8 @@ final class CalendarView: UIView {
         self.monthView.scrollToDate(date, animateScroll: animated)
     }
     
-    func selectDates(_ dates: [Date]) {
-        self.monthView.selectDates(dates)
+    func selectDate(_ date: Date) {
+        self.monthView.selectDates([date])
     }
     
     private func setupLayout() {
