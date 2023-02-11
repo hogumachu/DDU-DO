@@ -63,23 +63,40 @@ final class HomeViewModel {
     
     private func makeSections() -> [Section] {
         var sections: [Section] = []
-        sections.append(self.makeScheduleSection())
+        sections.append(self.makeTodayScheduleSection())
+        sections.append(self.makeTomorrowScheduleSection())
         return sections
     }
     
-    private func makeScheduleSection() -> Section {
+    private func makeTodayScheduleSection() -> Section {
         let today = Date()
         let targetDate = calculator.date(
             year: calculator.year(from: today),
             month: calculator.month(from: today),
             day: calculator.day(from: today)
         )
-        let nextDate = calculator.date(byAddingDayValue: 1, to: targetDate!)
-        let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", targetDate! as NSDate, nextDate! as NSDate)
+        let tomorrow = calculator.date(byAddingDayValue: 1, to: targetDate!)
+        let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", targetDate! as NSDate, tomorrow! as NSDate)
         let items = self.todoRepository
             .getAll(where: predicate)
             .map { Item.schedule(.init(text: $0.todo)) }
         return .schedule([.title("오늘 할일")] + items)
+    }
+    
+    private func makeTomorrowScheduleSection() -> Section {
+        let today = Date()
+        let targetDate = calculator.date(
+            year: calculator.year(from: today),
+            month: calculator.month(from: today),
+            day: calculator.day(from: today)
+        )
+        let tomorrow = calculator.date(byAddingDayValue: 1, to: targetDate!)
+        let dayAfterTomorrow = calculator.date(byAddingDayValue: 2, to: targetDate!)
+        let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", tomorrow! as NSDate, dayAfterTomorrow! as NSDate)
+        let items = self.todoRepository
+            .getAll(where: predicate)
+            .map { Item.schedule(.init(text: $0.todo)) }
+        return .schedule([.title("내일 할일")] + items)
     }
     
     private func observeTodoRepositoryUpdatedEvent() {
