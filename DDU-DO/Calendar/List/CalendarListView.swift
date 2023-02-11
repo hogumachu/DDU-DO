@@ -58,6 +58,7 @@ final class CalendarListView: UIView {
     
     private func setupAttributes() {
         self.tableView.do {
+            $0.separatorStyle = .none
             $0.backgroundColor = .white
             $0.registerCell(cell: CalendarListTableViewCell.self)
             $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)

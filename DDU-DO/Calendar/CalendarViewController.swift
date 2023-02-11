@@ -260,8 +260,18 @@ extension CalendarViewController: CalendarListViewDataSource {
         case .content(let model, _):
             guard let cell = tableView.dequeueReusableCell(cell: CalendarListTableViewCell.self, for: indexPath) else { return UITableViewCell() }
             cell.configure(model)
+            cell.delegate = self
+            cell.indexPath = indexPath
             return cell
         }
+    }
+    
+}
+
+extension CalendarViewController: CalendarListTableViewCellDelegate {
+    
+    func calendarListTableViewCellDidSelectComplete(_ cell: CalendarListTableViewCell, didSelectAt indexPath: IndexPath) {
+        self.viewModel.didSelectComplete(at: indexPath)
     }
     
 }

@@ -91,6 +91,30 @@ final class CalendarViewModel {
         self.viewModelEventRelay.accept(.reloadData)
     }
     
+    func didSelectComplete(at indexPath: IndexPath) {
+        guard let section = self.sections[safe: indexPath.section],
+              let item = section.items[safe: indexPath.row]
+        else {
+            return
+        }
+        switch item {
+        case .content(let model, let createdAt):
+            let predicate = NSPredicate(format: "createdAt == %@", createdAt as NSDate)
+            guard let entity = self.todoRepository.getAll(where: predicate).first else {
+                // TODO: - Handle Error
+                return
+            }
+            let newEntity = TodoEntity(todo: entity.todo, isComplete: !model.isComplete, createAt: entity.createAt, targetDate: entity.targetDate)
+            do {
+                try self.todoRepository.update(item: newEntity)
+                self.fetchTodoList(date: entity.targetDate)
+            } catch {
+                // TODO: Handle Error
+            }
+        }
+        
+    }
+    
     func willDisplay(date: Date) {
         guard self.isLoading == false else { return }
         if self.calculator.isEqualYearAndMonth(date, self.startDate) {
@@ -140,7 +164,8 @@ final class CalendarViewModel {
         let nextDate = self.calculator.date(byAddingDayValue: 1, to: targetDate!)
         let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", targetDate! as NSDate, nextDate! as NSDate)
         let items = self.todoRepository.getAll(where: predicate)
-            .map { Item.content(CalendarListTableViewCellModel(text: $0.todo), createdAt: $0.createAt) }
+            .sorted(by: { $0.createAt > $1.createAt })
+            .map { Item.content(CalendarListTableViewCellModel(text: $0.todo, isComplete: $0.isComplete), createdAt: $0.createAt) }
         if items.isEmpty {
             self.sections = []
         } else {
