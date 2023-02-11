@@ -36,9 +36,22 @@ final class CalendarListView: UIView {
         self.tableView.reloadData()
     }
     
+    func showEmptyView() {
+        self.emptyView.isHidden = false
+    }
+    
+    func hideEmptyView() {
+        self.emptyView.isHidden = true
+    }
+    
     private func setupLayout() {
         self.addSubview(self.tableView)
         self.tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        self.addSubview(self.emptyView)
+        self.emptyView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
@@ -47,8 +60,13 @@ final class CalendarListView: UIView {
         self.tableView.do {
             $0.registerCell(cell: CalendarListTableViewCell.self)
         }
+        
+        self.emptyView.do {
+            $0.isHidden = true
+        }
     }
     
     private let tableView = UITableView(frame: .zero)
+    private let emptyView = CalendarListEmptyView(frame: .zero)
     
 }
