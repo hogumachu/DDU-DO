@@ -23,6 +23,14 @@ final class HomeViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.navigationView.updateBlurFrame()
+        self.navigationView.snp.updateConstraints { make in
+            make.height.equalTo(40 + UIScreen.topSafeAreaInset)
+        }
+    }
+    
     private func bind(_ viewModel: HomeViewModel) {
         viewModel
             .viewModelEvent
@@ -43,10 +51,17 @@ final class HomeViewController: UIViewController {
         self.homeView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        self.view.addSubview(self.navigationView)
+        self.navigationView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(40)
+        }
         self.homeView.delegate = self
         self.homeView.dataSource = self
     }
     
+    private let navigationView = HomeNavigationView(frame: .zero)
     private let homeView = HomeView(frame: .zero)
     private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
