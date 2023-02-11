@@ -79,18 +79,18 @@ final class RecordView: UIView {
     }
     
     private let containerView = UIView(frame: .zero)
-    private let recordInputView = RecordInputView(frame: .zero)
+    private let recordInputView = TextInputView(frame: .zero)
     private let recordButton = UIButton(frame: .zero)
     
 }
 
-extension RecordView: RecordInputViewDelegate {
+extension RecordView: TextInputViewDelegate {
     
-    func recordInputView(_ view: RecordInputView, didUpdateText text: String) {
+    func textInputView(_ view: TextInputView, didUpdateText text: String) {
         self.delegate?.recordView(self, didUpdateText: text)
     }
     
-    func recordInputViewDidReturn(_ view: RecordInputView) {
+    func textInputViewDidReturn(_ view: TextInputView) {
         self.delegate?.recordViewDidReturn(self, text: self.recordInputView.text ?? "")
     }
     
