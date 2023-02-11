@@ -1,5 +1,5 @@
 //
-//  RecordInputView.swift
+//  TextInputView.swift
 //  DDU-DO
 //
 //  Created by 홍성준 on 2023/01/28.
@@ -9,19 +9,20 @@ import UIKit
 import SnapKit
 import Then
 
-protocol RecordInputViewDelegate: AnyObject {
+protocol TextInputViewDelegate: AnyObject {
     
-    func recordInputView(_ view: RecordInputView, didUpdateText text: String)
-    func recordInputViewDidReturn(_ view: RecordInputView)
+    func textInputView(_ view: TextInputView, didUpdateText text: String)
+    func textInputViewDidReturn(_ view: TextInputView)
     
 }
 
-final class RecordInputView: UIView {
+final class TextInputView: UIView {
     
-    weak var delegate: RecordInputViewDelegate?
+    weak var delegate: TextInputViewDelegate?
     
     var text: String? {
-        self.textField.text
+        get { self.textField.text }
+        set { self.textField.text = newValue }
     }
     
     override func becomeFirstResponder() -> Bool {
@@ -70,7 +71,7 @@ final class RecordInputView: UIView {
     }
     
     @objc private func textFieldDidChangeText(_ textField: UITextField) {
-        self.delegate?.recordInputView(self, didUpdateText: textField.text ?? "")
+        self.delegate?.textInputView(self, didUpdateText: textField.text ?? "")
     }
     
     private let textFieldContainerView = UIView(frame: .zero)
@@ -78,7 +79,7 @@ final class RecordInputView: UIView {
     
 }
 
-extension RecordInputView: UITextFieldDelegate {
+extension TextInputView: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         // Do Something
@@ -89,7 +90,7 @@ extension RecordInputView: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.delegate?.recordInputViewDidReturn(self)
+        self.delegate?.textInputViewDidReturn(self)
         return textField.resignFirstResponder()
     }
     

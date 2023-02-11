@@ -35,7 +35,7 @@
 		F15FFC38298529F200EF2E69 /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC37298529F200EF2E69 /* RecordViewController.swift */; };
 		F15FFC3A298529F900EF2E69 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC39298529F900EF2E69 /* RecordViewModel.swift */; };
 		F15FFC3C298529FF00EF2E69 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC3B298529FF00EF2E69 /* RecordView.swift */; };
-		F15FFC3E2985394000EF2E69 /* RecordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC3D2985394000EF2E69 /* RecordInputView.swift */; };
+		F15FFC3E2985394000EF2E69 /* TextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC3D2985394000EF2E69 /* TextInputView.swift */; };
 		F1BD6B912987BA1E00BE6825 /* CalendarCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BD6B902987BA1E00BE6825 /* CalendarCalculator.swift */; };
 		F1BD6B972987C48F00BE6825 /* TodoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BD6B962987C48F00BE6825 /* TodoDetailViewController.swift */; };
 		F1BD6B992987C49500BE6825 /* TodoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BD6B982987C49500BE6825 /* TodoDetailViewModel.swift */; };
@@ -84,7 +84,7 @@
 		F15FFC37298529F200EF2E69 /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
 		F15FFC39298529F900EF2E69 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		F15FFC3B298529FF00EF2E69 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
-		F15FFC3D2985394000EF2E69 /* RecordInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordInputView.swift; sourceTree = "<group>"; };
+		F15FFC3D2985394000EF2E69 /* TextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputView.swift; sourceTree = "<group>"; };
 		F1BD6B902987BA1E00BE6825 /* CalendarCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCalculator.swift; sourceTree = "<group>"; };
 		F1BD6B962987C48F00BE6825 /* TodoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewController.swift; sourceTree = "<group>"; };
 		F1BD6B982987C49500BE6825 /* TodoDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewModel.swift; sourceTree = "<group>"; };
@@ -190,6 +190,7 @@
 		F15FFC1C297D550200EF2E69 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F15FFC3D2985394000EF2E69 /* TextInputView.swift */,
 				F15FFC1D297D550C00EF2E69 /* TextOnlyTableViewCell.swift */,
 				F1BD6B9C2988D60300BE6825 /* Toast.swift */,
 			);
@@ -220,7 +221,6 @@
 				F15FFC37298529F200EF2E69 /* RecordViewController.swift */,
 				F15FFC39298529F900EF2E69 /* RecordViewModel.swift */,
 				F15FFC3B298529FF00EF2E69 /* RecordView.swift */,
-				F15FFC3D2985394000EF2E69 /* RecordInputView.swift */,
 			);
 			path = Record;
 			sourceTree = "<group>";
@@ -444,7 +444,7 @@
 				F15FFC06297D498900EF2E69 /* Entity.swift in Sources */,
 				F15FFBF6297BCE6100EF2E69 /* CalendarDateCell.swift in Sources */,
 				F15FFC2B297D643200EF2E69 /* Refreshable.swift in Sources */,
-				F15FFC3E2985394000EF2E69 /* RecordInputView.swift in Sources */,
+				F15FFC3E2985394000EF2E69 /* TextInputView.swift in Sources */,
 				F15FFC24297D630200EF2E69 /* TopScrollable.swift in Sources */,
 				F1BD6B912987BA1E00BE6825 /* CalendarCalculator.swift in Sources */,
 				F15FFBFF297BEC3F00EF2E69 /* CalendarDateHeaderView.swift in Sources */,
