@@ -74,7 +74,6 @@ final class RootViewController: UITabBarController {
         let viewModel = HomeViewModel(todoRepository: self.todoRepository)
         let viewController = HomeViewController(viewModel: viewModel).then {
             $0.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "house"), selectedImage: nil)
-            $0.tabBarItem.title = "홈"
         }
         
         return UINavigationController(rootViewController: viewController).then {
@@ -87,7 +86,6 @@ final class RootViewController: UITabBarController {
         let viewModel = CalendarViewModel(todoRepository: self.todoRepository)
         let viewController = CalendarViewController(viewModel: viewModel).then {
             $0.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "calendar"), selectedImage: nil)
-            $0.tabBarItem.title = "캘린더"
         }
         
         return UINavigationController(rootViewController: viewController).then {
