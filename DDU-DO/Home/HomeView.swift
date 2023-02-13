@@ -45,12 +45,11 @@ final class HomeView: UIView {
     
     private func setupAttributes() {
         self.tableView.do {
-            $0.backgroundColor = .white
+            $0.backgroundColor = .darkPurple
             $0.separatorStyle = .none
             $0.showsVerticalScrollIndicator = false
             $0.registerCell(cell: TextOnlyTableViewCell.self)
-            $0.registerCell(cell: HomeScheduleTableViewCell.self)
-            $0.registerCell(cell: HomeScheduleEmptyTableViewCell.self)
+            $0.registerCell(cell: HomeTodoTableViewCell.self)
             $0.contentInset = UIEdgeInsets(top: 30, left: 0, bottom: 50, right: 0)
         }
     }
