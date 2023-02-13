@@ -34,6 +34,11 @@ final class TodoDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.detailView.maskRoundedRect(cornerRadius: 20, corners: [.topLeft, .topRight])
+    }
+    
     func presentWithAnimation(from viewController: UIViewController) {
         self.modalPresentationStyle = .overFullScreen
         
