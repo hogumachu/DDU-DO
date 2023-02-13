@@ -10,7 +10,11 @@ import RxSwift
 import RxRelay
 
 enum HomeViewModelEvent {
+    
     case reloadData
+    case showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date)
+    case showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity)
+    
 }
 
 final class HomeViewModel {
@@ -28,6 +32,7 @@ final class HomeViewModel {
     enum Item {
         case title(String)
         case schedule(HomeScheduleTableViewCellModel, createdAt: Date)
+        case plus(targetDate: Date)
     }
     
     init(todoRepository: TodoRepository<TodoEntity>) {
@@ -53,7 +58,24 @@ final class HomeViewModel {
     }
     
     func didSelectRow(at indexPath: IndexPath) {
-        // TODO: - Do Something
+        guard let section = self.sections[safe: indexPath.section],
+              let item = section.items[safe: indexPath.row]
+        else {
+            return
+        }
+        
+        switch item {
+        case .schedule(_, let createdAt):
+            let predicate = NSPredicate(format: "createdAt == %@", createdAt as NSDate)
+            guard let entity = self.todoRepository.getAll(where: predicate).first else { return }
+            self.viewModelEventRelay.accept(.showDetailView(repository: self.todoRepository, entity: entity))
+            
+        case .plus(let targetDate):
+            self.viewModelEventRelay.accept(.showRecordView(repository: self.todoRepository, targetDate: targetDate))
+            
+        default:
+            return
+        }
     }
     
     func didSelectComplete(at indexPath: IndexPath) {
@@ -108,7 +130,7 @@ final class HomeViewModel {
             .getAll(where: predicate)
             .sorted(by: { $0.createAt > $1.createAt })
             .map { Item.schedule(.init(text: $0.todo, isComplete: $0.isComplete), createdAt: $0.createAt) }
-        return .schedule([.title("오늘 할일")] + items)
+        return .schedule([.title("오늘 할일")] + items + [.plus(targetDate: targetDate!)])
     }
     
     private func makeTomorrowScheduleSection() -> Section {
@@ -125,7 +147,7 @@ final class HomeViewModel {
             .getAll(where: predicate)
             .sorted(by: { $0.createAt > $1.createAt })
             .map { Item.schedule(.init(text: $0.todo, isComplete: $0.isComplete), createdAt: $0.createAt) }
-        return .schedule([.title("내일 할일")] + items)
+        return .schedule([.title("내일 할일")] + items + [.plus(targetDate: tomorrow!)])
     }
     
     private func observeTodoRepositoryUpdatedEvent() {

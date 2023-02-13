@@ -43,6 +43,12 @@ final class HomeViewController: UIViewController {
         switch event {
         case .reloadData:
             self.homeView.reloadData()
+            
+        case let .showRecordView(repository, targetDate):
+            self.showRecordView(repository: repository, targetDate: targetDate)
+            
+        case let .showDetailView(repository, entity):
+            self.showDetailView(repository: repository, entity: entity)
         }
     }
     
@@ -59,6 +65,20 @@ final class HomeViewController: UIViewController {
         }
         self.homeView.delegate = self
         self.homeView.dataSource = self
+    }
+    
+    private func showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date) {
+        let recordViewModel = RecordViewModel(todoRepository: repository, targetDate: targetDate)
+        let recordViewController = RecordViewController(viewModel: recordViewModel)
+        recordViewController.delegate = self
+        recordViewController.presentWithAnimation(from: self)
+    }
+    
+    private func showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity) {
+        let detailViewModel = TodoDetailViewModel(repository: repository, entity: entity)
+        let detailViewController = TodoDetailViewController(viewModel: detailViewModel)
+        detailViewController.presentWithAnimation(from: self)
+        detailViewController.delegate = self
     }
     
     private let navigationView = HomeNavigationView(frame: .zero)
@@ -102,6 +122,10 @@ extension HomeViewController: HomeViewDataSource {
             cell.delegate = self
             cell.indexPath = indexPath
             return cell
+            
+        case .plus(_):
+            guard let cell = tableView.dequeueReusableCell(cell: HomeScheduleEmptyTableViewCell.self, for: indexPath) else { return UITableViewCell() }
+            return cell
         }
     }
     
@@ -114,3 +138,36 @@ extension HomeViewController: HomeScheduleTableViewCellDelegate {
     }
     
 }
+
+extension HomeViewController: RecordViewControllerDelegate {
+    
+    func recordViewControllerDidFinishRecord(_ viewController: RecordViewController, targetDate: Date) {
+        let toastModel = ToastModel(message: "추가되었습니다", type: .success)
+        ToastManager.showToast(toastModel)
+    }
+    
+    func recordViewControllerDidFailRecord(_ viewController: RecordViewController, message: String) {
+        let toastModel = ToastModel(message: message, type: .fail)
+        ToastManager.showToast(toastModel)
+    }
+    
+    func recordViewControllerDidCancelRecord(_ viewController: RecordViewController) {
+        print("## recordViewControllerDidCancelRecord")
+    }
+    
+}
+
+extension HomeViewController: TodoDetailViewControllerDelegate {
+    
+    func todoDetailViewControllerDidFinish(_ viewController: TodoDetailViewController, message: String) {
+        let toastModel = ToastModel(message: message, type: .success)
+        ToastManager.showToast(toastModel)
+    }
+    
+    func todoDetailViewControllerDidFail(_ viewController: TodoDetailViewController, message: String) {
+        let toastModel = ToastModel(message: message, type: .fail)
+        ToastManager.showToast(toastModel)
+    }
+    
+}
+
