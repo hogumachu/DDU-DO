@@ -11,6 +11,7 @@ import Then
 
 protocol HomeTodoItemViewDelegate: AnyObject {
     
+    func homeTodoItemViewDidSelect(_ view: HomeTodoItemView, tag: Int)
     func homeTodoItemViewDidSelectComplete(_ view: HomeTodoItemView, tag: Int)
     
 }
@@ -89,6 +90,9 @@ final class HomeTodoItemView: UIView {
         self.containerView.do {
             $0.backgroundColor = .purple3
             $0.layer.cornerRadius = 16
+            $0.isUserInteractionEnabled = true
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(containerViewDidTap(_:)))
+            $0.addGestureRecognizer(tapGesture)
         }
         
         self.contentLabel.do {
@@ -105,6 +109,10 @@ final class HomeTodoItemView: UIView {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(checkImageViewDidTap(_:)))
             $0.addGestureRecognizer(tapGesture)
         }
+    }
+    
+    @objc private func containerViewDidTap(_ sender: UIGestureRecognizer) {
+        self.delegate?.homeTodoItemViewDidSelect(self, tag: self.tag)
     }
     
     @objc private func checkImageViewDidTap(_ sender: UIGestureRecognizer) {
