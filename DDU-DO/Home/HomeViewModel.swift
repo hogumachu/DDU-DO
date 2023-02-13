@@ -97,6 +97,53 @@ final class HomeViewModel {
         }
     }
     
+    func didSelectAllComplete(indexPath: IndexPath) {
+        guard let section = self.sections[safe: indexPath.section],
+              let item = section.items[safe: indexPath.row]
+        else {
+            return
+        }
+        
+        switch item {
+        case .todo(let model, _):
+            let newEntities = model.items
+                .map { NSPredicate(format: "createdAt == %@", $0.createdAt as NSDate) }
+                .compactMap { self.todoRepository.getAll(where: $0).first }
+                .map { TodoEntity(todo: $0.todo, isComplete: true, createAt: $0.createAt, targetDate: $0.targetDate) }
+            newEntities.forEach {
+                do {
+                    try self.todoRepository.update(item: $0)
+                } catch {
+                    // TODO: Handle Error
+                }
+            }
+            self.refresh()
+                
+            
+        default:
+            return
+        }
+    }
+    
+    func didSelectRow(indexPath: IndexPath, at tag: Int) {
+        guard let section = self.sections[safe: indexPath.section],
+              let item = section.items[safe: indexPath.row]
+        else {
+            return
+        }
+        
+        switch item {
+        case .todo(let model, _):
+            guard let todoItem = model.items[safe: tag] else { return }
+            let predicate = NSPredicate(format: "createdAt == %@", todoItem.createdAt as NSDate)
+            guard let entity = self.todoRepository.getAll(where: predicate).first else { return }
+            self.viewModelEventRelay.accept(.showDetailView(repository: self.todoRepository, entity: entity))
+            
+        default:
+            return
+        }
+    }
+    
     func didSelectRow(at indexPath: IndexPath) {
         guard let section = self.sections[safe: indexPath.section],
               let item = section.items[safe: indexPath.row]
