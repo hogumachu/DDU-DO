@@ -59,7 +59,7 @@ final class RecordView: UIView {
             self.weekdayLabel.textColor = .blue
             
         default:
-            self.weekdayLabel.textColor = .black
+            self.weekdayLabel.textColor = .purple4
         }
     }
     
@@ -72,13 +72,13 @@ final class RecordView: UIView {
         self.containerView.addSubview(self.recordButton)
         self.recordButton.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview().inset(20)
-            make.height.equalTo(50)
+            make.height.equalTo(55)
         }
         
         self.containerView.addSubview(self.recordInputView)
         self.recordInputView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
-            make.bottom.equalTo(self.recordButton.snp.top).offset(-20)
+            make.bottom.equalTo(self.recordButton.snp.top).offset(-10)
             make.height.equalTo(50)
         }
         
@@ -88,23 +88,33 @@ final class RecordView: UIView {
             make.bottom.equalTo(self.recordInputView.snp.top).offset(-10)
         }
         
-        self.containerView.addSubview(self.weekdayLabel)
+        self.containerView.addSubview(self.weekdayContainerView)
+        self.weekdayContainerView.snp.makeConstraints { make in
+            make.centerY.equalTo(self.dateLabel)
+            make.leading.equalTo(self.dateLabel.snp.trailing).offset(5)
+            make.size.equalTo(CGSize(width: 20, height: 20))
+        }
+        
+        self.weekdayContainerView.addSubview(self.weekdayLabel)
         self.weekdayLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.dateLabel)
-            make.leading.equalTo(self.dateLabel.snp.trailing).offset(2)
+            make.center.equalToSuperview()
         }
     }
     
     private func setupAttributes() {
-        self.containerView.backgroundColor = .white
+        self.containerView.backgroundColor = .purple4
         
         self.dateLabel.do {
-            $0.textColor = .darkGray
+            $0.textColor = .lightPurple
             $0.font = .systemFont(ofSize: 17, weight: .semibold)
         }
         
+        self.weekdayContainerView.do {
+            $0.backgroundColor = .lightPurple
+            $0.layer.cornerRadius = 4
+        }
         self.weekdayLabel.do {
-            $0.font = .systemFont(ofSize: 17, weight: .semibold)
+            $0.font = .systemFont(ofSize: 15, weight: .semibold)
         }
        
         self.recordInputView.do {
@@ -112,8 +122,11 @@ final class RecordView: UIView {
         }
         
         self.recordButton.do {
-            $0.layer.cornerRadius = 50 / 2
-            $0.backgroundColor = .systemBlue
+            $0.layer.cornerRadius = 16
+            $0.backgroundColor = .purple1
+            $0.setTitle("저장하기", for: .normal)
+            $0.setTitleColor(.lightPurple, for: .normal)
+            $0.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
             $0.addTarget(self, action: #selector(recordButtonDidTap(_:)), for: .touchUpInside)
         }
     }
@@ -122,6 +135,7 @@ final class RecordView: UIView {
         self.delegate?.recordViewDidTapRecordButton(self, text: self.recordInputView.text ?? "")
     }
     
+    private let weekdayContainerView = UIView(frame: .zero)
     private let weekdayLabel = UILabel(frame: .zero)
     private let dateLabel = UILabel(frame: .zero)
     private let containerView = UIView(frame: .zero)
