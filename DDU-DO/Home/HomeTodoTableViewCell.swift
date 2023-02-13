@@ -11,9 +11,10 @@ import Then
 
 protocol HomeTodoTableViewCellDelegate: AnyObject {
     
+    func homeTodoTableViewCellDidSelect(_ cell: HomeTodoTableViewCell, indexPath: IndexPath, didSelectAt tag: Int)
     func homeTodoTableViewCellDidSelectAdd(_ cell: HomeTodoTableViewCell, indexPath: IndexPath)
     func homeTodoTableViewCellDidSelectComplete(_ cell: HomeTodoTableViewCell, indexPath: IndexPath, didSelectAt tag: Int)
-    func homeTodoTableViewCellDidSelectCompleteAllButton(_ cell: HomeTodoTableViewCell)
+    func homeTodoTableViewCellDidSelectCompleteAllButton(_ cell: HomeTodoTableViewCell, indexPath: IndexPath)
     
 }
 
@@ -60,12 +61,12 @@ final class HomeTodoTableViewCell: UITableViewCell {
     func configure(_ model: HomeTodoTableViewCellModel) {
         self.titleLabel.text = model.title
         self.subtitleLabel.text = model.subtitle
-        self.updateType(model.type)
+        self.updateUI(model)
         
         self.itemStackView
             .subviews
             .forEach { $0.removeFromSuperview() }
-        
+       
         (0..<model.items.count)
             .map { _ in HomeTodoItemView(frame: .zero) }
             .enumerated()
@@ -77,16 +78,22 @@ final class HomeTodoTableViewCell: UITableViewCell {
             }
     }
     
-    private func updateType(_ type: HomeTodoType) {
-        switch type {
+    private func updateUI(_ model: HomeTodoTableViewCellModel) {
+        switch model.type {
         case .today:
             self.containerView.backgroundColor = .purple1
             self.titleLabel.textColor = .lightPurple
             self.subtitleLabel.textColor = .lightPurple
             self.addImageView.tintColor = .purple1
             self.addImageView.backgroundColor = .lightPurple
-            self.allCompleteButton.isHidden = false
-            self.itemStackViewBottomConstraint?.update(offset: -90)
+            let isAllCompleteButtonEnabled = model.items.filter { $0.isComplete == false }.count != 0
+            if isAllCompleteButtonEnabled {
+                self.allCompleteButton.isHidden = false
+                self.itemStackViewBottomConstraint?.update(offset: -90)
+            } else {
+                self.allCompleteButton.isHidden = true
+                self.itemStackViewBottomConstraint?.update(offset: -20)
+            }
             
         case .etc:
             self.containerView.backgroundColor = .lightPurple
@@ -182,12 +189,18 @@ final class HomeTodoTableViewCell: UITableViewCell {
             $0.setTitle("모두 완료하기", for: .normal)
             $0.setTitleColor(.purple2, for: .normal)
             $0.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
+            $0.addTarget(self, action: #selector(allCompleteButtonDidTap(_:)), for: .touchUpInside)
         }
     }
     
     @objc private func addImageViewDidTap(_ sender: UIGestureRecognizer) {
         guard let indexPath = indexPath else { return }
         self.delegate?.homeTodoTableViewCellDidSelectAdd(self, indexPath: indexPath)
+    }
+    
+    @objc private func allCompleteButtonDidTap(_ sender: UIButton) {
+        guard let indexPath = self.indexPath else { return }
+        self.delegate?.homeTodoTableViewCellDidSelectCompleteAllButton(self, indexPath: indexPath)
     }
     
     private var itemStackViewBottomConstraint: Constraint?
@@ -202,6 +215,11 @@ final class HomeTodoTableViewCell: UITableViewCell {
 }
 
 extension HomeTodoTableViewCell: HomeTodoItemViewDelegate {
+    
+    func homeTodoItemViewDidSelect(_ view: HomeTodoItemView, tag: Int) {
+        guard let indexPath = self.indexPath else { return }
+        self.delegate?.homeTodoTableViewCellDidSelect(self, indexPath: indexPath, didSelectAt: tag)
+    }
     
     func homeTodoItemViewDidSelectComplete(_ view: HomeTodoItemView, tag: Int) {
         guard let indexPath = self.indexPath else { return }

@@ -129,6 +129,11 @@ extension HomeViewController: HomeViewDataSource {
 
 extension HomeViewController: HomeTodoTableViewCellDelegate {
     
+    func homeTodoTableViewCellDidSelect(_ cell: HomeTodoTableViewCell, indexPath: IndexPath, didSelectAt tag: Int) {
+        self.viewModel.didSelectRow(indexPath: indexPath, at: tag)
+    }
+    
+    
     func homeTodoTableViewCellDidSelectAdd(_ cell: HomeTodoTableViewCell, indexPath: IndexPath) {
         self.viewModel.didSelectAdd(at: indexPath)
     }
@@ -137,8 +142,8 @@ extension HomeViewController: HomeTodoTableViewCellDelegate {
         self.viewModel.didSelectComplete(indexPath: indexPath, at: tag)
     }
     
-    func homeTodoTableViewCellDidSelectCompleteAllButton(_ cell: HomeTodoTableViewCell) {
-        // TODO: - Complete 상황에 따라 Active InActive 설정하기
+    func homeTodoTableViewCellDidSelectCompleteAllButton(_ cell: HomeTodoTableViewCell, indexPath: IndexPath) {
+        self.viewModel.didSelectAllComplete(indexPath: indexPath)
     }
     
 }
