@@ -20,19 +20,18 @@ enum HomeViewModelEvent {
 final class HomeViewModel {
     
     enum Section {
-        case schedule([Item])
+        case todo([Item])
         
         var items: [Item] {
             switch self {
-            case .schedule(let items):          return items
+            case .todo(let items):              return items
             }
         }
     }
     
     enum Item {
         case title(String)
-        case schedule(HomeScheduleTableViewCellModel, createdAt: Date)
-        case plus(targetDate: Date)
+        case todo(HomeTodoTableViewCellModel, targetDate: Date)
     }
     
     init(todoRepository: TodoRepository<TodoEntity>) {
@@ -57,7 +56,7 @@ final class HomeViewModel {
         return self.sections[safe: indexPath.section]?.items[safe: indexPath.item]
     }
     
-    func didSelectRow(at indexPath: IndexPath) {
+    func didSelectAdd(at indexPath: IndexPath) {
         guard let section = self.sections[safe: indexPath.section],
               let item = section.items[safe: indexPath.row]
         else {
@@ -65,12 +64,7 @@ final class HomeViewModel {
         }
         
         switch item {
-        case .schedule(_, let createdAt):
-            let predicate = NSPredicate(format: "createdAt == %@", createdAt as NSDate)
-            guard let entity = self.todoRepository.getAll(where: predicate).first else { return }
-            self.viewModelEventRelay.accept(.showDetailView(repository: self.todoRepository, entity: entity))
-            
-        case .plus(let targetDate):
+        case .todo(_, let targetDate):
             self.viewModelEventRelay.accept(.showRecordView(repository: self.todoRepository, targetDate: targetDate))
             
         default:
@@ -78,7 +72,7 @@ final class HomeViewModel {
         }
     }
     
-    func didSelectComplete(at indexPath: IndexPath) {
+    func didSelectComplete(indexPath: IndexPath, at tag: Int) {
         guard let section = self.sections[safe: indexPath.section],
               let item = section.items[safe: indexPath.row]
         else {
@@ -86,13 +80,11 @@ final class HomeViewModel {
         }
         
         switch item {
-        case .schedule(let model, let createdAt):
-            let predicate = NSPredicate(format: "createdAt == %@", createdAt as NSDate)
-            guard let entity = self.todoRepository.getAll(where: predicate).first else {
-                // TODO: - Handle Error
-                return
-            }
-            let newEntity = TodoEntity(todo: entity.todo, isComplete: !model.isComplete, createAt: entity.createAt, targetDate: entity.targetDate)
+        case .todo(let model, _):
+            guard let todoItem = model.items[safe: tag] else { return }
+            let predicate = NSPredicate(format: "createdAt == %@", todoItem.createdAt as NSDate)
+            guard let entity = self.todoRepository.getAll(where: predicate).first else { return }
+            let newEntity = TodoEntity(todo: entity.todo, isComplete: !todoItem.isComplete, createAt: entity.createAt, targetDate: entity.targetDate)
             do {
                 try self.todoRepository.update(item: newEntity)
                 self.refresh()
@@ -105,6 +97,19 @@ final class HomeViewModel {
         }
     }
     
+    func didSelectRow(at indexPath: IndexPath) {
+        guard let section = self.sections[safe: indexPath.section],
+              let item = section.items[safe: indexPath.row]
+        else {
+            return
+        }
+        
+        switch item {
+        default:
+            return
+        }
+    }
+    
     func refresh() {
         self.sections = self.makeSections()
         self.viewModelEventRelay.accept(.reloadData)
@@ -112,12 +117,12 @@ final class HomeViewModel {
     
     private func makeSections() -> [Section] {
         var sections: [Section] = []
-        sections.append(self.makeTodayScheduleSection())
-        sections.append(self.makeTomorrowScheduleSection())
+        sections.append(self.makeTodayTodoSection())
+        sections.append(self.makeTomorrowTodoSection())
         return sections
     }
     
-    private func makeTodayScheduleSection() -> Section {
+    private func makeTodayTodoSection() -> Section {
         let today = Date()
         let targetDate = calculator.date(
             year: calculator.year(from: today),
@@ -129,11 +134,18 @@ final class HomeViewModel {
         let items = self.todoRepository
             .getAll(where: predicate)
             .sorted(by: { $0.createAt > $1.createAt })
-            .map { Item.schedule(.init(text: $0.todo, isComplete: $0.isComplete), createdAt: $0.createAt) }
-        return .schedule([.title("오늘 할일")] + items + [.plus(targetDate: targetDate!)])
+            .map { HomeTodoItemViewModel.init(text: $0.todo, isComplete: $0.isComplete, createdAt: $0.createAt) }
+        return .todo([
+            .todo(.init(
+                title: "오늘 할일",
+                subtitle: "\(items.filter { $0.isComplete == false }.count)개 / 총 \(items.count)개",
+                items: items,
+                type: .today
+            ), targetDate: targetDate!)]
+        )
     }
     
-    private func makeTomorrowScheduleSection() -> Section {
+    private func makeTomorrowTodoSection() -> Section {
         let today = Date()
         let targetDate = calculator.date(
             year: calculator.year(from: today),
@@ -146,8 +158,15 @@ final class HomeViewModel {
         let items = self.todoRepository
             .getAll(where: predicate)
             .sorted(by: { $0.createAt > $1.createAt })
-            .map { Item.schedule(.init(text: $0.todo, isComplete: $0.isComplete), createdAt: $0.createAt) }
-        return .schedule([.title("내일 할일")] + items + [.plus(targetDate: tomorrow!)])
+            .map { HomeTodoItemViewModel.init(text: $0.todo, isComplete: $0.isComplete, createdAt: $0.createAt) }
+        return .todo([
+            .todo(.init(
+                title: "내일 할일",
+                subtitle: "\(items.count)개",
+                items: items,
+                type: .etc
+            ), targetDate: tomorrow!)]
+        )
     }
     
     private func observeTodoRepositoryUpdatedEvent() {

@@ -35,4 +35,10 @@ extension NSMutableAttributedString {
         return self
     }
     
+    func strikethrough() -> NSMutableAttributedString {
+        let range = NSRange(location: 0, length: self.length)
+        self.addAttributes([.strikethroughStyle: NSUnderlineStyle.single.rawValue], range: range)
+        return self
+    }
+    
 }

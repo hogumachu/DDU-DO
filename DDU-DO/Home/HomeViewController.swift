@@ -116,25 +116,29 @@ extension HomeViewController: HomeViewDataSource {
             cell.configure(model, inset: UIEdgeInsets(top: 0, left: 20, bottom: 10, right: 20))
             return cell
             
-        case .schedule(let model, _):
-            guard let cell = tableView.dequeueReusableCell(cell: HomeScheduleTableViewCell.self, for: indexPath) else { return UITableViewCell() }
+        case .todo(let model, _):
+            guard let cell = tableView.dequeueReusableCell(cell: HomeTodoTableViewCell.self, for: indexPath) else { return UITableViewCell() }
             cell.configure(model)
             cell.delegate = self
             cell.indexPath = indexPath
-            return cell
-            
-        case .plus(_):
-            guard let cell = tableView.dequeueReusableCell(cell: HomeScheduleEmptyTableViewCell.self, for: indexPath) else { return UITableViewCell() }
             return cell
         }
     }
     
 }
 
-extension HomeViewController: HomeScheduleTableViewCellDelegate {
+extension HomeViewController: HomeTodoTableViewCellDelegate {
     
-    func homeScheduleTableViewCellDidSelectComplete(_ cell: HomeScheduleTableViewCell, didSelectAt indexPath: IndexPath) {
-        self.viewModel.didSelectComplete(at: indexPath)
+    func homeTodoTableViewCellDidSelectAdd(_ cell: HomeTodoTableViewCell, indexPath: IndexPath) {
+        self.viewModel.didSelectAdd(at: indexPath)
+    }
+    
+    func homeTodoTableViewCellDidSelectComplete(_ cell: HomeTodoTableViewCell, indexPath: IndexPath, didSelectAt tag: Int) {
+        self.viewModel.didSelectComplete(indexPath: indexPath, at: tag)
+    }
+    
+    func homeTodoTableViewCellDidSelectCompleteAllButton(_ cell: HomeTodoTableViewCell) {
+        // TODO: - Complete 상황에 따라 Active InActive 설정하기
     }
     
 }
