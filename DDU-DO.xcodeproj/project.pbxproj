@@ -15,11 +15,11 @@
 		F13798B129977D0A0053DE9C /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798B029977D0A0053DE9C /* Date+.swift */; };
 		F13798B5299795FB0053DE9C /* Date+Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798B4299795FB0053DE9C /* Date+Weekday.swift */; };
 		F13798B729979B290053DE9C /* NSMutableAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798B629979B290053DE9C /* NSMutableAttributedString+.swift */; };
-		F13798B92997C45E0053DE9C /* HomeNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798B82997C45E0053DE9C /* HomeNavigationView.swift */; };
 		F13798BD299A22630053DE9C /* HomeTodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798BC299A22630053DE9C /* HomeTodoTableViewCell.swift */; };
 		F13798BF299A23840053DE9C /* HomeTodoItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798BE299A23840053DE9C /* HomeTodoItemView.swift */; };
 		F13798C1299A3AAE0053DE9C /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798C0299A3AAE0053DE9C /* UIColor+.swift */; };
 		F13798C3299A3AE60053DE9C /* UIColor+DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798C2299A3AE60053DE9C /* UIColor+DesignSystem.swift */; };
+		F13798C5299A6C540053DE9C /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798C4299A6C540053DE9C /* NavigationView.swift */; };
 		F15FFBF6297BCE6100EF2E69 /* CalendarDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */; };
 		F15FFBF9297BD99600EF2E69 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBF8297BD99600EF2E69 /* UICollectionView+.swift */; };
 		F15FFBFB297BD9A500EF2E69 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBFA297BD9A500EF2E69 /* UITableView+.swift */; };
@@ -73,11 +73,11 @@
 		F13798B029977D0A0053DE9C /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		F13798B4299795FB0053DE9C /* Date+Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Weekday.swift"; sourceTree = "<group>"; };
 		F13798B629979B290053DE9C /* NSMutableAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+.swift"; sourceTree = "<group>"; };
-		F13798B82997C45E0053DE9C /* HomeNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationView.swift; sourceTree = "<group>"; };
 		F13798BC299A22630053DE9C /* HomeTodoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTodoTableViewCell.swift; sourceTree = "<group>"; };
 		F13798BE299A23840053DE9C /* HomeTodoItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTodoItemView.swift; sourceTree = "<group>"; };
 		F13798C0299A3AAE0053DE9C /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		F13798C2299A3AE60053DE9C /* UIColor+DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+DesignSystem.swift"; sourceTree = "<group>"; };
+		F13798C4299A6C540053DE9C /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateCell.swift; sourceTree = "<group>"; };
 		F15FFBF8297BD99600EF2E69 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		F15FFBFA297BD9A500EF2E69 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
@@ -196,7 +196,6 @@
 				F15FFC15297D516800EF2E69 /* HomeViewController.swift */,
 				F15FFC17297D516D00EF2E69 /* HomeViewModel.swift */,
 				F15FFC19297D517000EF2E69 /* HomeView.swift */,
-				F13798B82997C45E0053DE9C /* HomeNavigationView.swift */,
 				F13798BC299A22630053DE9C /* HomeTodoTableViewCell.swift */,
 				F13798BE299A23840053DE9C /* HomeTodoItemView.swift */,
 			);
@@ -218,6 +217,7 @@
 				F15FFC3D2985394000EF2E69 /* TextInputView.swift */,
 				F15FFC1D297D550C00EF2E69 /* TextOnlyTableViewCell.swift */,
 				F1BD6B9C2988D60300BE6825 /* Toast.swift */,
+				F13798C4299A6C540053DE9C /* NavigationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -451,6 +451,7 @@
 				F15FFC18297D516D00EF2E69 /* HomeViewModel.swift in Sources */,
 				F15FFC29297D638100EF2E69 /* UIViewController+.swift in Sources */,
 				F13798AF299774760053DE9C /* CalendarDateBadgeView.swift in Sources */,
+				F13798C5299A6C540053DE9C /* NavigationView.swift in Sources */,
 				F15FFC38298529F200EF2E69 /* RecordViewController.swift in Sources */,
 				F1F12F96297BCB1500D8CE21 /* CalendarView.swift in Sources */,
 				F15FFBF9297BD99600EF2E69 /* UICollectionView+.swift in Sources */,
@@ -461,7 +462,6 @@
 				F13798B129977D0A0053DE9C /* Date+.swift in Sources */,
 				F15FFC3229800A6B00EF2E69 /* CalendarListView.swift in Sources */,
 				F15FFC01297BEEE600EF2E69 /* UIView+.swift in Sources */,
-				F13798B92997C45E0053DE9C /* HomeNavigationView.swift in Sources */,
 				F13798C3299A3AE60053DE9C /* UIColor+DesignSystem.swift in Sources */,
 				F15FFC0E297D4A3000EF2E69 /* TodoRepository.swift in Sources */,
 				F13798A92994D8F50053DE9C /* TodoDetailContentView.swift in Sources */,
