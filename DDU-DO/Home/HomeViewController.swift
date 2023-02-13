@@ -15,20 +15,13 @@ final class HomeViewController: UIViewController {
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.setupHomeView()
+        self.setupLayout()
+        self.setupAttributes()
         self.bind(viewModel)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.navigationView.updateBlurFrame()
-        self.navigationView.snp.updateConstraints { make in
-            make.height.equalTo(40 + UIScreen.topSafeAreaInset)
-        }
     }
     
     private func bind(_ viewModel: HomeViewModel) {
@@ -52,19 +45,38 @@ final class HomeViewController: UIViewController {
         }
     }
     
-    private func setupHomeView() {
-        self.view.addSubview(self.homeView)
-        self.homeView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+    private func setupLayout() {
+        self.view.addSubview(self.statusView)
+        self.statusView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(self.view.safeArea.top)
         }
         
         self.view.addSubview(self.navigationView)
         self.navigationView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(40)
+            make.top.equalTo(self.statusView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(44)
         }
+        
+        self.view.addSubview(self.homeView)
+        self.homeView.snp.makeConstraints { make in
+            make.top.equalTo(self.navigationView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+    }
+    
+    private func setupAttributes() {
         self.homeView.delegate = self
         self.homeView.dataSource = self
+        self.statusView.do {
+            $0.backgroundColor = .darkPurple
+        }
+        
+        self.navigationView.do {
+            $0.configure(.init(type: .logo(style: .darkContent)))
+            $0.backgroundColor = .darkPurple
+        }
     }
     
     private func showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date) {
@@ -81,7 +93,8 @@ final class HomeViewController: UIViewController {
         detailViewController.delegate = self
     }
     
-    private let navigationView = HomeNavigationView(frame: .zero)
+    private let statusView = UIView(frame: .zero)
+    private let navigationView = NavigationView(frame: .zero)
     private let homeView = HomeView(frame: .zero)
     private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
@@ -92,6 +105,16 @@ extension HomeViewController: HomeViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.viewModel.didSelectRow(at: indexPath)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset.y
+        
+        if offset > 0 {
+            self.navigationView.showSeparator()
+        } else {
+            self.navigationView.hideSeparator()
+        }
     }
     
 }
