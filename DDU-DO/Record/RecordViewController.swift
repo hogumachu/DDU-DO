@@ -37,7 +37,6 @@ final class RecordViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         self.recordView.maskRoundedRect(cornerRadius: 20, corners: [.topLeft, .topRight])
     }
     

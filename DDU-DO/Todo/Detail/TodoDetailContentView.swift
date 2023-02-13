@@ -29,19 +29,25 @@ final class TodoDetailContentView: UIView {
     }
     
     func configure(_ model: TodoDetailContentViewModel) {
-        self.imageView.image = UIImage(systemName: model.imageName)
+        self.imageView.image = UIImage(systemName: model.imageName)?.withRenderingMode(.alwaysTemplate)
         self.titleLabel.text = model.title
     }
     
     private func setupLayout() {
-        self.addSubview(self.imageView)
+        self.addSubview(self.containerView)
+        self.containerView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.height.equalTo(40)
+        }
+        
+        self.containerView.addSubview(self.imageView)
         self.imageView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 30, height: 30))
-            make.top.bottom.equalToSuperview()
+            make.centerY.equalToSuperview()
             make.leading.equalToSuperview().inset(20)
         }
         
-        self.addSubview(self.titleLabel)
+        self.containerView.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalTo(self.imageView.snp.trailing).offset(10)
@@ -50,12 +56,24 @@ final class TodoDetailContentView: UIView {
     }
     
     private func setupAttributes() {
+        self.containerView.do {
+            $0.layer.cornerRadius = 8
+            $0.backgroundColor = .purple3
+        }
+        
+        self.imageView.do {
+            $0.tintColor = .lightPurple
+            $0.contentMode = .scaleAspectFit
+        }
+        
         self.titleLabel.do {
-            $0.font = .systemFont(ofSize: 17)
+            $0.textColor = .lightPurple
+            $0.font = .systemFont(ofSize: 15, weight: .regular)
             $0.numberOfLines = 1
         }
     }
     
+    private let containerView = UIView(frame: .zero)
     private let imageView = UIImageView(frame: .zero)
     private let titleLabel = UILabel(frame: .zero)
     

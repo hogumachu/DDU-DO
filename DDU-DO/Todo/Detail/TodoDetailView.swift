@@ -39,19 +39,19 @@ final class TodoDetailView: UIView {
     
     func updateEditButtonState(isEnabled: Bool) {
         self.editButton.isEnabled = isEnabled
-        self.editButton.backgroundColor = isEnabled ? .systemBlue : .systemGray
+        self.editButton.backgroundColor = isEnabled ? .purple1 : .systemGray
     }
     
     private func setupLayout() {
         self.addSubview(self.editButton)
         self.editButton.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview().inset(20)
-            make.height.equalTo(60)
+            make.height.equalTo(55)
         }
         
         self.addSubview(self.contentStackView)
         self.contentStackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.equalTo(self.editButton.snp.top).offset(-20)
         }
         
@@ -60,14 +60,14 @@ final class TodoDetailView: UIView {
         
         self.addSubview(self.textInputView)
         self.textInputView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(self.contentStackView.snp.top)
-            make.height.equalTo(80)
+            make.top.leading.trailing.equalToSuperview().inset(20)
+            make.bottom.equalTo(self.contentStackView.snp.top).offset(-10)
+            make.height.equalTo(50)
         }
     }
     
     private func setupAttributes() {
-        self.backgroundColor = .white
+        self.backgroundColor = .purple4
         
         self.textInputView.do {
             $0.text = self.delegate?.todo
@@ -76,25 +76,28 @@ final class TodoDetailView: UIView {
         
         self.contentStackView.do {
             $0.axis = .vertical
-            $0.spacing = 3
+            $0.spacing = 10
             $0.distribution = .fillEqually
         }
         
         self.removeView.do {
-            $0.configure(.init(imageName: "trash.circle.fill", title: "삭제하기"))
+            $0.configure(.init(imageName: "trash.square.fill", title: "삭제하기"))
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeViewDidTap))
             $0.addGestureRecognizer(tapGesture)
         }
         
         self.quickChangeView.do {
-            $0.configure(.init(imageName: "calendar.circle.fill", title: "다음날로 미루기"))
+            $0.configure(.init(imageName: "arrow.forward.square.fill", title: "다음날로 미루기"))
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(quickChangeViewDidTap))
             $0.addGestureRecognizer(tapGesture)
         }
         
         self.editButton.do {
-            $0.layer.cornerRadius = 60 / 2
-            $0.backgroundColor = .systemBlue
+            $0.layer.cornerRadius = 16
+            $0.backgroundColor = .purple1
+            $0.setTitle("변경하기", for: .normal)
+            $0.setTitleColor(.lightPurple, for: .normal)
+            $0.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
             $0.addTarget(self, action: #selector(editViewDidTap(_:)), for: .touchUpInside)
         }
         
