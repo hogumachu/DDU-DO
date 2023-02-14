@@ -37,7 +37,8 @@ final class RootViewController: UITabBarController {
     private func setupTabBar() {
         let apperance: UITabBarAppearance = self.tabBar.standardAppearance.then {
             $0.configureWithDefaultBackground()
-            $0.backgroundColor = .white
+            $0.backgroundColor = .backgroundBlue
+            $0.shadowColor = .blue1
             
             let font = UIFont.systemFont(ofSize: 11, weight: .regular)
             let selectedFont = UIFont.systemFont(ofSize: 11, weight: .semibold)
@@ -54,8 +55,8 @@ final class RootViewController: UITabBarController {
                 $0.scrollEdgeAppearance = $0.standardAppearance
             }
             $0.isTranslucent = false
-            $0.tintColor = .black
-            $0.unselectedItemTintColor = .gray
+            $0.tintColor = .skyBlue
+            $0.unselectedItemTintColor = .blue5
         }
     }
     
