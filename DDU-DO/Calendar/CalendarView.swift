@@ -52,17 +52,45 @@ final class CalendarView: UIView {
     }
     
     private func setupLayout() {
-        self.addSubview(self.monthView)
+        self.addSubview(self.containerView)
+        self.containerView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(20)
+        }
+        
+        self.insertSubview(self.containerShadowView, belowSubview: self.containerView)
+        self.containerShadowView.snp.makeConstraints { make in
+            make.edges.equalTo(self.containerView)
+        }
+        
+        self.containerView.addSubview(self.monthView)
         self.monthView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.edges.equalToSuperview().inset(20)
         }
     }
     
     private func setupAttributes() {
+        self.backgroundColor = .blue1
+        
+        self.containerView.do {
+            $0.backgroundColor = .lightBlue
+            $0.layer.cornerRadius = 16
+        }
+        
+        self.containerShadowView.do {
+            $0.layer.cornerRadius = 16
+            $0.clipsToBounds = false
+            $0.backgroundColor = .lightBlue
+            $0.applyShadow(
+                color: .black,
+                opacity: 0.3,
+                offset: CGSize(width: 0, height: -4),
+                blur: 16
+            )
+        }
+        
         self.monthView.do {
-            $0.backgroundColor = .white
+            $0.backgroundColor = .lightBlue
             $0.registerCell(cell: CalendarDateCell.self)
-            $0.registerReusableView(view: CalendarDateHeaderView.self)
             $0.scrollDirection = .horizontal
             $0.scrollingMode = .stopAtEachCalendarFrame
             $0.showsHorizontalScrollIndicator = false
@@ -71,6 +99,8 @@ final class CalendarView: UIView {
         }
     }
     
+    private let containerShadowView = UIView(frame: .zero)
+    private let containerView = UIView(frame: .zero)
     private let monthView = JTACMonthView(frame: .zero)
     
 }
