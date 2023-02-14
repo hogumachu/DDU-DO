@@ -19,6 +19,8 @@ enum CalendarViewModelEvent {
     case showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date)
     case showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity)
     case updateEmptyView(isHidden: Bool)
+    case updateTitle(text: String?)
+    case updateTodayButton(isHidden: Bool)
     
 }
 
@@ -65,6 +67,7 @@ final class CalendarViewModel {
         self.currentDate = Date()
         self.viewModelEventRelay.accept(.scrollToDate(date: self.currentDate, animated: true))
         self.viewModelEventRelay.accept(.selectDates(date: self.currentDate))
+        self.didSelectDate(date: self.currentDate)
     }
     
     func numberOfRowsInSection(_ section: Int) -> Int {
@@ -88,6 +91,7 @@ final class CalendarViewModel {
     func didSelectDate(date: Date) {
         self.currentDate = date
         self.fetchTodoList(date: date)
+        self.viewModelEventRelay.accept(.updateTodayButton(isHidden: date.isDateInToday))
         self.viewModelEventRelay.accept(.reloadData)
     }
     
@@ -116,6 +120,8 @@ final class CalendarViewModel {
     }
     
     func willDisplay(date: Date) {
+        let title = self.monthFormatter.string(from: date)
+        self.viewModelEventRelay.accept(.updateTitle(text: title))
         guard self.isLoading == false else { return }
         if self.calculator.isEqualYearAndMonth(date, self.startDate) {
             self.loadMoreStartDateDataIfEnabled(date: date)
@@ -191,6 +197,10 @@ final class CalendarViewModel {
         }
     }
     
+    private let monthFormatter = DateFormatter().then {
+        $0.dateFormat = "yyyy년 MM월"
+        $0.locale = Locale(identifier: "ko_kr")
+    }
     private let todoRepository: TodoRepository<TodoEntity>
     private let calculator = CalendarCalculator()
     private let viewModelEventRelay = PublishRelay<CalendarViewModelEvent>()
