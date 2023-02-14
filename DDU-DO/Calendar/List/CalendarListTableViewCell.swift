@@ -85,7 +85,7 @@ final class CalendarListTableViewCell: UITableViewCell {
         
         self.containerView.do {
             $0.backgroundColor = .blue1
-            $0.layer.cornerRadius = 8
+            $0.layer.cornerRadius = 16
         }
         
         self.completeImageView.do {
@@ -100,9 +100,8 @@ final class CalendarListTableViewCell: UITableViewCell {
         
         self.contentLabel.do {
             $0.textColor = .lightBlue
-            $0.font = .systemFont(ofSize: 12, weight: .regular)
-            $0.numberOfLines = 1
-            $0.lineBreakMode = .byTruncatingTail
+            $0.font = .systemFont(ofSize: 15, weight: .regular)
+            $0.numberOfLines = 0
         }
     }
     

@@ -60,7 +60,7 @@ final class TextInputView: UIView {
             $0.backgroundColor = .lightBlue
             $0.layer.borderColor = UIColor.blue3?.cgColor
             $0.layer.borderWidth = 1
-            $0.layer.cornerRadius = 8
+            $0.layer.cornerRadius = 16
         }
         
         self.textField.do {

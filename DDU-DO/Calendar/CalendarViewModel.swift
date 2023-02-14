@@ -20,6 +20,7 @@ enum CalendarViewModelEvent {
     case showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity)
     case updateEmptyView(isHidden: Bool)
     case updateTitle(text: String?)
+    case updateDateTitle(text: String?)
     case updateTodayButton(isHidden: Bool)
     
 }
@@ -91,6 +92,7 @@ final class CalendarViewModel {
     func didSelectDate(date: Date) {
         self.currentDate = date
         self.fetchTodoList(date: date)
+        self.viewModelEventRelay.accept(.updateDateTitle(text: self.dayFormatter.string(from: date)))
         self.viewModelEventRelay.accept(.updateTodayButton(isHidden: date.isDateInToday))
         self.viewModelEventRelay.accept(.reloadData)
     }
@@ -199,6 +201,10 @@ final class CalendarViewModel {
     
     private let monthFormatter = DateFormatter().then {
         $0.dateFormat = "yyyy년 MM월"
+        $0.locale = Locale(identifier: "ko_kr")
+    }
+    private let dayFormatter = DateFormatter().then {
+        $0.dateFormat = "MM.dd"
         $0.locale = Locale(identifier: "ko_kr")
     }
     private let todoRepository: TodoRepository<TodoEntity>

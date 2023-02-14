@@ -41,6 +41,7 @@ final class CalendarViewController: UIViewController {
         viewModel
             .viewModelEvent
             .withUnretained(self)
+            .observe(on: MainScheduler.asyncInstance)
             .subscribe(onNext: { viewController, event in viewController.handle(event) })
             .disposed(by: self.disposeBag)
     }
@@ -76,6 +77,9 @@ final class CalendarViewController: UIViewController {
         case .updateTitle(let text):
             self.navigationView.updateTitle(text)
             
+        case .updateDateTitle(let text):
+            self.dateView.showTitle(text)
+            
         case .updateTodayButton(let isHidden):
             self.todayView.isHidden = isHidden
         }
@@ -99,13 +103,19 @@ final class CalendarViewController: UIViewController {
         self.calendarView.snp.makeConstraints { make in
             make.top.equalTo(self.navigationView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(32 * 7)
+            make.height.equalTo(35 * 7)
         }
         
         self.view.addSubview(self.calendarListView)
         self.calendarListView.snp.makeConstraints { make in
             make.top.equalTo(self.calendarView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        self.view.addSubview(self.dateView)
+        self.dateView.snp.makeConstraints { make in
+            make.top.leading.equalTo(self.calendarListView).inset(10)
+            make.size.equalTo(CGSize(width: 108, height: 55))
         }
         
         self.view.addSubview(self.createView)
@@ -143,6 +153,15 @@ final class CalendarViewController: UIViewController {
         self.calendarListView.do {
             $0.delegate = self
             $0.dataSource = self
+        }
+        
+        self.dateView.do {
+            $0.updateRadius(16)
+            $0.updateBackgroundColor(.blue5)
+            $0.updateTintColor(.lightBlue)
+            let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 17, weight: .semibold))
+            $0.setImage(UIImage(systemName: "calendar.circle.fill", withConfiguration: config)?.withRenderingMode(.alwaysTemplate))
+            $0.showTitle("")
         }
         
         self.createView.do {
@@ -196,6 +215,7 @@ final class CalendarViewController: UIViewController {
     private let navigationView = NavigationView(frame: .zero)
     private let calendarView = CalendarView(frame: .zero)
     private let calendarListView = CalendarListView(frame: .zero)
+    private let dateView = CalendarFloatingView(frame: .zero)
     private let createView = CalendarFloatingView(frame: .zero)
     private let todayView = CalendarFloatingView(frame: .zero)
     private let viewModel: CalendarViewModel

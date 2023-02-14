@@ -57,7 +57,7 @@ final class TodoDetailContentView: UIView {
     
     private func setupAttributes() {
         self.containerView.do {
-            $0.layer.cornerRadius = 8
+            $0.layer.cornerRadius = 16
             $0.backgroundColor = .blue3
         }
         
