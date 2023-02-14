@@ -47,6 +47,11 @@ final class RecordView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func updateButtonState(isEnabled: Bool) {
+        self.recordButton.isEnabled = isEnabled
+        self.recordButton.backgroundColor = isEnabled ? .blue5 : .systemGray
+    }
+    
     private func updateDelegate() {
         self.dateLabel.text = self.delegate?.dateString
         self.weekdayLabel.text = self.delegate?.weekday?.toString()
@@ -59,7 +64,7 @@ final class RecordView: UIView {
             self.weekdayLabel.textColor = .blue
             
         default:
-            self.weekdayLabel.textColor = .purple4
+            self.weekdayLabel.textColor = .blue4
         }
     }
     
@@ -102,15 +107,15 @@ final class RecordView: UIView {
     }
     
     private func setupAttributes() {
-        self.containerView.backgroundColor = .purple4
+        self.containerView.backgroundColor = .blue1
         
         self.dateLabel.do {
-            $0.textColor = .lightPurple
+            $0.textColor = .lightBlue
             $0.font = .systemFont(ofSize: 17, weight: .semibold)
         }
         
         self.weekdayContainerView.do {
-            $0.backgroundColor = .lightPurple
+            $0.backgroundColor = .lightBlue
             $0.layer.cornerRadius = 4
         }
         self.weekdayLabel.do {
@@ -122,10 +127,11 @@ final class RecordView: UIView {
         }
         
         self.recordButton.do {
+            $0.isEnabled = false
             $0.layer.cornerRadius = 16
-            $0.backgroundColor = .purple1
+            $0.backgroundColor = .systemGray
             $0.setTitle("저장하기", for: .normal)
-            $0.setTitleColor(.lightPurple, for: .normal)
+            $0.setTitleColor(.lightBlue, for: .normal)
             $0.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
             $0.addTarget(self, action: #selector(recordButtonDidTap(_:)), for: .touchUpInside)
         }
