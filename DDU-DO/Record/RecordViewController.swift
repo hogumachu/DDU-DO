@@ -78,6 +78,9 @@ final class RecordViewController: UIViewController {
     
     private func handle(_ event: RecordViewModelEvent) {
         switch event {
+        case .updateButtonState(let isEnabled):
+            self.recordView.updateButtonState(isEnabled: isEnabled)
+            
         case .didFinishRecord(let targetDate):
             self.dismissWithAnimation {
                 self.delegate?.recordViewControllerDidFinishRecord(self, targetDate: targetDate)
@@ -176,7 +179,7 @@ extension RecordViewController: RecordViewDelegate {
     }
     
     func recordView(_ view: RecordView, didUpdateText text: String) {
-        
+        self.viewModel.updateText(text: text)
     }
     
     func recordViewDidTapRecordButton(_ view: RecordView, text: String) {

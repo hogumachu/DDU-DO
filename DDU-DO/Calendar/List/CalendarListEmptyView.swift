@@ -29,7 +29,8 @@ final class CalendarListEmptyView: UIView {
         
         self.containerView.addSubview(self.stackView)
         self.stackView.snp.makeConstraints { make in
-            make.centerY.leading.trailing.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-20)
+            make.leading.trailing.equalToSuperview()
         }
         
         self.stackView.addArrangedSubview(self.titleLabel)
@@ -43,16 +44,16 @@ final class CalendarListEmptyView: UIView {
         }
         
         self.titleLabel.do {
-            $0.text = "저장된 내용이 없습니다"
-            $0.textColor = .black
+            $0.text = "저장된 내용이 없어요"
+            $0.textColor = .lightBlue
             $0.textAlignment = .center
             $0.font = .systemFont(ofSize: 15, weight: .semibold)
             $0.numberOfLines = 0
         }
         
         self.contentLabel.do {
-            $0.text = "우측 하단 버튼으로 할일을 추가할 수 있습니다"
-            $0.textColor = .darkGray
+            $0.text = "하단에 있는 버튼으로 추가할 수 있어요"
+            $0.textColor = .lightBlue
             $0.textAlignment = .center
             $0.font = .systemFont(ofSize: 13, weight: .regular)
             $0.numberOfLines = 0

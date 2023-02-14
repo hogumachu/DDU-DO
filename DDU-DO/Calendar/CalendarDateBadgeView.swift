@@ -25,21 +25,10 @@ final class CalendarDateBadgeView: UIView {
         self.isHidden = false
         
         switch count {
-        case 0:
-            self.numberLabel.text = "0"
-            self.isHidden = true
-            
-        case 1:
-            self.numberLabel.text = "1"
-            self.containerView.backgroundColor = .darkGray
-            
-        case 2:
-            self.numberLabel.text = "2"
-            self.containerView.backgroundColor = .systemOrange
-            
-        default:
-            self.numberLabel.text = "3+"
-            self.containerView.backgroundColor = .systemPink
+        case 0:     self.isHidden = true
+        case 1:     self.containerView.backgroundColor = .pink1
+        case 2:     self.containerView.backgroundColor = .pink2
+        default:    self.containerView.backgroundColor = .pink3
             
         }
     }
@@ -48,27 +37,16 @@ final class CalendarDateBadgeView: UIView {
         self.addSubview(self.containerView)
         self.containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-        }
-        
-        self.containerView.addSubview(self.numberLabel)
-        self.numberLabel.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(3)
+            make.size.equalTo(CGSize(width: 8, height: 8))
         }
     }
     
     private func setupAttributes() {
         self.containerView.do {
-            $0.layer.cornerRadius = 3
-            $0.backgroundColor = .darkGray
-        }
-        
-        self.numberLabel.do {
-            $0.textColor = .white
-            $0.font = .systemFont(ofSize: 10, weight: .regular)
+            $0.layer.cornerRadius = 4
         }
     }
     
     private let containerView = UIView(frame: .zero)
-    private let numberLabel = UILabel(frame: .zero)
     
 }

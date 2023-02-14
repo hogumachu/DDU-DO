@@ -37,7 +37,7 @@ final class TodoDetailContentView: UIView {
         self.addSubview(self.containerView)
         self.containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.equalTo(40)
+            make.height.equalTo(45)
         }
         
         self.containerView.addSubview(self.imageView)
@@ -58,16 +58,16 @@ final class TodoDetailContentView: UIView {
     private func setupAttributes() {
         self.containerView.do {
             $0.layer.cornerRadius = 8
-            $0.backgroundColor = .purple3
+            $0.backgroundColor = .blue3
         }
         
         self.imageView.do {
-            $0.tintColor = .lightPurple
+            $0.tintColor = .lightBlue
             $0.contentMode = .scaleAspectFit
         }
         
         self.titleLabel.do {
-            $0.textColor = .lightPurple
+            $0.textColor = .lightBlue
             $0.font = .systemFont(ofSize: 15, weight: .regular)
             $0.numberOfLines = 1
         }

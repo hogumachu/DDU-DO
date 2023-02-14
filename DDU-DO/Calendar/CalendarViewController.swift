@@ -32,6 +32,11 @@ final class CalendarViewController: UIViewController {
         self.calendarView.selectDate(date)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.calendarListView.maskRoundedRect(cornerRadius: 20, corners: [.topLeft, .topRight])
+    }
+    
     private func bind(_ viewModel: CalendarViewModel) {
         viewModel
             .viewModelEvent
@@ -67,6 +72,12 @@ final class CalendarViewController: UIViewController {
             } else {
                 self.calendarListView.showEmptyView()
             }
+            
+        case .updateTitle(let text):
+            self.navigationView.updateTitle(text)
+            
+        case .updateTodayButton(let isHidden):
+            self.todayView.isHidden = isHidden
         }
     }
     
@@ -77,11 +88,18 @@ final class CalendarViewController: UIViewController {
             make.bottom.equalTo(self.view.safeArea.top)
         }
         
-        self.view.addSubview(self.calendarView)
-        self.calendarView.snp.makeConstraints { make in
+        self.view.addSubview(self.navigationView)
+        self.navigationView.snp.makeConstraints { make in
             make.top.equalTo(self.statusView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(40 * 7)
+            make.height.equalTo(44)
+        }
+        
+        self.view.addSubview(self.calendarView)
+        self.calendarView.snp.makeConstraints { make in
+            make.top.equalTo(self.navigationView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(32 * 7)
         }
         
         self.view.addSubview(self.calendarListView)
@@ -90,54 +108,73 @@ final class CalendarViewController: UIViewController {
             make.leading.trailing.bottom.equalToSuperview()
         }
         
-        self.view.addSubview(self.createButton)
-        self.createButton.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 40, height: 40))
-            make.trailing.bottom.equalToSuperview().inset(30)
+        self.view.addSubview(self.createView)
+        self.createView.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 60, height: 60))
+            make.trailing.bottom.equalToSuperview().inset(10)
         }
         
-        self.view.addSubview(self.todayButton)
-        self.todayButton.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 40, height: 40))
-            make.leading.bottom.equalToSuperview().inset(30)
+        self.view.addSubview(self.todayView)
+        self.todayView.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 80, height: 55))
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().inset(10)
         }
     }
     
     private func setupAttributes() {
+        self.view.backgroundColor = .blue1
+        
         self.statusView.do {
-            $0.backgroundColor = .white
+            $0.backgroundColor = .blue1
+        }
+        
+        self.navigationView.do {
+            $0.configure(.init(type: .none))
+            $0.backgroundColor = .blue1
+            $0.updateTintColor(.lightBlue)
         }
         
         self.calendarView.do {
             $0.delegate = self
             $0.dataSource = self
-            $0.backgroundColor = .white
         }
         
         self.calendarListView.do {
             $0.delegate = self
             $0.dataSource = self
-            $0.backgroundColor = .white
         }
         
-        self.createButton.do {
-            $0.layer.cornerRadius = 40 / 2
-            $0.backgroundColor = .systemOrange
-            $0.addTarget(self, action: #selector(createButtonDidTap(_:)), for: .touchUpInside)
+        self.createView.do {
+            $0.updateRadius(16)
+            $0.updateBackgroundColor(.blue5)
+            let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 17, weight: .heavy))
+            $0.setImage(UIImage(systemName: "plus", withConfiguration: config)?.withRenderingMode(.alwaysTemplate))
+            $0.updateTintColor(.lightBlue)
+            $0.hideTitle()
+            $0.isUserInteractionEnabled = true
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(createViewDidTap(_:)))
+            $0.addGestureRecognizer(tapGesture)
         }
         
-        self.todayButton.do {
-            $0.layer.cornerRadius = 40 / 2
-            $0.backgroundColor = .systemPink
-            $0.addTarget(self, action: #selector(todayButtonDidTap(_:)), for: .touchUpInside)
+        self.todayView.do {
+            $0.updateRadius(16)
+            $0.updateBackgroundColor(.lightBlue)
+            let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 13, weight: .heavy))
+            $0.setImage(UIImage(systemName: "arrow.up", withConfiguration: config)?.withRenderingMode(.alwaysTemplate))
+            $0.updateTintColor(.blue2)
+            $0.showTitle("오늘")
+            $0.isUserInteractionEnabled = true
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(todayViewDidTap(_:)))
+            $0.addGestureRecognizer(tapGesture)
         }
     }
     
-    @objc private func createButtonDidTap(_ sender: UIButton) {
+    @objc private func createViewDidTap(_ sender: UIGestureRecognizer) {
         self.viewModel.createButtonDidTap()
     }
     
-    @objc private func todayButtonDidTap(_ sender: UIButton) {
+    @objc private func todayViewDidTap(_ sender: UIButton) {
         self.viewModel.todayButtonDidTap()
     }
     
@@ -156,10 +193,11 @@ final class CalendarViewController: UIViewController {
     }
     
     private let statusView = UIView(frame: .zero)
+    private let navigationView = NavigationView(frame: .zero)
     private let calendarView = CalendarView(frame: .zero)
     private let calendarListView = CalendarListView(frame: .zero)
-    private let createButton = UIButton(frame: .zero)
-    private let todayButton = UIButton(frame: .zero)
+    private let createView = CalendarFloatingView(frame: .zero)
+    private let todayView = CalendarFloatingView(frame: .zero)
     private let viewModel: CalendarViewModel
     private let disposeBag = DisposeBag()
     
@@ -197,20 +235,6 @@ extension CalendarViewController: CalendarViewDelegate {
     
     func calendar(_ calendar: JTACMonthView, shouldSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) -> Bool {
         return cellState.dateBelongsTo == .thisMonth
-    }
-    
-    func calendar(_ calendar: JTACMonthView, headerViewForDateRange range: (start: Date, end: Date), at indexPath: IndexPath) -> JTACMonthReusableView {
-        guard let view = calendar.dequeueReusableView(view: CalendarDateHeaderView.self, for: indexPath) else { return JTACMonthReusableView() }
-        let formatter = DateFormatter().then {
-            $0.dateFormat = "yyyy년 MM월"
-            $0.locale = Locale(identifier: "ko_kr")
-        }
-        view.configure(formatter.string(from: range.start))
-        return view
-    }
-    
-    func calendarSizeForMonths(_ calendar: JTACMonthView?) -> MonthSize? {
-        return MonthSize(defaultSize: 60)
     }
     
     func calendar(_ calendar: JTACMonthView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {

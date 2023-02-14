@@ -57,16 +57,16 @@ final class TextInputView: UIView {
     
     private func setupAttributes() {
         self.textFieldContainerView.do {
-            $0.backgroundColor = .lightPurple
-            $0.layer.borderColor = UIColor.purple3?.cgColor
+            $0.backgroundColor = .lightBlue
+            $0.layer.borderColor = UIColor.blue3?.cgColor
             $0.layer.borderWidth = 1
             $0.layer.cornerRadius = 8
         }
         
         self.textField.do {
             $0.returnKeyType = .done
-            $0.textColor = .purple4
-            $0.backgroundColor = .lightPurple
+            $0.textColor = .blue4
+            $0.backgroundColor = .lightBlue
             $0.delegate = self
             $0.addTarget(self, action: #selector(textFieldDidChangeText(_:)), for: .editingChanged)
         }

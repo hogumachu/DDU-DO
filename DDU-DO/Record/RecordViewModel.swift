@@ -11,6 +11,7 @@ import RxRelay
 
 enum RecordViewModelEvent {
     
+    case updateButtonState(isEnabled: Bool)
     case didFinishRecord(targetDate: Date)
     case didFailRecord(message: String)
     
@@ -48,6 +49,10 @@ final class RecordViewModel {
         } catch {
             self.viewModelEventRelay.accept(.didFailRecord(message: "저장에 실패했습니다"))
         }
+    }
+    
+    func updateText(text: String) {
+        self.viewModelEventRelay.accept(.updateButtonState(isEnabled: !text.isEmpty))
     }
     
     private let targetDate: Date

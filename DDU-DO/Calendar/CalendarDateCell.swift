@@ -32,21 +32,26 @@ final class CalendarDateCell: JTACDayCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.dateLabel.textColor = .black
-        self.circleView.backgroundColor = .white
+        self.circleView.backgroundColor = .clear
         self.badgeView.configure(count: 0)
     }
     
     func configure(_ model: CalendarDateCellModel) {
         self.dateLabel.text = model.state.text
         self.dateLabel.font = .systemFont(ofSize: 13, weight: .regular)
-        self.circleView.backgroundColor = model.state.isSelected ? .lightGray : .white
+        self.circleView.backgroundColor = model.state.isSelected ? .blue1 : .clear
+        
         switch model.state.day {
         case .sunday:
             self.dateLabel.textColor = .red
         case .saturday:
             self.dateLabel.textColor = .blue
         default:
-            self.dateLabel.textColor = .black
+            self.dateLabel.textColor = .blue5
+        }
+        
+        if model.state.isSelected {
+            self.dateLabel.textColor = .white
         }
         
         if model.state.dateBelongsTo != .thisMonth {
@@ -57,7 +62,7 @@ final class CalendarDateCell: JTACDayCell {
         }
         
         if model.state.date.isDateInToday {
-            self.circleView.backgroundColor = .darkGray
+            self.circleView.backgroundColor = .blue3
             self.dateLabel.textColor = .white
             self.dateLabel.font = .systemFont(ofSize: 13, weight: .semibold)
         }
@@ -88,11 +93,11 @@ final class CalendarDateCell: JTACDayCell {
     
     private func setupAttributes() {
         self.containerView.do {
-            $0.backgroundColor = .white
+            $0.backgroundColor = .lightBlue
         }
         
         self.circleView.do {
-            $0.backgroundColor = .white
+            $0.backgroundColor = .clear
             $0.layer.cornerRadius = 25 / 2
         }
         

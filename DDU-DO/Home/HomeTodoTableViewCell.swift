@@ -81,11 +81,11 @@ final class HomeTodoTableViewCell: UITableViewCell {
     private func updateUI(_ model: HomeTodoTableViewCellModel) {
         switch model.type {
         case .today:
-            self.containerView.backgroundColor = .purple1
-            self.titleLabel.textColor = .lightPurple
-            self.subtitleLabel.textColor = .lightPurple
-            self.addImageView.tintColor = .purple1
-            self.addImageView.backgroundColor = .lightPurple
+            self.containerView.backgroundColor = .blue1
+            self.titleLabel.textColor = .lightBlue
+            self.subtitleLabel.textColor = .lightBlue
+            self.addImageView.tintColor = .blue1
+            self.addImageView.backgroundColor = .lightBlue
             let isAllCompleteButtonEnabled = model.items.filter { $0.isComplete == false }.count != 0
             if isAllCompleteButtonEnabled {
                 self.allCompleteButton.isHidden = false
@@ -96,11 +96,11 @@ final class HomeTodoTableViewCell: UITableViewCell {
             }
             
         case .etc:
-            self.containerView.backgroundColor = .lightPurple
-            self.titleLabel.textColor = .purple1
-            self.subtitleLabel.textColor = .purple1
-            self.addImageView.tintColor = .lightPurple
-            self.addImageView.backgroundColor = .purple1
+            self.containerView.backgroundColor = .lightBlue
+            self.titleLabel.textColor = .blue1
+            self.subtitleLabel.textColor = .blue1
+            self.addImageView.tintColor = .lightBlue
+            self.addImageView.backgroundColor = .blue1
             self.allCompleteButton.isHidden = true
             self.itemStackViewBottomConstraint?.update(offset: -20)
         }
@@ -110,6 +110,11 @@ final class HomeTodoTableViewCell: UITableViewCell {
         self.contentView.addSubview(self.containerView)
         self.containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(20)
+        }
+        
+        self.contentView.insertSubview(self.containerShadowView, belowSubview: self.containerView)
+        self.containerShadowView.snp.makeConstraints { make in
+            make.edges.equalTo(self.containerView)
         }
         
         self.containerView.addSubview(self.addImageView)
@@ -148,20 +153,32 @@ final class HomeTodoTableViewCell: UITableViewCell {
     
     private func setupAttributes() {
         self.selectionStyle = .none
-        self.backgroundColor = .darkPurple
+        self.backgroundColor = .backgroundBlue
         
         self.containerView.do {
-            $0.layer.cornerRadius = 10
-            $0.backgroundColor = .purple1
+            $0.layer.cornerRadius = 16
+            $0.backgroundColor = .blue1
+        }
+        
+        self.containerShadowView.do {
+            $0.layer.cornerRadius = 16
+            $0.clipsToBounds = false
+            $0.backgroundColor = .blue1
+            $0.applyShadow(
+                color: .black,
+                opacity: 0.1,
+                offset: CGSize(width: 0, height: -4),
+                blur: 16
+            )
         }
         
         self.titleLabel.do {
-            $0.textColor = .lightPurple
+            $0.textColor = .lightBlue
             $0.font = .systemFont(ofSize: 22, weight: .bold)
         }
         
         self.subtitleLabel.do {
-            $0.textColor = .lightPurple
+            $0.textColor = .lightBlue
             $0.font = .systemFont(ofSize: 15, weight: .regular)
         }
         
@@ -169,9 +186,9 @@ final class HomeTodoTableViewCell: UITableViewCell {
             let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 17, weight: .heavy))
             $0.image = UIImage(systemName: "plus", withConfiguration: config)?.withRenderingMode(.alwaysTemplate)
             $0.contentMode = .center
-            $0.tintColor = .purple1
+            $0.tintColor = .blue1
             $0.layer.cornerRadius = 16
-            $0.backgroundColor = .lightPurple
+            $0.backgroundColor = .lightBlue
             $0.isUserInteractionEnabled = true
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(addImageViewDidTap(_:)))
             $0.addGestureRecognizer(tapGesture)
@@ -184,10 +201,10 @@ final class HomeTodoTableViewCell: UITableViewCell {
         }
         
         self.allCompleteButton.do {
-            $0.backgroundColor = .lightPurple
+            $0.backgroundColor = .lightBlue
             $0.layer.cornerRadius = 16
             $0.setTitle("모두 완료하기", for: .normal)
-            $0.setTitleColor(.purple2, for: .normal)
+            $0.setTitleColor(.blue2, for: .normal)
             $0.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
             $0.addTarget(self, action: #selector(allCompleteButtonDidTap(_:)), for: .touchUpInside)
         }
@@ -205,6 +222,7 @@ final class HomeTodoTableViewCell: UITableViewCell {
     
     private var itemStackViewBottomConstraint: Constraint?
     
+    private let containerShadowView = UIView(frame: .zero)
     private let containerView = UIView(frame: .zero)
     private let titleLabel = UILabel(frame: .zero)
     private let subtitleLabel = UILabel(frame: .zero)
