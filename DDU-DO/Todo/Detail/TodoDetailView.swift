@@ -39,7 +39,7 @@ final class TodoDetailView: UIView {
     
     func updateEditButtonState(isEnabled: Bool) {
         self.editButton.isEnabled = isEnabled
-        self.editButton.backgroundColor = isEnabled ? .purple1 : .systemGray
+        self.editButton.backgroundColor = isEnabled ? .blue4 : .systemGray
     }
     
     private func setupLayout() {
@@ -67,7 +67,7 @@ final class TodoDetailView: UIView {
     }
     
     private func setupAttributes() {
-        self.backgroundColor = .purple4
+        self.backgroundColor = .blue1
         
         self.textInputView.do {
             $0.text = self.delegate?.todo
@@ -94,9 +94,9 @@ final class TodoDetailView: UIView {
         
         self.editButton.do {
             $0.layer.cornerRadius = 16
-            $0.backgroundColor = .purple1
+            $0.backgroundColor = .blue4
             $0.setTitle("변경하기", for: .normal)
-            $0.setTitleColor(.lightPurple, for: .normal)
+            $0.setTitleColor(.lightBlue, for: .normal)
             $0.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
             $0.addTarget(self, action: #selector(editViewDidTap(_:)), for: .touchUpInside)
         }
