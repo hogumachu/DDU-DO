@@ -15,6 +15,7 @@ enum NavigationViewType {
     case logo(style: NavigationLogoStyle)
     case logoWithInfo(style: NavigationLogoStyle)
     case info
+    case none
     
 }
 
@@ -42,6 +43,7 @@ extension NavigationViewType {
         case .logo:                         return nil
         case .logoWithInfo:                 return nil
         case .info:                         return nil
+        case .none:                         return nil
         }
     }
     
@@ -53,6 +55,7 @@ extension NavigationViewType {
         case .logo:                         return nil
         case .logoWithInfo:                 return UIImage.init(systemName: "line.3.horizontal", withConfiguration: config)
         case .info:                         return UIImage.init(systemName: "line.3.horizontal", withConfiguration: config)
+        case .none:                         return nil
         }
     }
     
@@ -64,6 +67,7 @@ extension NavigationViewType {
         case .logo(let style):              return UIImage(named: style.named, in: Bundle.main, with: config)
         case .logoWithInfo(let style):      return UIImage(named: style.named, in: Bundle.main, with: config)
         case .info:                         return nil
+        case .none:                         return nil
         }
     }
     
@@ -99,6 +103,10 @@ final class NavigationView: UIView {
         self.titleLabel.textColor = color
     }
     
+    func updateTitle(_ text: String?) {
+        self.titleLabel.text = text
+    }
+    
     func showSeparator() {
         guard self.separator.alpha == 0.0 else { return }
         UIView.animate(withDuration: 0.1) {
@@ -121,6 +129,12 @@ final class NavigationView: UIView {
             make.size.equalTo(CGSize(width: 100, height: 40))
         }
         
+        self.addSubview(self.titleLabel)
+        self.titleLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(50)
+        }
+        
         self.addSubview(self.separator)
         self.separator.snp.makeConstraints { make in
             make.height.equalTo(1)
@@ -133,6 +147,11 @@ final class NavigationView: UIView {
             $0.contentMode = .scaleAspectFit
         }
         
+        self.titleLabel.do {
+            $0.textAlignment = .center
+            $0.font = .systemFont(ofSize: 17, weight: .semibold)
+        }
+        
         self.leftButton.do {
             $0.contentMode = .center
         }
@@ -142,11 +161,10 @@ final class NavigationView: UIView {
         }
         
         self.separator.do {
-            $0.backgroundColor = .purple3
+            $0.backgroundColor = .blue1
             $0.alpha = 0.0
         }
     }
-    
     
     private let titleLabel = UILabel(frame: .zero)
     private let logoImageView = UIImageView(frame: .zero)
