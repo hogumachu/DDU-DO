@@ -20,6 +20,7 @@
 		F13798C1299A3AAE0053DE9C /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798C0299A3AAE0053DE9C /* UIColor+.swift */; };
 		F13798C3299A3AE60053DE9C /* UIColor+DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798C2299A3AE60053DE9C /* UIColor+DesignSystem.swift */; };
 		F13798C5299A6C540053DE9C /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798C4299A6C540053DE9C /* NavigationView.swift */; };
+		F13798C7299B25200053DE9C /* CalendarFloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798C6299B25200053DE9C /* CalendarFloatingView.swift */; };
 		F15FFBF6297BCE6100EF2E69 /* CalendarDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */; };
 		F15FFBF9297BD99600EF2E69 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBF8297BD99600EF2E69 /* UICollectionView+.swift */; };
 		F15FFBFB297BD9A500EF2E69 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBFA297BD9A500EF2E69 /* UITableView+.swift */; };
@@ -78,6 +79,7 @@
 		F13798C0299A3AAE0053DE9C /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		F13798C2299A3AE60053DE9C /* UIColor+DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+DesignSystem.swift"; sourceTree = "<group>"; };
 		F13798C4299A6C540053DE9C /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
+		F13798C6299B25200053DE9C /* CalendarFloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarFloatingView.swift; sourceTree = "<group>"; };
 		F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateCell.swift; sourceTree = "<group>"; };
 		F15FFBF8297BD99600EF2E69 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		F15FFBFA297BD9A500EF2E69 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 				F15FFBFE297BEC3F00EF2E69 /* CalendarDateHeaderView.swift */,
 				F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */,
 				F13798AE299774760053DE9C /* CalendarDateBadgeView.swift */,
+				F13798C6299B25200053DE9C /* CalendarFloatingView.swift */,
 				F15FFC3329800B0B00EF2E69 /* List */,
 			);
 			path = Calendar;
@@ -483,6 +486,7 @@
 				F15FFBFF297BEC3F00EF2E69 /* CalendarDateHeaderView.swift in Sources */,
 				F13798B5299795FB0053DE9C /* Date+Weekday.swift in Sources */,
 				F1BD6B9D2988D60300BE6825 /* Toast.swift in Sources */,
+				F13798C7299B25200053DE9C /* CalendarFloatingView.swift in Sources */,
 				F13798AB299683BE0053DE9C /* NotificationName.swift in Sources */,
 				F1BD6B9B2987C49A00BE6825 /* TodoDetailView.swift in Sources */,
 				F15FFC0C297D4A2C00EF2E69 /* TodoObject.swift in Sources */,
@@ -641,6 +645,7 @@
 				DEVELOPMENT_TEAM = 62ZLDXLZ77;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "DDU-DO/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "뚜두";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -671,6 +676,7 @@
 				DEVELOPMENT_TEAM = 62ZLDXLZ77;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "DDU-DO/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "뚜두";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
