@@ -73,7 +73,7 @@ final class CalendarListView: UIView {
             $0.separatorStyle = .none
             $0.backgroundColor = .backgroundBlue
             $0.registerCell(cell: CalendarListTableViewCell.self)
-            $0.contentInset = UIEdgeInsets(top: 30, left: 0, bottom: 100, right: 0)
+            $0.contentInset = UIEdgeInsets(top: 55, left: 0, bottom: 100, right: 0)
             $0.showsVerticalScrollIndicator = false
         }
         

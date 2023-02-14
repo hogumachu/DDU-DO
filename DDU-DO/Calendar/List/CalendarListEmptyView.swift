@@ -29,7 +29,7 @@ final class CalendarListEmptyView: UIView {
         
         self.containerView.addSubview(self.stackView)
         self.stackView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview().offset(-20)
+            make.centerY.equalToSuperview().offset(-10)
             make.leading.trailing.equalToSuperview()
         }
         
