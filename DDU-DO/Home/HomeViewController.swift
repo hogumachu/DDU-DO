@@ -70,12 +70,12 @@ final class HomeViewController: UIViewController {
         self.homeView.delegate = self
         self.homeView.dataSource = self
         self.statusView.do {
-            $0.backgroundColor = .darkPurple
+            $0.backgroundColor = .backgroundBlue
         }
         
         self.navigationView.do {
             $0.configure(.init(type: .logo(style: .darkContent)))
-            $0.backgroundColor = .darkPurple
+            $0.backgroundColor = .backgroundBlue
         }
     }
     
