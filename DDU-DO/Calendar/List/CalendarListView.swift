@@ -32,6 +32,11 @@ final class CalendarListView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.gradientLayer.frame = self.gradientView.bounds
+    }
+    
     func reloadData() {
         self.tableView.reloadData()
     }
@@ -54,23 +59,45 @@ final class CalendarListView: UIView {
         self.emptyView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        self.addSubview(self.gradientView)
+        self.gradientView.snp.makeConstraints { make in
+            make.height.equalTo(30)
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(self.tableView)
+        }
     }
     
     private func setupAttributes() {
         self.tableView.do {
             $0.separatorStyle = .none
-            $0.backgroundColor = .white
+            $0.backgroundColor = .backgroundBlue
             $0.registerCell(cell: CalendarListTableViewCell.self)
-            $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+            $0.contentInset = UIEdgeInsets(top: 30, left: 0, bottom: 100, right: 0)
             $0.showsVerticalScrollIndicator = false
         }
         
         self.emptyView.do {
             $0.isHidden = true
         }
+        
+        self.gradientView.do {
+            $0.isUserInteractionEnabled = false
+            $0.layer.insertSublayer(self.gradientLayer, at: 0)
+        }
     }
     
     private let tableView = UITableView(frame: .zero)
     private let emptyView = CalendarListEmptyView(frame: .zero)
+    private let gradientView = UIView(frame: .zero)
+    private var gradientLayer: CAGradientLayer = {
+        CAGradientLayer().then {
+            $0.colors = [
+                UIColor.backgroundBlue?.cgColor,
+                UIColor.backgroundBlue?.withAlphaComponent(0).cgColor
+            ]
+            $0.locations = [0, 1]
+        }
+    }()
     
 }
