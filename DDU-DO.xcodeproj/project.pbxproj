@@ -24,7 +24,6 @@
 		F15FFBF6297BCE6100EF2E69 /* CalendarDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */; };
 		F15FFBF9297BD99600EF2E69 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBF8297BD99600EF2E69 /* UICollectionView+.swift */; };
 		F15FFBFB297BD9A500EF2E69 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBFA297BD9A500EF2E69 /* UITableView+.swift */; };
-		F15FFBFF297BEC3F00EF2E69 /* CalendarDateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFBFE297BEC3F00EF2E69 /* CalendarDateHeaderView.swift */; };
 		F15FFC01297BEEE600EF2E69 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC00297BEEE600EF2E69 /* UIView+.swift */; };
 		F15FFC06297D498900EF2E69 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC05297D498900EF2E69 /* Entity.swift */; };
 		F15FFC08297D498E00EF2E69 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC07297D498E00EF2E69 /* Repository.swift */; };
@@ -83,7 +82,6 @@
 		F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateCell.swift; sourceTree = "<group>"; };
 		F15FFBF8297BD99600EF2E69 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		F15FFBFA297BD9A500EF2E69 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
-		F15FFBFE297BEC3F00EF2E69 /* CalendarDateHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateHeaderView.swift; sourceTree = "<group>"; };
 		F15FFC00297BEEE600EF2E69 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		F15FFC05297D498900EF2E69 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		F15FFC07297D498E00EF2E69 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
@@ -327,7 +325,6 @@
 				F1F12F93297BCB0E00D8CE21 /* CalendarViewController.swift */,
 				F1F12F97297BCB1C00D8CE21 /* CalendarViewModel.swift */,
 				F1F12F95297BCB1500D8CE21 /* CalendarView.swift */,
-				F15FFBFE297BEC3F00EF2E69 /* CalendarDateHeaderView.swift */,
 				F15FFBF5297BCE6100EF2E69 /* CalendarDateCell.swift */,
 				F13798AE299774760053DE9C /* CalendarDateBadgeView.swift */,
 				F13798C6299B25200053DE9C /* CalendarFloatingView.swift */,
@@ -483,7 +480,6 @@
 				F15FFC24297D630200EF2E69 /* TopScrollable.swift in Sources */,
 				F13798AD29974E8B0053DE9C /* CalendarListEmptyView.swift in Sources */,
 				F1BD6B912987BA1E00BE6825 /* CalendarCalculator.swift in Sources */,
-				F15FFBFF297BEC3F00EF2E69 /* CalendarDateHeaderView.swift in Sources */,
 				F13798B5299795FB0053DE9C /* Date+Weekday.swift in Sources */,
 				F1BD6B9D2988D60300BE6825 /* Toast.swift in Sources */,
 				F13798C7299B25200053DE9C /* CalendarFloatingView.swift in Sources */,

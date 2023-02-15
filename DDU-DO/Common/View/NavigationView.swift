@@ -12,24 +12,10 @@ import Then
 enum NavigationViewType {
     
     case back
-    case logo(style: NavigationLogoStyle)
-    case logoWithInfo(style: NavigationLogoStyle)
+    case logo
+    case logoWithInfo
     case info
     case none
-    
-}
-
-enum NavigationLogoStyle {
-    
-    case lightContent
-    case darkContent
-    
-    var named: String {
-        switch self {
-        case .lightContent:                       return "logo_light_content"
-        case .darkContent:                  return "logo_dark_content"
-        }
-    }
     
 }
 
@@ -64,8 +50,8 @@ extension NavigationViewType {
         
         switch self {
         case .back:                         return nil
-        case .logo(let style):              return UIImage(named: style.named, in: Bundle.main, with: config)
-        case .logoWithInfo(let style):      return UIImage(named: style.named, in: Bundle.main, with: config)
+        case .logo:                         return UIImage(named: "logo", in: Bundle.main, with: config)
+        case .logoWithInfo:                 return UIImage(named: "logo", in: Bundle.main, with: config)
         case .info:                         return nil
         case .none:                         return nil
         }
@@ -126,7 +112,7 @@ final class NavigationView: UIView {
         self.logoImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().offset(20)
-            make.size.equalTo(CGSize(width: 100, height: 40))
+            make.size.equalTo(CGSize(width: 80, height: 30))
         }
         
         self.addSubview(self.titleLabel)
@@ -161,7 +147,7 @@ final class NavigationView: UIView {
         }
         
         self.separator.do {
-            $0.backgroundColor = .blue1
+            $0.backgroundColor = .gray0
             $0.alpha = 0.0
         }
     }

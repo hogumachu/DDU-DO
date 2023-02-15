@@ -71,7 +71,7 @@ final class CalendarListView: UIView {
     private func setupAttributes() {
         self.tableView.do {
             $0.separatorStyle = .none
-            $0.backgroundColor = .backgroundBlue
+            $0.backgroundColor = .white
             $0.registerCell(cell: CalendarListTableViewCell.self)
             $0.contentInset = UIEdgeInsets(top: 55, left: 0, bottom: 100, right: 0)
             $0.showsVerticalScrollIndicator = false
@@ -93,8 +93,8 @@ final class CalendarListView: UIView {
     private var gradientLayer: CAGradientLayer = {
         CAGradientLayer().then {
             $0.colors = [
-                UIColor.backgroundBlue?.cgColor,
-                UIColor.backgroundBlue?.withAlphaComponent(0).cgColor
+                UIColor.white.cgColor,
+                UIColor.white.withAlphaComponent(0).cgColor
             ]
             $0.locations = [0, 1]
         }

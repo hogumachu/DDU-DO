@@ -25,6 +25,7 @@ final class RootViewController: UITabBarController {
         
         self.setupTabBar()
         self.setupTabBarViewControllers()
+        self.setupGradient()
         self.delegate = self
     }
     
@@ -32,20 +33,17 @@ final class RootViewController: UITabBarController {
         super.viewDidLayoutSubviews()
         self.tabBar.frame.size = CGSize(width: self.tabBar.frame.width, height: 50 + self.view.safeAreaInsets.bottom)
         self.tabBar.frame.origin.y = self.view.frame.maxY - self.tabBar.frame.height
+        self.gradientLayer.frame = self.gradientView.bounds
     }
     
     private func setupTabBar() {
         let apperance: UITabBarAppearance = self.tabBar.standardAppearance.then {
             $0.configureWithDefaultBackground()
-            $0.backgroundColor = .backgroundBlue
-            $0.shadowColor = .blue1
-            
-            let font = UIFont.systemFont(ofSize: 11, weight: .regular)
-            let selectedFont = UIFont.systemFont(ofSize: 11, weight: .semibold)
-            $0.stackedLayoutAppearance.normal.titleTextAttributes = [.font: font]
-            $0.stackedLayoutAppearance.selected.titleTextAttributes = [.font: selectedFont]
-            $0.stackedLayoutAppearance.normal.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -3)
-            $0.stackedItemPositioning = .centered
+            $0.backgroundColor = .gray0
+            $0.shadowColor = nil
+            $0.stackedItemPositioning = .automatic
+            $0.stackedLayoutAppearance.normal.iconColor = .gray2
+            $0.stackedLayoutAppearance.selected.iconColor = .green2
         }
         
         self.tabBar.do {
@@ -55,8 +53,6 @@ final class RootViewController: UITabBarController {
                 $0.scrollEdgeAppearance = $0.standardAppearance
             }
             $0.isTranslucent = false
-            $0.tintColor = .skyBlue
-            $0.unselectedItemTintColor = .blue5
         }
     }
     
@@ -83,6 +79,20 @@ final class RootViewController: UITabBarController {
         }
     }()
     
+    private func setupGradient() {
+        self.gradientView.do {
+            $0.isUserInteractionEnabled = false
+            $0.layer.insertSublayer(self.gradientLayer, at: 0)
+        }
+        
+        self.view.addSubview(self.gradientView)
+        self.gradientView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(25)
+            make.bottom.equalTo(self.view.safeArea.bottom).offset(-50)
+        }
+    }
+    
     private lazy var calendarViewController: UINavigationController = {
         let viewModel = CalendarViewModel(todoRepository: self.todoRepository)
         let viewController = CalendarViewController(viewModel: viewModel).then {
@@ -97,6 +107,16 @@ final class RootViewController: UITabBarController {
     
     private let todoRepository: TodoRepository<TodoEntity>
     private var currentIndex: Int?
+    private let gradientView = UIView(frame: .zero)
+    private var gradientLayer: CAGradientLayer = {
+        CAGradientLayer().then {
+            $0.colors = [
+                UIColor.gray0?.withAlphaComponent(0).cgColor,
+                UIColor.gray0?.cgColor
+            ]
+            $0.locations = [0, 1]
+        }
+    }()
     
 }
 

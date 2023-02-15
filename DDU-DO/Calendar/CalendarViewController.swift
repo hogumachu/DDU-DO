@@ -133,16 +133,16 @@ final class CalendarViewController: UIViewController {
     }
     
     private func setupAttributes() {
-        self.view.backgroundColor = .blue1
+        self.view.backgroundColor = .gray0
         
         self.statusView.do {
-            $0.backgroundColor = .blue1
+            $0.backgroundColor = .gray0
         }
         
         self.navigationView.do {
             $0.configure(.init(type: .none))
-            $0.backgroundColor = .blue1
-            $0.updateTintColor(.lightBlue)
+            $0.backgroundColor = .gray0
+            $0.updateTintColor(.blueBlack)
         }
         
         self.calendarView.do {
@@ -157,8 +157,8 @@ final class CalendarViewController: UIViewController {
         
         self.dateView.do {
             $0.updateRadius(16)
-            $0.updateBackgroundColor(.blue5)
-            $0.updateTintColor(.lightBlue)
+            $0.updateBackgroundColor(.green2)
+            $0.updateTintColor(.white)
             let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 17, weight: .semibold))
             $0.setImage(UIImage(systemName: "calendar.circle.fill", withConfiguration: config)?.withRenderingMode(.alwaysTemplate))
             $0.showTitle("")
@@ -166,10 +166,10 @@ final class CalendarViewController: UIViewController {
         
         self.createView.do {
             $0.updateRadius(16)
-            $0.updateBackgroundColor(.blue5)
+            $0.updateBackgroundColor(.green2)
             let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 17, weight: .heavy))
             $0.setImage(UIImage(systemName: "plus", withConfiguration: config)?.withRenderingMode(.alwaysTemplate))
-            $0.updateTintColor(.lightBlue)
+            $0.updateTintColor(.white)
             $0.hideTitle()
             $0.isUserInteractionEnabled = true
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(createViewDidTap(_:)))
@@ -178,10 +178,10 @@ final class CalendarViewController: UIViewController {
         
         self.todayView.do {
             $0.updateRadius(16)
-            $0.updateBackgroundColor(.lightBlue)
+            $0.updateBackgroundColor(.gray2)
             let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 13, weight: .heavy))
             $0.setImage(UIImage(systemName: "arrow.up", withConfiguration: config)?.withRenderingMode(.alwaysTemplate))
-            $0.updateTintColor(.blue2)
+            $0.updateTintColor(.blueBlack)
             $0.showTitle("오늘")
             $0.isUserInteractionEnabled = true
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(todayViewDidTap(_:)))

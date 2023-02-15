@@ -49,7 +49,7 @@ final class RecordView: UIView {
     
     func updateButtonState(isEnabled: Bool) {
         self.recordButton.isEnabled = isEnabled
-        self.recordButton.backgroundColor = isEnabled ? .blue5 : .systemGray
+        self.recordButton.backgroundColor = isEnabled ? .green2 : .systemGray
     }
     
     private func updateDelegate() {
@@ -64,7 +64,7 @@ final class RecordView: UIView {
             self.weekdayLabel.textColor = .blue
             
         default:
-            self.weekdayLabel.textColor = .blue4
+            self.weekdayLabel.textColor = .blueBlack
         }
     }
     
@@ -107,15 +107,15 @@ final class RecordView: UIView {
     }
     
     private func setupAttributes() {
-        self.containerView.backgroundColor = .blue1
+        self.containerView.backgroundColor = .white
         
         self.dateLabel.do {
-            $0.textColor = .lightBlue
+            $0.textColor = .blueBlack
             $0.font = .systemFont(ofSize: 17, weight: .semibold)
         }
         
         self.weekdayContainerView.do {
-            $0.backgroundColor = .lightBlue
+            $0.backgroundColor = .gray0
             $0.layer.cornerRadius = 4
         }
         self.weekdayLabel.do {
@@ -131,7 +131,8 @@ final class RecordView: UIView {
             $0.layer.cornerRadius = 16
             $0.backgroundColor = .systemGray
             $0.setTitle("저장하기", for: .normal)
-            $0.setTitleColor(.lightBlue, for: .normal)
+            $0.setTitleColor(.white, for: .normal)
+            $0.setTitleColor(.gray2, for: .disabled)
             $0.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
             $0.addTarget(self, action: #selector(recordButtonDidTap(_:)), for: .touchUpInside)
         }

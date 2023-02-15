@@ -42,12 +42,12 @@ final class HomeTodoItemView: UIView {
         if model.isComplete {
             self.contentLabel.attributedText = NSMutableAttributedString(string: model.text ?? "")
                 .strikethrough()
-            self.containerView.backgroundColor = .blue4
+            self.containerView.backgroundColor = .gray2
             let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 17, weight: .heavy))
             self.checkImageView.image = .init(systemName: "checkmark", withConfiguration: config)?.withRenderingMode(.alwaysTemplate)
         } else {
             self.contentLabel.attributedText = NSMutableAttributedString(string: model.text ?? "")
-            self.containerView.backgroundColor = .blue3
+            self.containerView.backgroundColor = .gray0
             self.checkImageView.image = nil
         }
         
@@ -60,7 +60,7 @@ final class HomeTodoItemView: UIView {
             self.contentLabel.attributedText = NSMutableAttributedString(string: model.text ?? "")
             self.checkImageView.isHidden = true
             self.contentLabelTrailgConstraint?.update(offset: -20)
-            self.containerView.backgroundColor = .blue1
+            self.containerView.backgroundColor = .gray0
         }
     }
     
@@ -88,7 +88,7 @@ final class HomeTodoItemView: UIView {
     
     private func setupAttributes() {
         self.containerView.do {
-            $0.backgroundColor = .blue3
+            $0.backgroundColor = .white
             $0.layer.cornerRadius = 16
             $0.isUserInteractionEnabled = true
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(containerViewDidTap(_:)))
@@ -96,15 +96,15 @@ final class HomeTodoItemView: UIView {
         }
         
         self.contentLabel.do {
-            $0.textColor = .lightBlue
+            $0.textColor = .blueBlack
             $0.font = .systemFont(ofSize: 17, weight: .regular)
         }
         
         self.checkImageView.do {
-            $0.backgroundColor = .lightBlue
+            $0.backgroundColor = .gray1
             $0.layer.cornerRadius = 10
             $0.contentMode = .center
-            $0.tintColor = .blue1
+            $0.tintColor = .green2
             $0.isUserInteractionEnabled = true
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(checkImageViewDidTap(_:)))
             $0.addGestureRecognizer(tapGesture)

@@ -58,16 +58,16 @@ final class TodoDetailContentView: UIView {
     private func setupAttributes() {
         self.containerView.do {
             $0.layer.cornerRadius = 16
-            $0.backgroundColor = .blue3
+            $0.backgroundColor = .gray1
         }
         
         self.imageView.do {
-            $0.tintColor = .lightBlue
+            $0.tintColor = .green2
             $0.contentMode = .scaleAspectFit
         }
         
         self.titleLabel.do {
-            $0.textColor = .lightBlue
+            $0.textColor = .blueBlack
             $0.font = .systemFont(ofSize: 15, weight: .regular)
             $0.numberOfLines = 1
         }

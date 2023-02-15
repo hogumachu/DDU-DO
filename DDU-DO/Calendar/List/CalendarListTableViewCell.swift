@@ -42,7 +42,7 @@ final class CalendarListTableViewCell: UITableViewCell {
         super.prepareForReuse()
         self.indexPath = nil
         self.contentLabel.attributedText = nil
-        self.containerView.backgroundColor = .blue1
+        self.containerView.backgroundColor = .white
     }
     
     func configure(_ model: CalendarListTableViewCellModel) {
@@ -50,11 +50,11 @@ final class CalendarListTableViewCell: UITableViewCell {
             self.contentLabel.attributedText = NSMutableAttributedString(string: model.text ?? "")
                 .strikethrough()
             let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 15, weight: .heavy))
-            self.containerView.backgroundColor = .blue4
+            self.containerView.backgroundColor = .gray2
             self.completeImageView.image = UIImage(systemName: "checkmark", withConfiguration: config)
         } else {
             self.contentLabel.attributedText = NSMutableAttributedString(string: model.text ?? "")
-            self.containerView.backgroundColor = .blue1
+            self.containerView.backgroundColor = .gray0
             self.completeImageView.image = nil
         }
     }
@@ -80,26 +80,26 @@ final class CalendarListTableViewCell: UITableViewCell {
     }
     
     private func setupAttributes() {
-        self.backgroundColor = .backgroundBlue
+        self.backgroundColor = .white
         self.selectionStyle = .none
         
         self.containerView.do {
-            $0.backgroundColor = .blue1
+            $0.backgroundColor = .gray0
             $0.layer.cornerRadius = 16
         }
         
         self.completeImageView.do {
-            $0.backgroundColor = .lightBlue
+            $0.backgroundColor = .gray1
             $0.layer.cornerRadius = 10
             $0.contentMode = .center
-            $0.tintColor = .blue2
+            $0.tintColor = .green2
             $0.isUserInteractionEnabled = true
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(completeImageViewDidTap(_:)))
             $0.addGestureRecognizer(tapGesture)
         }
         
         self.contentLabel.do {
-            $0.textColor = .lightBlue
+            $0.textColor = .blueBlack
             $0.font = .systemFont(ofSize: 15, weight: .regular)
             $0.numberOfLines = 0
         }

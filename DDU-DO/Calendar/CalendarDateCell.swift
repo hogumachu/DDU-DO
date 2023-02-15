@@ -39,7 +39,7 @@ final class CalendarDateCell: JTACDayCell {
     func configure(_ model: CalendarDateCellModel) {
         self.dateLabel.text = model.state.text
         self.dateLabel.font = .systemFont(ofSize: 13, weight: .regular)
-        self.circleView.backgroundColor = model.state.isSelected ? .blue1 : .clear
+        self.circleView.backgroundColor = model.state.isSelected ? .green1 : .clear
         
         switch model.state.day {
         case .sunday:
@@ -47,7 +47,7 @@ final class CalendarDateCell: JTACDayCell {
         case .saturday:
             self.dateLabel.textColor = .blue
         default:
-            self.dateLabel.textColor = .blue5
+            self.dateLabel.textColor = .blueBlack
         }
         
         if model.state.isSelected {
@@ -62,7 +62,7 @@ final class CalendarDateCell: JTACDayCell {
         }
         
         if model.state.date.isDateInToday {
-            self.circleView.backgroundColor = .blue3
+            self.circleView.backgroundColor = .green2
             self.dateLabel.textColor = .white
             self.dateLabel.font = .systemFont(ofSize: 13, weight: .semibold)
         }
@@ -93,7 +93,7 @@ final class CalendarDateCell: JTACDayCell {
     
     private func setupAttributes() {
         self.containerView.do {
-            $0.backgroundColor = .lightBlue
+            $0.backgroundColor = .gray0
         }
         
         self.circleView.do {
