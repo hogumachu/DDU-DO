@@ -18,6 +18,7 @@ final class CalendarViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.setupLayout()
         self.setupAttributes()
+        self.setupFeedbackGenerator()
         self.bind(viewModel)
     }
     
@@ -120,8 +121,8 @@ final class CalendarViewController: UIViewController {
         
         self.view.addSubview(self.createView)
         self.createView.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 60, height: 60))
-            make.trailing.bottom.equalToSuperview().inset(10)
+            make.size.equalTo(CGSize(width: 70, height: 70))
+            make.trailing.bottom.equalToSuperview().inset(15)
         }
         
         self.view.addSubview(self.todayView)
@@ -165,7 +166,7 @@ final class CalendarViewController: UIViewController {
         }
         
         self.createView.do {
-            $0.updateRadius(16)
+            $0.updateRadius(25)
             $0.updateBackgroundColor(.green2)
             let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 17, weight: .heavy))
             $0.setImage(UIImage(systemName: "plus", withConfiguration: config)?.withRenderingMode(.alwaysTemplate))
