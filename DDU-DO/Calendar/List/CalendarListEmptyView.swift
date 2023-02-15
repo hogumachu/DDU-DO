@@ -45,7 +45,7 @@ final class CalendarListEmptyView: UIView {
         
         self.titleLabel.do {
             $0.text = "저장된 내용이 없어요"
-            $0.textColor = .lightBlue
+            $0.textColor = .blueBlack
             $0.textAlignment = .center
             $0.font = .systemFont(ofSize: 15, weight: .semibold)
             $0.numberOfLines = 0
@@ -53,7 +53,7 @@ final class CalendarListEmptyView: UIView {
         
         self.contentLabel.do {
             $0.text = "하단에 있는 버튼으로 추가할 수 있어요"
-            $0.textColor = .lightBlue
+            $0.textColor = .blueBlack
             $0.textAlignment = .center
             $0.font = .systemFont(ofSize: 13, weight: .regular)
             $0.numberOfLines = 0

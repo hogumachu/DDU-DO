@@ -69,27 +69,27 @@ final class CalendarView: UIView {
     }
     
     private func setupAttributes() {
-        self.backgroundColor = .blue1
+        self.backgroundColor = .gray0
         
         self.containerView.do {
-            $0.backgroundColor = .lightBlue
+            $0.backgroundColor = .gray0
             $0.layer.cornerRadius = 16
         }
         
         self.containerShadowView.do {
             $0.layer.cornerRadius = 16
             $0.clipsToBounds = false
-            $0.backgroundColor = .lightBlue
+            $0.backgroundColor = .gray0
             $0.applyShadow(
                 color: .black,
-                opacity: 0.3,
+                opacity: 0.1,
                 offset: CGSize(width: 0, height: -4),
                 blur: 16
             )
         }
         
         self.monthView.do {
-            $0.backgroundColor = .lightBlue
+            $0.backgroundColor = .gray0
             $0.registerCell(cell: CalendarDateCell.self)
             $0.scrollDirection = .horizontal
             $0.scrollingMode = .stopAtEachCalendarFrame

@@ -9,18 +9,22 @@ import UIKit
 
 extension UIColor {
     
-    // MARK: - Blue
+    // MARK: - Gray
     
-    static let lightBlue = UIColor(hex: "EAE9F4")
-    static let skyBlue = UIColor(hex: "21D2FF")
+    static let gray0 = UIColor(hex: "F3F5F8")
+    static let gray1 = UIColor(hex: "EAE9F4")
+    static let gray2 = UIColor(hex: "C1C4CA")
+
+    // MARK: - Green
+
+    static let green0 = UIColor(hex: "6E858E")
+    static let green1 = UIColor(hex: "64748B")
+    static let green2 = UIColor(hex: "316D86")
+
+    // MARK: - Black
     
-    static let blue1 = UIColor(hex: "4D4BC9")
-    static let blue2 = UIColor(hex: "4D4EB9")
-    static let blue3 = UIColor(hex: "2624AB")
-    static let blue4 = UIColor(hex: "181669")
-    static let blue5 = UIColor(hex: "0D033F")
+    static let blueBlack = UIColor(hex: "0F172A")
     
-    static let backgroundBlue = UIColor(hex: "412DA8")
     
     // MARK: - Pink
     

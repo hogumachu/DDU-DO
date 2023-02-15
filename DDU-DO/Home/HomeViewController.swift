@@ -70,12 +70,12 @@ final class HomeViewController: UIViewController {
         self.homeView.delegate = self
         self.homeView.dataSource = self
         self.statusView.do {
-            $0.backgroundColor = .backgroundBlue
+            $0.backgroundColor = .gray0
         }
         
         self.navigationView.do {
-            $0.configure(.init(type: .logo(style: .darkContent)))
-            $0.backgroundColor = .backgroundBlue
+            $0.configure(.init(type: .logo))
+            $0.backgroundColor = .gray0
         }
     }
     
@@ -110,7 +110,7 @@ extension HomeViewController: HomeViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y
         
-        if offset > 0 {
+        if offset > 20 {
             self.navigationView.showSeparator()
         } else {
             self.navigationView.hideSeparator()
