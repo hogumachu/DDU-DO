@@ -17,6 +17,7 @@ final class HomeViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.setupLayout()
         self.setupAttributes()
+        self.setupFeedbackGenerator()
         self.bind(viewModel)
     }
     
@@ -79,6 +80,31 @@ final class HomeViewController: UIViewController {
         }
     }
     
+    private func setupFeedbackGenerator() {
+        self.selectionFeedbackGenerator = UISelectionFeedbackGenerator()
+        self.selectionFeedbackGenerator?.prepare()
+        
+        self.impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+        self.impactFeedbackGenerator?.prepare()
+        
+        self.notificationFeedbackGenerator = UINotificationFeedbackGenerator()
+        self.notificationFeedbackGenerator?.prepare()
+    }
+    
+    private func selectionChanged() {
+        self.selectionFeedbackGenerator?.selectionChanged()
+        self.selectionFeedbackGenerator?.prepare()
+    }
+    
+    private func impactOccurred() {
+        self.impactFeedbackGenerator?.impactOccurred()
+        self.impactFeedbackGenerator?.prepare()
+    }
+    
+    private func notifictaionOccured(type: UINotificationFeedbackGenerator.FeedbackType) {
+        self.notificationFeedbackGenerator?.notificationOccurred(type)
+    }
+    
     private func showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date) {
         let recordViewModel = RecordViewModel(todoRepository: repository, targetDate: targetDate)
         let recordViewController = RecordViewController(viewModel: recordViewModel)
@@ -92,6 +118,10 @@ final class HomeViewController: UIViewController {
         detailViewController.presentWithAnimation(from: self)
         detailViewController.delegate = self
     }
+    
+    private var selectionFeedbackGenerator: UISelectionFeedbackGenerator?
+    private var impactFeedbackGenerator: UIImpactFeedbackGenerator?
+    private var notificationFeedbackGenerator: UINotificationFeedbackGenerator?
     
     private let statusView = UIView(frame: .zero)
     private let navigationView = NavigationView(frame: .zero)
@@ -163,10 +193,12 @@ extension HomeViewController: HomeTodoTableViewCellDelegate {
     
     func homeTodoTableViewCellDidSelectComplete(_ cell: HomeTodoTableViewCell, indexPath: IndexPath, didSelectAt tag: Int) {
         self.viewModel.didSelectComplete(indexPath: indexPath, at: tag)
+        self.selectionChanged()
     }
     
     func homeTodoTableViewCellDidSelectCompleteAllButton(_ cell: HomeTodoTableViewCell, indexPath: IndexPath) {
         self.viewModel.didSelectAllComplete(indexPath: indexPath)
+        self.impactOccurred()
     }
     
 }
@@ -176,11 +208,13 @@ extension HomeViewController: RecordViewControllerDelegate {
     func recordViewControllerDidFinishRecord(_ viewController: RecordViewController, targetDate: Date) {
         let toastModel = ToastModel(message: "추가되었습니다", type: .success)
         ToastManager.showToast(toastModel)
+        self.notifictaionOccured(type: .success)
     }
     
     func recordViewControllerDidFailRecord(_ viewController: RecordViewController, message: String) {
         let toastModel = ToastModel(message: message, type: .fail)
         ToastManager.showToast(toastModel)
+        self.notifictaionOccured(type: .error)
     }
     
     func recordViewControllerDidCancelRecord(_ viewController: RecordViewController) {
@@ -194,11 +228,13 @@ extension HomeViewController: TodoDetailViewControllerDelegate {
     func todoDetailViewControllerDidFinish(_ viewController: TodoDetailViewController, message: String) {
         let toastModel = ToastModel(message: message, type: .success)
         ToastManager.showToast(toastModel)
+        self.notifictaionOccured(type: .success)
     }
     
     func todoDetailViewControllerDidFail(_ viewController: TodoDetailViewController, message: String) {
         let toastModel = ToastModel(message: message, type: .fail)
         ToastManager.showToast(toastModel)
+        self.notifictaionOccured(type: .error)
     }
     
 }

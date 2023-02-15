@@ -189,6 +189,31 @@ final class CalendarViewController: UIViewController {
         }
     }
     
+    private func setupFeedbackGenerator() {
+        self.selectionFeedbackGenerator = UISelectionFeedbackGenerator()
+        self.selectionFeedbackGenerator?.prepare()
+        
+        self.impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+        self.impactFeedbackGenerator?.prepare()
+        
+        self.notificationFeedbackGenerator = UINotificationFeedbackGenerator()
+        self.notificationFeedbackGenerator?.prepare()
+    }
+    
+    private func selectionChanged() {
+        self.selectionFeedbackGenerator?.selectionChanged()
+        self.selectionFeedbackGenerator?.prepare()
+    }
+    
+    private func impactOccurred() {
+        self.impactFeedbackGenerator?.impactOccurred()
+        self.impactFeedbackGenerator?.prepare()
+    }
+    
+    private func notifictaionOccured(type: UINotificationFeedbackGenerator.FeedbackType) {
+        self.notificationFeedbackGenerator?.notificationOccurred(type)
+    }
+    
     @objc private func createViewDidTap(_ sender: UIGestureRecognizer) {
         self.viewModel.createButtonDidTap()
     }
@@ -210,6 +235,10 @@ final class CalendarViewController: UIViewController {
         detailViewController.presentWithAnimation(from: self)
         detailViewController.delegate = self
     }
+    
+    private var selectionFeedbackGenerator: UISelectionFeedbackGenerator?
+    private var impactFeedbackGenerator: UIImpactFeedbackGenerator?
+    private var notificationFeedbackGenerator: UINotificationFeedbackGenerator?
     
     private let statusView = UIView(frame: .zero)
     private let navigationView = NavigationView(frame: .zero)
@@ -316,6 +345,7 @@ extension CalendarViewController: CalendarListTableViewCellDelegate {
     
     func calendarListTableViewCellDidSelectComplete(_ cell: CalendarListTableViewCell, didSelectAt indexPath: IndexPath) {
         self.viewModel.didSelectComplete(at: indexPath)
+        self.selectionChanged()
     }
     
 }
@@ -325,11 +355,13 @@ extension CalendarViewController: RecordViewControllerDelegate {
     func recordViewControllerDidFinishRecord(_ viewController: RecordViewController, targetDate: Date) {
         let toastModel = ToastModel(message: "추가되었습니다", type: .success)
         ToastManager.showToast(toastModel)
+        self.notifictaionOccured(type: .success)
     }
     
     func recordViewControllerDidFailRecord(_ viewController: RecordViewController, message: String) {
         let toastModel = ToastModel(message: message, type: .fail)
         ToastManager.showToast(toastModel)
+        self.notifictaionOccured(type: .error)
     }
     
     func recordViewControllerDidCancelRecord(_ viewController: RecordViewController) {
@@ -343,11 +375,13 @@ extension CalendarViewController: TodoDetailViewControllerDelegate {
     func todoDetailViewControllerDidFinish(_ viewController: TodoDetailViewController, message: String) {
         let toastModel = ToastModel(message: message, type: .success)
         ToastManager.showToast(toastModel)
+        self.notifictaionOccured(type: .success)
     }
     
     func todoDetailViewControllerDidFail(_ viewController: TodoDetailViewController, message: String) {
         let toastModel = ToastModel(message: message, type: .fail)
         ToastManager.showToast(toastModel)
+        self.notifictaionOccured(type: .error)
     }
     
 }
