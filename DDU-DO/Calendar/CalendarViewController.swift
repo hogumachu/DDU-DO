@@ -386,3 +386,11 @@ extension CalendarViewController: TodoDetailViewControllerDelegate {
     }
     
 }
+
+extension CalendarViewController: TopScrollable {
+    
+    func scrollToTop() {
+        self.calendarListView.scrollToTop()
+    }
+    
+}
