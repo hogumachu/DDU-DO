@@ -75,8 +75,10 @@ final class HomeViewController: UIViewController {
         }
         
         self.navigationView.do {
-            $0.configure(.init(type: .logo))
+            $0.delegate = self
+            $0.configure(.init(type: .info))
             $0.backgroundColor = .gray0
+            $0.updateTintColor(.blueBlack)
         }
     }
     
@@ -117,6 +119,14 @@ final class HomeViewController: UIViewController {
         let detailViewController = TodoDetailViewController(viewModel: detailViewModel)
         detailViewController.presentWithAnimation(from: self)
         detailViewController.delegate = self
+    }
+    
+    private func showSettingView() {
+        let settingViewModel = SettingViewModel()
+        let settingViewController = SettingViewController(viewModel: settingViewModel).then {
+            $0.hidesBottomBarWhenPushed = true
+        }
+        self.navigationController?.pushViewController(settingViewController, animated: true)
     }
     
     private var selectionFeedbackGenerator: UISelectionFeedbackGenerator?
@@ -239,3 +249,14 @@ extension HomeViewController: TodoDetailViewControllerDelegate {
     
 }
 
+extension HomeViewController: NavigationViewDelegate {
+    
+    func navigationViewDidTapLeftButton(_ view: NavigationView) {
+        
+    }
+    
+    func navigationViewDidTapRightButton(_ view: NavigationView) {
+        self.showSettingView()
+    }
+    
+}
