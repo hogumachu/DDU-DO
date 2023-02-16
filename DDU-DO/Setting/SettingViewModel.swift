@@ -13,6 +13,9 @@ import Then
 enum SettingViewModelEvent {
     
     case reloadData
+    case showModalView(BottomModalViewModel)
+    case didFinish(message: String?)
+    case didFail(message: String?)
     
 }
 
@@ -37,7 +40,8 @@ final class SettingViewModel {
         
     }
     
-    init() {
+    init(todoRepository: TodoRepository<TodoEntity>) {
+        self.todoRepository = todoRepository
         self.sections = self.makeSections(settings: self.settings)
         self.viewModelEventRelay.accept(.reloadData)
     }
@@ -69,15 +73,24 @@ final class SettingViewModel {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
             
         case .deleteAll:
-            print("## TODO: Delete All")
+            let modalViewModel = BottomModalViewModel(title: "정말 제거하시겠습니까?", subtitle: "제거하시면 다시는 복구할 수 없어요", buttonTitle: "제거하기", cancelButtonTitle: "취소", type: .alert)
+            self.viewModelEventRelay.accept(.showModalView(modalViewModel))
             
         case .review:
             guard let url = URL(string: "itms-apps://itunes.apple.com/app/id~~~~~~~~~~~") else { return }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
             
-            
         case .mail:
             self.mailToDeveloperIfEnabled()
+        }
+    }
+    
+    func bottomModalViewButtonDidTap() {
+        do {
+            try self.todoRepository.deleteAll()
+            self.viewModelEventRelay.accept(.didFinish(message: "성공적으로 제거했습니다"))
+        } catch {
+            self.viewModelEventRelay.accept(.didFail(message: "데이터 제거에 실패했습니다"))
         }
     }
     
@@ -120,6 +133,7 @@ final class SettingViewModel {
     
     private let settings: [Setting] = [.appVersion, .review, .mail, .deleteAll]
     private var sections: [Section] = []
+    private let todoRepository: TodoRepository<TodoEntity>
     
     private let viewModelEventRelay = PublishRelay<SettingViewModelEvent>()
     

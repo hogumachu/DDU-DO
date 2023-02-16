@@ -54,6 +54,13 @@ final class TodoRepository<RepositoryObject>: Repository where RepositoryObject:
         }
     }
     
+    func deleteAll() throws {
+        try realm.write {
+            realm.deleteAll()
+            self.postTodoRepositoryUpdated()
+        }
+    }
+    
     private func postTodoRepositoryUpdated() {
         NotificationCenter.default.post(name: .todoRepositoryUpdated, object: nil)
     }

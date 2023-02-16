@@ -37,6 +37,16 @@ final class SettingViewController: UIViewController {
         switch event {
         case .reloadData:
             self.settingView.reloadData()
+            
+        case .showModalView(let viewModel):
+            self.showModalView(viewModel)
+            
+        case .didFinish(let message):
+            self.showToast(message, isSuccess: true)
+            self.navigationController?.popViewController(animated: true)
+            
+        case .didFail(let message):
+            self.showToast(message, isSuccess: false)
         }
     }
     
@@ -48,6 +58,18 @@ final class SettingViewController: UIViewController {
         
         self.settingView.delegate = self
         self.settingView.dataSource = self
+    }
+    
+    private func showModalView(_ viewModel: BottomModalViewModel) {
+        let modalViewController = BottomModalViewController(viewModel: viewModel)
+        modalViewController.presentWithAnimation(from: self)
+        modalViewController.delegate = self
+    }
+    
+    private func showToast(_ message: String?, isSuccess: Bool) {
+        guard let message = message else { return }
+        let model = ToastModel(message: message, type: isSuccess ? .success : .fail)
+        ToastManager.showToast(model)
     }
     
     private let settingView = SettingView(frame: .zero)
@@ -97,5 +119,12 @@ extension SettingViewController: SettingViewDataSource {
         }
     }
     
+}
+
+extension SettingViewController: BottomModalViewControllerDelegate {
+    
+    func bottomModalViewControllerDidTapButton(_ viewController: BottomModalViewController) {
+        self.viewModel.bottomModalViewButtonDidTap()
+    }
     
 }
