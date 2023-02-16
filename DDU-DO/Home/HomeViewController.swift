@@ -263,3 +263,11 @@ extension HomeViewController: NavigationViewDelegate {
     }
     
 }
+
+extension HomeViewController: TopScrollable {
+    
+    func scrollToTop() {
+        self.homeView.scrollToTop()
+    }
+    
+}

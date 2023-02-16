@@ -49,6 +49,14 @@ final class CalendarListView: UIView {
         self.emptyView.isHidden = true
     }
     
+    func scrollToTop() {
+        let inset = self.tableView.contentInset
+        self.tableView.setContentOffset(
+            CGPoint(x: -inset.left, y: -inset.top),
+            animated: true
+        )
+    }
+    
     private func setupLayout() {
         self.addSubview(self.tableView)
         self.tableView.snp.makeConstraints { make in
