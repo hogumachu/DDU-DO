@@ -12,8 +12,6 @@ import Then
 enum NavigationViewType {
     
     case back
-    case logo
-    case logoWithInfo
     case info
     case none
     
@@ -26,8 +24,6 @@ extension NavigationViewType {
         
         switch self {
         case .back:                         return UIImage(systemName: "arrow.backward", withConfiguration: config)
-        case .logo:                         return nil
-        case .logoWithInfo:                 return nil
         case .info:                         return nil
         case .none:                         return nil
         }
@@ -38,8 +34,6 @@ extension NavigationViewType {
         
         switch self {
         case .back:                         return nil
-        case .logo:                         return nil
-        case .logoWithInfo:                 return UIImage.init(systemName: "line.3.horizontal", withConfiguration: config)
         case .info:                         return UIImage.init(systemName: "line.3.horizontal", withConfiguration: config)
         case .none:                         return nil
         }
@@ -50,8 +44,6 @@ extension NavigationViewType {
         
         switch self {
         case .back:                         return nil
-        case .logo:                         return UIImage(named: "logo", in: Bundle.main, with: config)
-        case .logoWithInfo:                 return UIImage(named: "logo", in: Bundle.main, with: config)
         case .info:                         return nil
         case .none:                         return nil
         }
@@ -65,7 +57,16 @@ struct NavigationViewModel {
     
 }
 
+protocol NavigationViewDelegate: AnyObject {
+    
+    func navigationViewDidTapLeftButton(_ view: NavigationView)
+    func navigationViewDidTapRightButton(_ view: NavigationView)
+    
+}
+
 final class NavigationView: UIView {
+    
+    weak var delegate: NavigationViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -80,7 +81,6 @@ final class NavigationView: UIView {
     func configure(_ model: NavigationViewModel) {
         self.leftButton.setImage(model.type.leftImage?.withRenderingMode(.alwaysTemplate), for: .normal)
         self.rightButton.setImage(model.type.rightImage?.withRenderingMode(.alwaysTemplate), for: .normal)
-        self.logoImageView.image = model.type.logoImage
     }
     
     func updateTintColor(_ color: UIColor?) {
@@ -108,13 +108,6 @@ final class NavigationView: UIView {
     }
     
     private func setupLayout() {
-        self.addSubview(self.logoImageView)
-        self.logoImageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(20)
-            make.size.equalTo(CGSize(width: 80, height: 30))
-        }
-        
         self.addSubview(self.titleLabel)
         self.titleLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -126,24 +119,34 @@ final class NavigationView: UIView {
             make.height.equalTo(1)
             make.leading.trailing.bottom.equalToSuperview()
         }
+        
+        self.addSubview(self.leftButton)
+        self.leftButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(20)
+        }
+        
+        self.addSubview(self.rightButton)
+        self.rightButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(20)
+        }
     }
     
     private func setupAttributes() {
-        self.logoImageView.do {
-            $0.contentMode = .scaleAspectFit
-        }
-        
         self.titleLabel.do {
             $0.textAlignment = .center
-            $0.font = .systemFont(ofSize: 17, weight: .semibold)
+            $0.font = .systemFont(ofSize: 17, weight: .bold)
         }
         
         self.leftButton.do {
             $0.contentMode = .center
+            $0.addTarget(self, action: #selector(leftButtonDidTap(_:)), for: .touchUpInside)
         }
         
         self.rightButton.do {
             $0.contentMode = .center
+            $0.addTarget(self, action: #selector(rightButtonDidTap(_:)), for: .touchUpInside)
         }
         
         self.separator.do {
@@ -152,8 +155,15 @@ final class NavigationView: UIView {
         }
     }
     
+    @objc private func leftButtonDidTap(_ sender: UIButton) {
+        self.delegate?.navigationViewDidTapLeftButton(self)
+    }
+    
+    @objc private func rightButtonDidTap(_ sender: UIButton) {
+        self.delegate?.navigationViewDidTapRightButton(self)
+    }
+    
     private let titleLabel = UILabel(frame: .zero)
-    private let logoImageView = UIImageView(frame: .zero)
     private let leftButton = UIButton(frame: .zero)
     private let rightButton = UIButton(frame: .zero)
     private let separator = UIView(frame: .zero)
