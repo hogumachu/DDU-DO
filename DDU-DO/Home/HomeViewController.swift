@@ -43,6 +43,9 @@ final class HomeViewController: UIViewController {
             
         case let .showDetailView(repository, entity):
             self.showDetailView(repository: repository, entity: entity)
+            
+        case let .showSettingView(repository):
+            self.showSettingView(repository: repository)
         }
     }
     
@@ -121,8 +124,8 @@ final class HomeViewController: UIViewController {
         detailViewController.delegate = self
     }
     
-    private func showSettingView() {
-        let settingViewModel = SettingViewModel()
+    private func showSettingView(repository: TodoRepository<TodoEntity>) {
+        let settingViewModel = SettingViewModel(todoRepository: repository)
         let settingViewController = SettingViewController(viewModel: settingViewModel).then {
             $0.hidesBottomBarWhenPushed = true
         }
@@ -256,7 +259,7 @@ extension HomeViewController: NavigationViewDelegate {
     }
     
     func navigationViewDidTapRightButton(_ view: NavigationView) {
-        self.showSettingView()
+        self.viewModel.didTapNavigationRightButton()
     }
     
 }

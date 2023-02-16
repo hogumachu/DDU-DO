@@ -14,6 +14,7 @@ enum HomeViewModelEvent {
     case reloadData
     case showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date)
     case showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity)
+    case showSettingView(repository: TodoRepository<TodoEntity>)
     
 }
 
@@ -155,6 +156,10 @@ final class HomeViewModel {
         default:
             return
         }
+    }
+    
+    func didTapNavigationRightButton() {
+        self.viewModelEventRelay.accept(.showSettingView(repository: self.todoRepository))
     }
     
     func refresh() {

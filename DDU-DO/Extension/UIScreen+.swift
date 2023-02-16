@@ -17,4 +17,8 @@ extension UIScreen {
         UIScreen.safeAreaInsets?.top ?? 0
     }
     
+    static var bottomSafeAreaInset: CGFloat {
+        UIScreen.safeAreaInsets?.bottom ?? 0
+    }
+    
 }
