@@ -69,7 +69,7 @@ final class SettingViewModel {
         
         switch setting {
         case .appVersion:
-            guard let url = URL(string: "itms-apps://itunes.apple.com/app/id~~~~~~~~~~~") else { return }
+            guard let url = URL(string: "itms-apps://itunes.apple.com/app/id1672261507") else { return }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
             
         case .deleteAll:
@@ -77,7 +77,7 @@ final class SettingViewModel {
             self.viewModelEventRelay.accept(.showModalView(modalViewModel))
             
         case .review:
-            guard let url = URL(string: "itms-apps://itunes.apple.com/app/id~~~~~~~~~~~") else { return }
+            guard let url = URL(string: "itms-apps://itunes.apple.com/app/id1672261507") else { return }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
             
         case .mail:
@@ -100,13 +100,14 @@ final class SettingViewModel {
         let appVersion = "AppVersion: " + AppBundle.appVersion
         let device = UIDevice.current.modelName
         let os = UIDevice.current.systemVersion
+        let message = "\n\n\n\n\n---------------\n\n\n" + [appVersion, device, os].joined(separator: "\n")
         
         var components = URLComponents()
         components.scheme = "mailto"
         components.path = address
         components.queryItems = [
             URLQueryItem(name: "subject", value: title),
-            URLQueryItem(name: "body", value: "\n\n\n\n\n---------------\n\n\n" + [appVersion, device, os].joined(separator: "\n"))
+            URLQueryItem(name: "body", value: message)
         ]
         guard let url = components.url else { return }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
