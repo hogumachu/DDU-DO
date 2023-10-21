@@ -83,6 +83,7 @@
 		F1F9EBF32AE3B3BC002FA542 /* AppRootInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBEF2AE3B3BC002FA542 /* AppRootInteractor.swift */; };
 		F1F9EBF52AE3B56B002FA542 /* AppRootComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBF42AE3B56B002FA542 /* AppRootComponent.swift */; };
 		F1F9EBFB2AE3BB63002FA542 /* TodoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBFA2AE3BB63002FA542 /* TodoUseCase.swift */; };
+		F1F9EBFE2AE3C412002FA542 /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBFD2AE3C412002FA542 /* AppComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,7 +155,7 @@
 		F1BD6BA32988E2DC00BE6825 /* ToastCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastCenter.swift; sourceTree = "<group>"; };
 		F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		F1F12F332964251000D8CE21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F1F12F332964251000D8CE21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		F1F12F382964251000D8CE21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1F12F93297BCB0E00D8CE21 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		F1F12F95297BCB1500D8CE21 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -167,6 +168,7 @@
 		F1F9EBEF2AE3B3BC002FA542 /* AppRootInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootInteractor.swift; sourceTree = "<group>"; };
 		F1F9EBF42AE3B56B002FA542 /* AppRootComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootComponent.swift; sourceTree = "<group>"; };
 		F1F9EBFA2AE3BB63002FA542 /* TodoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoUseCase.swift; sourceTree = "<group>"; };
+		F1F9EBFD2AE3C412002FA542 /* AppComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,9 +371,8 @@
 		F1F12F292964250D00D8CE21 /* DDU-DO */ = {
 			isa = PBXGroup;
 			children = (
+				F1F9EBFC2AE3C3F7002FA542 /* App */,
 				F1F9EBEB2AE3B3B2002FA542 /* AppRoot */,
-				F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */,
-				F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */,
 				F15FFC12297D512700EF2E69 /* RootViewController.swift */,
 				F15FFC03297D474400EF2E69 /* Service */,
 				F15FFBF7297BD97A00EF2E69 /* Extension */,
@@ -382,9 +383,6 @@
 				F15FFC36298529D600EF2E69 /* Record */,
 				F1BD6B922987C46900BE6825 /* Todo */,
 				F13798CA299CDF5A0053DE9C /* Setting */,
-				F1F12F332964251000D8CE21 /* Assets.xcassets */,
-				F1F12F352964251000D8CE21 /* LaunchScreen.storyboard */,
-				F1F12F382964251000D8CE21 /* Info.plist */,
 			);
 			path = "DDU-DO";
 			sourceTree = "<group>";
@@ -414,6 +412,19 @@
 				F1F9EBF42AE3B56B002FA542 /* AppRootComponent.swift */,
 			);
 			path = AppRoot;
+			sourceTree = "<group>";
+		};
+		F1F9EBFC2AE3C3F7002FA542 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */,
+				F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */,
+				F1F12F332964251000D8CE21 /* Assets.xcassets */,
+				F1F12F382964251000D8CE21 /* Info.plist */,
+				F1F12F352964251000D8CE21 /* LaunchScreen.storyboard */,
+				F1F9EBFD2AE3C412002FA542 /* AppComponent.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -595,6 +606,7 @@
 				F13798AB299683BE0053DE9C /* NotificationName.swift in Sources */,
 				F1BD6B9B2987C49A00BE6825 /* TodoDetailView.swift in Sources */,
 				F15FFC0C297D4A2C00EF2E69 /* TodoObject.swift in Sources */,
+				F1F9EBFE2AE3C412002FA542 /* AppComponent.swift in Sources */,
 				F13798B729979B290053DE9C /* NSMutableAttributedString+.swift in Sources */,
 				F1BD6B972987C48F00BE6825 /* TodoDetailViewController.swift in Sources */,
 				F14B4D8A299DED270055B842 /* Setting.swift in Sources */,
@@ -813,7 +825,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 62ZLDXLZ77;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "DDU-DO/Info.plist";
+				INFOPLIST_FILE = "DDU-DO/App/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "뚜두";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -844,7 +856,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 62ZLDXLZ77;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "DDU-DO/Info.plist";
+				INFOPLIST_FILE = "DDU-DO/App/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "뚜두";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
