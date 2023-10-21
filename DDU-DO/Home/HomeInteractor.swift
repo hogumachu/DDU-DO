@@ -9,7 +9,11 @@ import Foundation
 import RIBs
 import RxSwift
 
-protocol HomeRouting: ViewableRouting {}
+protocol HomeRouting: ViewableRouting {
+    func attachSetting()
+    func attachRecord(target: Date)
+    func attachDetail(entity: TodoEntity)
+}
 
 protocol HomePresentable: Presentable {
     var listener: HomePresentableListener? { get set }
@@ -24,8 +28,6 @@ protocol HomeInteractorDependency: Dependency {
 }
 
 final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteractable, HomePresentableListener {
-    
-    
     
     weak var router: HomeRouting?
     weak var listener: HomeListener?
@@ -53,7 +55,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     }
     
     func didTapSetting() {
-        print("# Attach Setting View")
+        router?.attachSetting()
     }
     
     func didSelectAdd(at indexPath: IndexPath) {
@@ -65,7 +67,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         
         switch item {
         case .todo(_, let targetDate):
-            print("# Attach Record View")
+            router?.attachRecord(target: targetDate)
             
         default:
             return
@@ -136,7 +138,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         case .todo(let model, _):
             guard let todoItem = model.items[safe: tag] else { return }
             guard let entity = dependency.todoUseCase.fetch(createdAt: todoItem.createdAt).first else { return }
-            print("# Attach DetailView")
+            router?.attachDetail(entity: entity)
             
         default:
             return
