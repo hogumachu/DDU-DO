@@ -20,7 +20,6 @@
 		F13798C3299A3AE60053DE9C /* UIColor+DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798C2299A3AE60053DE9C /* UIColor+DesignSystem.swift */; };
 		F13798C5299A6C540053DE9C /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798C4299A6C540053DE9C /* NavigationView.swift */; };
 		F13798C7299B25200053DE9C /* CalendarFloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798C6299B25200053DE9C /* CalendarFloatingView.swift */; };
-		F13798CE299D1A3A0053DE9C /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798CD299D1A3A0053DE9C /* SettingViewModel.swift */; };
 		F13798D0299D1A3F0053DE9C /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798CF299D1A3F0053DE9C /* SettingView.swift */; };
 		F13798D2299D1A560053DE9C /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13798D1299D1A560053DE9C /* SettingTableViewCell.swift */; };
 		F14B4D88299DE9F80055B842 /* AppBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14B4D87299DE9F80055B842 /* AppBundle.swift */; };
@@ -120,7 +119,6 @@
 		F13798C6299B25200053DE9C /* CalendarFloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarFloatingView.swift; sourceTree = "<group>"; };
 		F13798C8299CD34D0053DE9C /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		F13798C9299CD3630053DE9C /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ko; path = ko.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		F13798CD299D1A3A0053DE9C /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		F13798CF299D1A3F0053DE9C /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		F13798D1299D1A560053DE9C /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		F14B4D87299DE9F80055B842 /* AppBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBundle.swift; sourceTree = "<group>"; };
@@ -217,13 +215,24 @@
 		F13798CA299CDF5A0053DE9C /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				F1F9EC162AE3D4E3002FA542 /* RIBs */,
-				F13798CD299D1A3A0053DE9C /* SettingViewModel.swift */,
-				F13798CF299D1A3F0053DE9C /* SettingView.swift */,
-				F13798D1299D1A560053DE9C /* SettingTableViewCell.swift */,
+				F1485B0D2AE3DBF40027C001 /* Views */,
+				F1F9EC172AE3D4EE002FA542 /* SettingRouter.swift */,
+				F1F9EC182AE3D4EE002FA542 /* SettingViewController.swift */,
+				F1F9EC192AE3D4EE002FA542 /* SettingBuilder.swift */,
+				F1F9EC1A2AE3D4EE002FA542 /* SettingInteractor.swift */,
+				F1F9EC1F2AE3D57F002FA542 /* SettingSection.swift */,
 				F14B4D89299DED270055B842 /* Setting.swift */,
 			);
 			path = Setting;
+			sourceTree = "<group>";
+		};
+		F1485B0D2AE3DBF40027C001 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F13798CF299D1A3F0053DE9C /* SettingView.swift */,
+				F13798D1299D1A560053DE9C /* SettingTableViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		F14B4D8D299E27D70055B842 /* ViewController */ = {
@@ -455,18 +464,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		F1F9EC162AE3D4E3002FA542 /* RIBs */ = {
-			isa = PBXGroup;
-			children = (
-				F1F9EC172AE3D4EE002FA542 /* SettingRouter.swift */,
-				F1F9EC182AE3D4EE002FA542 /* SettingViewController.swift */,
-				F1F9EC192AE3D4EE002FA542 /* SettingBuilder.swift */,
-				F1F9EC1A2AE3D4EE002FA542 /* SettingInteractor.swift */,
-				F1F9EC1F2AE3D57F002FA542 /* SettingSection.swift */,
-			);
-			path = RIBs;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -600,7 +597,6 @@
 				F14B4D8C299E21110055B842 /* UIDevice.swift in Sources */,
 				F13798D0299D1A3F0053DE9C /* SettingView.swift in Sources */,
 				F15FFC29297D638100EF2E69 /* UIViewController+.swift in Sources */,
-				F13798CE299D1A3A0053DE9C /* SettingViewModel.swift in Sources */,
 				F1F9EC1C2AE3D4EE002FA542 /* SettingViewController.swift in Sources */,
 				F13798AF299774760053DE9C /* CalendarDateBadgeView.swift in Sources */,
 				F13798C5299A6C540053DE9C /* NavigationView.swift in Sources */,
