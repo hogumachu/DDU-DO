@@ -155,7 +155,7 @@
 		F1BD6BA32988E2DC00BE6825 /* ToastCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastCenter.swift; sourceTree = "<group>"; };
 		F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		F1F12F332964251000D8CE21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F1F12F332964251000D8CE21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		F1F12F382964251000D8CE21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1F12F93297BCB0E00D8CE21 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		F1F12F95297BCB1500D8CE21 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -373,8 +373,6 @@
 			children = (
 				F1F9EBFC2AE3C3F7002FA542 /* App */,
 				F1F9EBEB2AE3B3B2002FA542 /* AppRoot */,
-				F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */,
-				F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */,
 				F15FFC12297D512700EF2E69 /* RootViewController.swift */,
 				F15FFC03297D474400EF2E69 /* Service */,
 				F15FFBF7297BD97A00EF2E69 /* Extension */,
@@ -385,9 +383,6 @@
 				F15FFC36298529D600EF2E69 /* Record */,
 				F1BD6B922987C46900BE6825 /* Todo */,
 				F13798CA299CDF5A0053DE9C /* Setting */,
-				F1F12F332964251000D8CE21 /* Assets.xcassets */,
-				F1F12F352964251000D8CE21 /* LaunchScreen.storyboard */,
-				F1F12F382964251000D8CE21 /* Info.plist */,
 			);
 			path = "DDU-DO";
 			sourceTree = "<group>";
@@ -422,6 +417,11 @@
 		F1F9EBFC2AE3C3F7002FA542 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */,
+				F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */,
+				F1F12F332964251000D8CE21 /* Assets.xcassets */,
+				F1F12F382964251000D8CE21 /* Info.plist */,
+				F1F12F352964251000D8CE21 /* LaunchScreen.storyboard */,
 				F1F9EBFD2AE3C412002FA542 /* AppComponent.swift */,
 			);
 			path = App;
@@ -825,7 +825,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 62ZLDXLZ77;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "DDU-DO/Info.plist";
+				INFOPLIST_FILE = "DDU-DO/App/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "뚜두";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -856,7 +856,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 62ZLDXLZ77;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "DDU-DO/Info.plist";
+				INFOPLIST_FILE = "DDU-DO/App/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "뚜두";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
