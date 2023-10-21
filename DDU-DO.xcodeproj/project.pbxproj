@@ -76,6 +76,12 @@
 		F1F9EBD22AE3AFF6002FA542 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F1F9EBD12AE3AFF6002FA542 /* SnapKit */; };
 		F1F9EBD52AE3B00D002FA542 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = F1F9EBD42AE3B00D002FA542 /* Then */; };
 		F1F9EBD82AE3B03B002FA542 /* JTAppleCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = F1F9EBD72AE3B03B002FA542 /* JTAppleCalendar */; };
+		F1F9EBE12AE3B2E8002FA542 /* RIBs in Frameworks */ = {isa = PBXBuildFile; productRef = F1F9EBE02AE3B2E8002FA542 /* RIBs */; };
+		F1F9EBF02AE3B3BC002FA542 /* AppRootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBEC2AE3B3BC002FA542 /* AppRootRouter.swift */; };
+		F1F9EBF12AE3B3BC002FA542 /* AppRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBED2AE3B3BC002FA542 /* AppRootViewController.swift */; };
+		F1F9EBF22AE3B3BC002FA542 /* AppRootBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBEE2AE3B3BC002FA542 /* AppRootBuilder.swift */; };
+		F1F9EBF32AE3B3BC002FA542 /* AppRootInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBEF2AE3B3BC002FA542 /* AppRootInteractor.swift */; };
+		F1F9EBF52AE3B56B002FA542 /* AppRootComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBF42AE3B56B002FA542 /* AppRootComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,7 +142,6 @@
 		F15FFC39298529F900EF2E69 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		F15FFC3B298529FF00EF2E69 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		F15FFC3D2985394000EF2E69 /* TextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputView.swift; sourceTree = "<group>"; };
-		F1A6D38629BAF9F800832C5F /* DDU-DOTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "DDU-DOTests.xctest"; path = "/Users/hong/Developer/DDU-DO/build/Debug-iphoneos/DDU-DOTests.xctest"; sourceTree = "<absolute>"; };
 		F1A6D38F29BAFB3500832C5F /* TodoRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoRepositoryTests.swift; sourceTree = "<group>"; };
 		F1BD6B902987BA1E00BE6825 /* CalendarCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCalculator.swift; sourceTree = "<group>"; };
 		F1BD6B962987C48F00BE6825 /* TodoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewController.swift; sourceTree = "<group>"; };
@@ -146,7 +151,6 @@
 		F1BD6B9F2988E13A00BE6825 /* ToastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
 		F1BD6BA12988E19900BE6825 /* UIScreen+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+.swift"; sourceTree = "<group>"; };
 		F1BD6BA32988E2DC00BE6825 /* ToastCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastCenter.swift; sourceTree = "<group>"; };
-		F1F12F272964250D00D8CE21 /* DDU-DO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "DDU-DO.app"; path = "/Users/hong/Developer/DDU-DO/build/Debug-iphoneos/DDU-DO.app"; sourceTree = "<absolute>"; };
 		F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		F1F12F332964251000D8CE21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -154,6 +158,13 @@
 		F1F12F93297BCB0E00D8CE21 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		F1F12F95297BCB1500D8CE21 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		F1F12F97297BCB1C00D8CE21 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		F1F9EBDD2AE3B2A9002FA542 /* DDU-DO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DDU-DO.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1F9EBDE2AE3B2A9002FA542 /* DDU-DOTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DDU-DOTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1F9EBEC2AE3B3BC002FA542 /* AppRootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootRouter.swift; sourceTree = "<group>"; };
+		F1F9EBED2AE3B3BC002FA542 /* AppRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootViewController.swift; sourceTree = "<group>"; };
+		F1F9EBEE2AE3B3BC002FA542 /* AppRootBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootBuilder.swift; sourceTree = "<group>"; };
+		F1F9EBEF2AE3B3BC002FA542 /* AppRootInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootInteractor.swift; sourceTree = "<group>"; };
+		F1F9EBF42AE3B56B002FA542 /* AppRootComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +187,7 @@
 				F1F9EBD22AE3AFF6002FA542 /* SnapKit in Frameworks */,
 				F1F9EBCD2AE3AFDC002FA542 /* RxRelay in Frameworks */,
 				F1F9EBC62AE3AFB5002FA542 /* Realm in Frameworks */,
+				F1F9EBE12AE3B2E8002FA542 /* RIBs in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,12 +358,15 @@
 			children = (
 				F1F12F292964250D00D8CE21 /* DDU-DO */,
 				F1A6D38729BAF9F800832C5F /* DDU-DOTests */,
+				F1F9EBDD2AE3B2A9002FA542 /* DDU-DO.app */,
+				F1F9EBDE2AE3B2A9002FA542 /* DDU-DOTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
 		F1F12F292964250D00D8CE21 /* DDU-DO */ = {
 			isa = PBXGroup;
 			children = (
+				F1F9EBEB2AE3B3B2002FA542 /* AppRoot */,
 				F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */,
 				F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */,
 				F15FFC12297D512700EF2E69 /* RootViewController.swift */,
@@ -386,6 +401,18 @@
 			path = Calendar;
 			sourceTree = "<group>";
 		};
+		F1F9EBEB2AE3B3B2002FA542 /* AppRoot */ = {
+			isa = PBXGroup;
+			children = (
+				F1F9EBEC2AE3B3BC002FA542 /* AppRootRouter.swift */,
+				F1F9EBED2AE3B3BC002FA542 /* AppRootViewController.swift */,
+				F1F9EBEE2AE3B3BC002FA542 /* AppRootBuilder.swift */,
+				F1F9EBEF2AE3B3BC002FA542 /* AppRootInteractor.swift */,
+				F1F9EBF42AE3B56B002FA542 /* AppRootComponent.swift */,
+			);
+			path = AppRoot;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -404,7 +431,7 @@
 			);
 			name = "DDU-DOTests";
 			productName = "DDU-DOTests";
-			productReference = F1A6D38629BAF9F800832C5F /* DDU-DOTests.xctest */;
+			productReference = F1F9EBDE2AE3B2A9002FA542 /* DDU-DOTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		F1F12F262964250D00D8CE21 /* DDU-DO */ = {
@@ -429,9 +456,10 @@
 				F1F9EBD12AE3AFF6002FA542 /* SnapKit */,
 				F1F9EBD42AE3B00D002FA542 /* Then */,
 				F1F9EBD72AE3B03B002FA542 /* JTAppleCalendar */,
+				F1F9EBE02AE3B2E8002FA542 /* RIBs */,
 			);
 			productName = "DDU-DO";
-			productReference = F1F12F272964250D00D8CE21 /* DDU-DO.app */;
+			productReference = F1F9EBDD2AE3B2A9002FA542 /* DDU-DO.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -465,11 +493,12 @@
 			);
 			mainGroup = F1F12F1E2964250D00D8CE21;
 			packageReferences = (
-				F1F9EBC42AE3AFB5002FA542 /* XCRemoteSwiftPackageReference "realm-swift.git" */,
+				F1F9EBC42AE3AFB5002FA542 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				F1F9EBC92AE3AFDC002FA542 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				F1F9EBD02AE3AFF6002FA542 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				F1F9EBD32AE3B00D002FA542 /* XCRemoteSwiftPackageReference "Then" */,
 				F1F9EBD62AE3B03B002FA542 /* XCRemoteSwiftPackageReference "JTAppleCalendar" */,
+				F1F9EBDF2AE3B2E8002FA542 /* XCRemoteSwiftPackageReference "RIBs" */,
 			);
 			productRefGroup = F1F12F1E2964250D00D8CE21;
 			projectDirPath = "";
@@ -532,16 +561,20 @@
 				F15FFBFB297BD9A500EF2E69 /* UITableView+.swift in Sources */,
 				F13798B129977D0A0053DE9C /* Date+.swift in Sources */,
 				F15FFC3229800A6B00EF2E69 /* CalendarListView.swift in Sources */,
+				F1F9EBF02AE3B3BC002FA542 /* AppRootRouter.swift in Sources */,
 				F15FFC01297BEEE600EF2E69 /* UIView+.swift in Sources */,
 				F14B4D88299DE9F80055B842 /* AppBundle.swift in Sources */,
 				F13798C3299A3AE60053DE9C /* UIColor+DesignSystem.swift in Sources */,
 				F15FFC0E297D4A3000EF2E69 /* TodoRepository.swift in Sources */,
+				F1F9EBF32AE3B3BC002FA542 /* AppRootInteractor.swift in Sources */,
+				F1F9EBF22AE3B3BC002FA542 /* AppRootBuilder.swift in Sources */,
 				F13798A92994D8F50053DE9C /* TodoDetailContentView.swift in Sources */,
 				F1BD6BA02988E13A00BE6825 /* ToastManager.swift in Sources */,
 				F15FFC3C298529FF00EF2E69 /* RecordView.swift in Sources */,
 				F1BD6BA22988E19900BE6825 /* UIScreen+.swift in Sources */,
 				F15FFC13297D512700EF2E69 /* RootViewController.swift in Sources */,
 				F1F12F94297BCB0E00D8CE21 /* CalendarViewController.swift in Sources */,
+				F1F9EBF12AE3B3BC002FA542 /* AppRootViewController.swift in Sources */,
 				F15FFC3A298529F900EF2E69 /* RecordViewModel.swift in Sources */,
 				F13798BD299A22630053DE9C /* HomeTodoTableViewCell.swift in Sources */,
 				F1F12F2B2964250D00D8CE21 /* AppDelegate.swift in Sources */,
@@ -563,6 +596,7 @@
 				F14B4D8A299DED270055B842 /* Setting.swift in Sources */,
 				F1F12F2D2964250D00D8CE21 /* SceneDelegate.swift in Sources */,
 				F14B4D8F299E27EA0055B842 /* BottomModalViewController.swift in Sources */,
+				F1F9EBF52AE3B56B002FA542 /* AppRootComponent.swift in Sources */,
 				F15FFC1E297D550C00EF2E69 /* TextOnlyTableViewCell.swift in Sources */,
 				F15FFC08297D498E00EF2E69 /* Repository.swift in Sources */,
 				F13798BF299A23840053DE9C /* HomeTodoItemView.swift in Sources */,
@@ -861,7 +895,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		F1F9EBC42AE3AFB5002FA542 /* XCRemoteSwiftPackageReference "realm-swift.git" */ = {
+		F1F9EBC42AE3AFB5002FA542 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
@@ -901,17 +935,25 @@
 				minimumVersion = 8.0.0;
 			};
 		};
+		F1F9EBDF2AE3B2E8002FA542 /* XCRemoteSwiftPackageReference "RIBs" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/uber/RIBs";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		F1F9EBC52AE3AFB5002FA542 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F1F9EBC42AE3AFB5002FA542 /* XCRemoteSwiftPackageReference "realm-swift.git" */;
+			package = F1F9EBC42AE3AFB5002FA542 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = Realm;
 		};
 		F1F9EBC72AE3AFB5002FA542 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F1F9EBC42AE3AFB5002FA542 /* XCRemoteSwiftPackageReference "realm-swift.git" */;
+			package = F1F9EBC42AE3AFB5002FA542 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
 		F1F9EBCA2AE3AFDC002FA542 /* RxCocoa */ = {
@@ -943,6 +985,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F1F9EBD62AE3B03B002FA542 /* XCRemoteSwiftPackageReference "JTAppleCalendar" */;
 			productName = JTAppleCalendar;
+		};
+		F1F9EBE02AE3B2E8002FA542 /* RIBs */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F1F9EBDF2AE3B2E8002FA542 /* XCRemoteSwiftPackageReference "RIBs" */;
+			productName = RIBs;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
