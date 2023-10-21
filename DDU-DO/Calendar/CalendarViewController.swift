@@ -332,7 +332,7 @@ extension CalendarViewController: CalendarListViewDataSource {
         
         switch item {
         case .content(let model, _):
-            guard let cell = tableView.dequeueReusableCell(cell: CalendarListTableViewCell.self, for: indexPath) else { return UITableViewCell() }
+            let cell = tableView.dequeueReusableCell(cell: CalendarListTableViewCell.self, for: indexPath)
             cell.configure(model)
             cell.delegate = self
             cell.indexPath = indexPath

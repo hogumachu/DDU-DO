@@ -22,6 +22,12 @@ struct HomeTodoItemViewModel {
     let isComplete: Bool
     let createdAt: Date
     
+    init(entity: TodoEntity) {
+        self.text = entity.todo
+        self.isComplete = entity.isComplete
+        self.createdAt = entity.createAt
+    }
+    
 }
 
 final class HomeTodoItemView: UIView {

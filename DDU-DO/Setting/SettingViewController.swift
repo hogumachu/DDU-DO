@@ -108,12 +108,12 @@ extension SettingViewController: SettingViewDataSource {
         guard let item = self.viewModel.cellItem(at: indexPath) else { return UITableViewCell() }
         switch item {
         case .title(let model):
-            guard let cell = tableView.dequeueReusableCell(cell: SettingTableViewCell.self, for: indexPath) else { return UITableViewCell() }
+            let cell = tableView.dequeueReusableCell(cell: SettingTableViewCell.self, for: indexPath)
             cell.configure(model)
             return cell
             
         case .detail(let model):
-            guard let cell = tableView.dequeueReusableCell(cell: SettingTableViewCell.self, for: indexPath) else { return UITableViewCell() }
+            let cell = tableView.dequeueReusableCell(cell: SettingTableViewCell.self, for: indexPath)
             cell.configure(model)
             return cell
         }

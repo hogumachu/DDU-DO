@@ -6,5 +6,9 @@
 //
 
 import RIBs
+import RealmSwift
 
-final class AppRootComponent: Component<AppRootDependency> {}
+final class AppRootComponent: Component<AppRootDependency>, HomeDependency {
+    var todoUseCase: TodoUseCase = DefaultTodoUseCase(repository: RealmTodoRepository(realm: try! Realm()))
+    let calculator: CalendarCalculator = CalendarCalculator()
+}
