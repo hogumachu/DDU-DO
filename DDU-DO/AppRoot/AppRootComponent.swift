@@ -8,7 +8,8 @@
 import RIBs
 import RealmSwift
 
-final class AppRootComponent: Component<AppRootDependency>, HomeDependency {
+final class AppRootComponent: Component<AppRootDependency>, HomeDependency, SettingDependency {
     var todoUseCase: TodoUseCase = DefaultTodoUseCase(repository: RealmTodoRepository(realm: try! Realm()))
     let calculator: CalendarCalculator = CalendarCalculator()
+    lazy var settingBuildable: SettingBuildable = SettingBuilder(dependency: self)
 }
