@@ -16,8 +16,8 @@ enum CalendarViewModelEvent {
     case reloadDataWithDate(date: Date)
     case scrollToDate(date: Date, animated: Bool)
     case selectDates(date: Date)
-    case showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date)
-    case showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity)
+    case showRecordView(useCase: TodoUseCase, targetDate: Date)
+    case showDetailView(useCase: TodoUseCase, entity: TodoEntity)
     case updateEmptyView(isHidden: Bool)
     case updateTitle(text: String?)
     case updateDateTitle(text: String?)
@@ -41,8 +41,8 @@ final class CalendarViewModel {
         case content(CalendarListTableViewCellModel, createdAt: Date)
     }
     
-    init(todoRepository: TodoRepository<TodoEntity>) {
-        self.todoRepository = todoRepository
+    init(todoUseCase: TodoUseCase) {
+        self.todoUseCase = todoUseCase
         self.observeTodoRepositoryUpdatedEvent()
         self.refresh()
     }
@@ -61,7 +61,10 @@ final class CalendarViewModel {
     }
     
     func createButtonDidTap() {
-        self.viewModelEventRelay.accept(.showRecordView(repository: self.todoRepository, targetDate: self.currentDate))
+        self.viewModelEventRelay.accept(.showRecordView(
+            useCase: todoUseCase,
+            targetDate: self.currentDate
+        ))
     }
     
     func todayButtonDidTap() {
@@ -83,9 +86,8 @@ final class CalendarViewModel {
         guard let section = self.sections[safe: indexPath.section], let item = section.items[safe: indexPath.row] else { return }
         switch item {
         case .content(_, let createdAt):
-            let predicate = NSPredicate(format: "createdAt == %@", createdAt as NSDate)
-            guard let entity = self.todoRepository.getAll(where: predicate).first else { return }
-            self.viewModelEventRelay.accept(.showDetailView(repository: self.todoRepository, entity: entity))
+            guard let entity = todoUseCase.fetch(createdAt: createdAt).first else { return }
+            self.viewModelEventRelay.accept(.showDetailView(useCase: todoUseCase, entity: entity))
         }
     }
     
@@ -105,14 +107,10 @@ final class CalendarViewModel {
         }
         switch item {
         case .content(let model, let createdAt):
-            let predicate = NSPredicate(format: "createdAt == %@", createdAt as NSDate)
-            guard let entity = self.todoRepository.getAll(where: predicate).first else {
-                // TODO: - Handle Error
-                return
-            }
+            guard let entity = todoUseCase.fetch(createdAt: createdAt).first else { return }
             let newEntity = TodoEntity(todo: entity.todo, isComplete: !model.isComplete, createAt: entity.createAt, targetDate: entity.targetDate)
             do {
-                try self.todoRepository.update(item: newEntity)
+                try todoUseCase.update(item: newEntity)
                 self.fetchTodoList(date: entity.targetDate)
             } catch {
                 // TODO: Handle Error
@@ -136,8 +134,7 @@ final class CalendarViewModel {
     
     func calendarItem(state: CellState) -> CalendarDateCellModel {
         let nextDate = self.calculator.date(byAddingDayValue: 1, to: state.date)
-        let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", state.date as NSDate, nextDate! as NSDate)
-        let items = self.todoRepository.getAll(where: predicate)
+        let items = todoUseCase.fetch(start: startDate, end: nextDate!)
         return CalendarDateCellModel(state: state, numberOfItems: items.count)
     }
     
@@ -170,8 +167,8 @@ final class CalendarViewModel {
             day: self.calculator.day(from: date)
         )
         let nextDate = self.calculator.date(byAddingDayValue: 1, to: targetDate!)
-        let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", targetDate! as NSDate, nextDate! as NSDate)
-        let items = self.todoRepository.getAll(where: predicate)
+        guard let targetDate, let nextDate else { return }
+        let items = todoUseCase.fetch(start: targetDate, end: nextDate)
             .sorted(by: { $0.createAt > $1.createAt })
             .map { Item.content(CalendarListTableViewCellModel(text: $0.todo, isComplete: $0.isComplete), createdAt: $0.createAt) }
         if items.isEmpty {
@@ -207,7 +204,7 @@ final class CalendarViewModel {
         $0.dateFormat = "MM.dd"
         $0.locale = Locale(identifier: "ko_kr")
     }
-    private let todoRepository: TodoRepository<TodoEntity>
+    private let todoUseCase: TodoUseCase
     private let calculator = CalendarCalculator()
     private let viewModelEventRelay = PublishRelay<CalendarViewModelEvent>()
     private let disposeBag = DisposeBag()

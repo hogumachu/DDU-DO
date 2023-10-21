@@ -11,8 +11,8 @@ import Then
 
 final class RootViewController: UITabBarController {
     
-    init(todoRepository: TodoRepository<TodoEntity>) {
-        self.todoRepository = todoRepository
+    init(todoUseCase: TodoUseCase) {
+        self.todoUseCase = todoUseCase
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -68,7 +68,7 @@ final class RootViewController: UITabBarController {
     }
     
     private lazy var homeViewController: UINavigationController = {
-        let viewModel = HomeViewModel(todoRepository: self.todoRepository)
+        let viewModel = HomeViewModel(todoUseCase: todoUseCase)
         let viewController = HomeViewController(viewModel: viewModel).then {
             $0.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "house"), selectedImage: nil)
         }
@@ -94,7 +94,7 @@ final class RootViewController: UITabBarController {
     }
     
     private lazy var calendarViewController: UINavigationController = {
-        let viewModel = CalendarViewModel(todoRepository: self.todoRepository)
+        let viewModel = CalendarViewModel(todoUseCase: todoUseCase)
         let viewController = CalendarViewController(viewModel: viewModel).then {
             $0.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "calendar"), selectedImage: nil)
         }
@@ -105,7 +105,7 @@ final class RootViewController: UITabBarController {
         }
     }()
     
-    private let todoRepository: TodoRepository<TodoEntity>
+    private let todoUseCase: TodoUseCase
     private var currentIndex: Int?
     private let gradientView = UIView(frame: .zero)
     private var gradientLayer: CAGradientLayer = {

@@ -38,14 +38,14 @@ final class HomeViewController: UIViewController {
         case .reloadData:
             self.homeView.reloadData()
             
-        case let .showRecordView(repository, targetDate):
-            self.showRecordView(repository: repository, targetDate: targetDate)
+        case let .showRecordView(useCase, targetDate):
+            self.showRecordView(useCase: useCase, targetDate: targetDate)
             
-        case let .showDetailView(repository, entity):
-            self.showDetailView(repository: repository, entity: entity)
+        case let .showDetailView(useCase, entity):
+            self.showDetailView(useCase: useCase, entity: entity)
             
-        case let .showSettingView(repository):
-            self.showSettingView(repository: repository)
+        case let .showSettingView(useCase):
+            self.showSettingView(useCase: useCase)
         }
     }
     
@@ -110,22 +110,22 @@ final class HomeViewController: UIViewController {
         self.notificationFeedbackGenerator?.notificationOccurred(type)
     }
     
-    private func showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date) {
-        let recordViewModel = RecordViewModel(todoRepository: repository, targetDate: targetDate)
+    private func showRecordView(useCase: TodoUseCase, targetDate: Date) {
+        let recordViewModel = RecordViewModel(todoUseCase: useCase, targetDate: targetDate)
         let recordViewController = RecordViewController(viewModel: recordViewModel)
         recordViewController.delegate = self
         recordViewController.presentWithAnimation(from: self)
     }
     
-    private func showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity) {
-        let detailViewModel = TodoDetailViewModel(repository: repository, entity: entity)
+    private func showDetailView(useCase: TodoUseCase, entity: TodoEntity) {
+        let detailViewModel = TodoDetailViewModel(todoUseCase: useCase, entity: entity)
         let detailViewController = TodoDetailViewController(viewModel: detailViewModel)
         detailViewController.presentWithAnimation(from: self)
         detailViewController.delegate = self
     }
     
-    private func showSettingView(repository: TodoRepository<TodoEntity>) {
-        let settingViewModel = SettingViewModel(todoRepository: repository)
+    private func showSettingView(useCase: TodoUseCase) {
+        let settingViewModel = SettingViewModel(todoUseCase: useCase)
         let settingViewController = SettingViewController(viewModel: settingViewModel).then {
             $0.hidesBottomBarWhenPushed = true
         }

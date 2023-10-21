@@ -19,8 +19,8 @@ enum RecordViewModelEvent {
 
 final class RecordViewModel {
     
-    init(todoRepository: TodoRepository<TodoEntity>, targetDate: Date) {
-        self.todoRepository = todoRepository
+    init(todoUseCase: TodoUseCase, targetDate: Date) {
+        self.todoUseCase = todoUseCase
         self.targetDate = targetDate
     }
     
@@ -44,7 +44,7 @@ final class RecordViewModel {
         
         do {
             let entity = TodoEntity(todo: text, isComplete: false, createAt: Date(), targetDate: self.targetDate)
-            try self.todoRepository.insert(item: entity)
+            try todoUseCase.insert(item: entity)
             self.viewModelEventRelay.accept(.didFinishRecord(targetDate: self.targetDate))
         } catch {
             self.viewModelEventRelay.accept(.didFailRecord(message: "저장에 실패했습니다"))
@@ -56,7 +56,7 @@ final class RecordViewModel {
     }
     
     private let targetDate: Date
-    private let todoRepository: TodoRepository<TodoEntity>
+    private let todoUseCase: TodoUseCase
     private let formatter = DateFormatter().then {
         $0.dateFormat = "MM월 dd일"
         $0.locale = Locale(identifier: "ko_kr")

@@ -12,9 +12,9 @@ import RxRelay
 enum HomeViewModelEvent {
     
     case reloadData
-    case showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date)
-    case showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity)
-    case showSettingView(repository: TodoRepository<TodoEntity>)
+    case showRecordView(useCase: TodoUseCase, targetDate: Date)
+    case showDetailView(useCase: TodoUseCase, entity: TodoEntity)
+    case showSettingView(useCase: TodoUseCase)
     
 }
 
@@ -35,8 +35,8 @@ final class HomeViewModel {
         case todo(HomeTodoTableViewCellModel, targetDate: Date)
     }
     
-    init(todoRepository: TodoRepository<TodoEntity>) {
-        self.todoRepository = todoRepository
+    init(todoUseCase: TodoUseCase) {
+        self.todoUseCase = todoUseCase
         self.observeTodoRepositoryUpdatedEvent()
         self.refresh()
     }
@@ -66,7 +66,10 @@ final class HomeViewModel {
         
         switch item {
         case .todo(_, let targetDate):
-            self.viewModelEventRelay.accept(.showRecordView(repository: self.todoRepository, targetDate: targetDate))
+            self.viewModelEventRelay.accept(.showRecordView(
+                useCase: todoUseCase,
+                targetDate: targetDate
+            ))
             
         default:
             return
@@ -83,11 +86,10 @@ final class HomeViewModel {
         switch item {
         case .todo(let model, _):
             guard let todoItem = model.items[safe: tag] else { return }
-            let predicate = NSPredicate(format: "createdAt == %@", todoItem.createdAt as NSDate)
-            guard let entity = self.todoRepository.getAll(where: predicate).first else { return }
+            guard let entity = todoUseCase.fetch(createdAt: todoItem.createdAt).first else { return }
             let newEntity = TodoEntity(todo: entity.todo, isComplete: !todoItem.isComplete, createAt: entity.createAt, targetDate: entity.targetDate)
             do {
-                try self.todoRepository.update(item: newEntity)
+                try todoUseCase.update(item: newEntity)
                 self.refresh()
             } catch {
                 // TODO: Handle Error
@@ -108,12 +110,11 @@ final class HomeViewModel {
         switch item {
         case .todo(let model, _):
             let newEntities = model.items
-                .map { NSPredicate(format: "createdAt == %@", $0.createdAt as NSDate) }
-                .compactMap { self.todoRepository.getAll(where: $0).first }
+                .compactMap { todoUseCase.fetch(createdAt: $0.createdAt).first }
                 .map { TodoEntity(todo: $0.todo, isComplete: true, createAt: $0.createAt, targetDate: $0.targetDate) }
             newEntities.forEach {
                 do {
-                    try self.todoRepository.update(item: $0)
+                    try self.todoUseCase.update(item: $0)
                 } catch {
                     // TODO: Handle Error
                 }
@@ -136,9 +137,8 @@ final class HomeViewModel {
         switch item {
         case .todo(let model, _):
             guard let todoItem = model.items[safe: tag] else { return }
-            let predicate = NSPredicate(format: "createdAt == %@", todoItem.createdAt as NSDate)
-            guard let entity = self.todoRepository.getAll(where: predicate).first else { return }
-            self.viewModelEventRelay.accept(.showDetailView(repository: self.todoRepository, entity: entity))
+            guard let entity = todoUseCase.fetch(createdAt: todoItem.createdAt).first else { return }
+            self.viewModelEventRelay.accept(.showDetailView(useCase: todoUseCase, entity: entity))
             
         default:
             return
@@ -159,7 +159,7 @@ final class HomeViewModel {
     }
     
     func didTapNavigationRightButton() {
-        self.viewModelEventRelay.accept(.showSettingView(repository: self.todoRepository))
+        self.viewModelEventRelay.accept(.showSettingView(useCase: todoUseCase))
     }
     
     func refresh() {
@@ -182,9 +182,11 @@ final class HomeViewModel {
             day: calculator.day(from: today)
         )
         let tomorrow = calculator.date(byAddingDayValue: 1, to: targetDate!)
-        let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", targetDate! as NSDate, tomorrow! as NSDate)
-        let items = self.todoRepository
-            .getAll(where: predicate)
+        guard let targetDate, let tomorrow else {
+            return .todo([])
+        }
+        let items = todoUseCase
+            .fetch(start: targetDate, end: tomorrow)
             .sorted(by: { $0.createAt > $1.createAt })
             .map { HomeTodoItemViewModel.init(text: $0.todo, isComplete: $0.isComplete, createdAt: $0.createAt) }
         return .todo([
@@ -193,7 +195,7 @@ final class HomeViewModel {
                 subtitle: "\(items.filter { $0.isComplete == false }.count)개 / 총 \(items.count)개",
                 items: items,
                 type: .today
-            ), targetDate: targetDate!)]
+            ), targetDate: targetDate)]
         )
     }
     
@@ -206,9 +208,11 @@ final class HomeViewModel {
         )
         let tomorrow = calculator.date(byAddingDayValue: 1, to: targetDate!)
         let dayAfterTomorrow = calculator.date(byAddingDayValue: 2, to: targetDate!)
-        let predicate = NSPredicate(format: "targetDate >= %@ AND targetDate < %@", tomorrow! as NSDate, dayAfterTomorrow! as NSDate)
-        let items = self.todoRepository
-            .getAll(where: predicate)
+        guard let tomorrow, let dayAfterTomorrow else {
+            return .todo([])
+        }
+        let items = todoUseCase
+            .fetch(start: today, end: dayAfterTomorrow)
             .sorted(by: { $0.createAt > $1.createAt })
             .map { HomeTodoItemViewModel.init(text: $0.todo, isComplete: $0.isComplete, createdAt: $0.createAt) }
         return .todo([
@@ -217,7 +221,7 @@ final class HomeViewModel {
                 subtitle: "\(items.count)개",
                 items: items,
                 type: .etc
-            ), targetDate: tomorrow!)]
+            ), targetDate: tomorrow)]
         )
     }
     
@@ -228,7 +232,7 @@ final class HomeViewModel {
     }
     
     private var sections: [Section] = []
-    private let todoRepository: TodoRepository<TodoEntity>
+    private let todoUseCase: TodoUseCase
     private let calculator = CalendarCalculator()
     private let viewModelEventRelay = PublishRelay<HomeViewModelEvent>()
     private let disposeBag = DisposeBag()

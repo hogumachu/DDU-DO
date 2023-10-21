@@ -20,8 +20,8 @@ enum TodoDetailViewModelEvent {
 
 final class TodoDetailViewModel {
     
-    init(repository: TodoRepository<TodoEntity>, entity: TodoEntity) {
-        self.repository = repository
+    init(todoUseCase: TodoUseCase, entity: TodoEntity) {
+        self.todoUseCase = todoUseCase
         self.entity = entity
     }
     
@@ -55,7 +55,7 @@ final class TodoDetailViewModel {
             targetDate: self.entity.targetDate
         )
         do {
-            try self.repository.update(item: self.entity)
+            try todoUseCase.update(item: entity)
             self.viewModelEventRelay.accept(.didFinish(message: "수정되었습니다"))
         } catch {
             print("# ERROR: \(error.localizedDescription)")
@@ -65,7 +65,7 @@ final class TodoDetailViewModel {
     
     func didTapRemove() {
         do {
-            try self.repository.delete(item: self.entity)
+            try todoUseCase.delete(item: entity)
             self.viewModelEventRelay.accept(.didFinish(message: "삭제되었습니다"))
         } catch {
             print("# ERROR: \(error.localizedDescription)")
@@ -83,7 +83,7 @@ final class TodoDetailViewModel {
             targetDate: newTargetDate
         )
         do {
-            try self.repository.update(item: self.entity)
+            try todoUseCase.update(item: entity)
             self.viewModelEventRelay.accept(.didFinish(message: "다음 날로 연기되었습니다"))
         } catch {
             print("# ERROR: \(error.localizedDescription)")
@@ -92,7 +92,7 @@ final class TodoDetailViewModel {
     }
     
     private var entity: TodoEntity
-    private let repository: TodoRepository<TodoEntity>
+    private let todoUseCase: TodoUseCase
     private let calculator = CalendarCalculator()
     private let viewModelEventRelay = PublishRelay<TodoDetailViewModelEvent>()
     
