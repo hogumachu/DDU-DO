@@ -82,6 +82,7 @@
 		F1F9EBF22AE3B3BC002FA542 /* AppRootBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBEE2AE3B3BC002FA542 /* AppRootBuilder.swift */; };
 		F1F9EBF32AE3B3BC002FA542 /* AppRootInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBEF2AE3B3BC002FA542 /* AppRootInteractor.swift */; };
 		F1F9EBF52AE3B56B002FA542 /* AppRootComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBF42AE3B56B002FA542 /* AppRootComponent.swift */; };
+		F1F9EBFB2AE3BB63002FA542 /* TodoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBFA2AE3BB63002FA542 /* TodoUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +166,7 @@
 		F1F9EBEE2AE3B3BC002FA542 /* AppRootBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootBuilder.swift; sourceTree = "<group>"; };
 		F1F9EBEF2AE3B3BC002FA542 /* AppRootInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootInteractor.swift; sourceTree = "<group>"; };
 		F1F9EBF42AE3B56B002FA542 /* AppRootComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootComponent.swift; sourceTree = "<group>"; };
+		F1F9EBFA2AE3BB63002FA542 /* TodoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +252,7 @@
 				F15FFC09297D4A2600EF2E69 /* TodoEntity.swift */,
 				F15FFC0B297D4A2C00EF2E69 /* TodoObject.swift */,
 				F15FFC0D297D4A3000EF2E69 /* TodoRepository.swift */,
+				F1F9EBFA2AE3BB63002FA542 /* TodoUseCase.swift */,
 			);
 			path = Todo;
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 				F15FFC24297D630200EF2E69 /* TopScrollable.swift in Sources */,
 				F13798AD29974E8B0053DE9C /* CalendarListEmptyView.swift in Sources */,
 				F1BD6B912987BA1E00BE6825 /* CalendarCalculator.swift in Sources */,
+				F1F9EBFB2AE3BB63002FA542 /* TodoUseCase.swift in Sources */,
 				F13798B5299795FB0053DE9C /* Date+Weekday.swift in Sources */,
 				F1BD6B9D2988D60300BE6825 /* Toast.swift in Sources */,
 				F13798C7299B25200053DE9C /* CalendarFloatingView.swift in Sources */,

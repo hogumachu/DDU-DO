@@ -8,45 +8,50 @@
 import Foundation
 import RealmSwift
 
-final class TodoRepository<RepositoryObject>: Repository where RepositoryObject: Entity, RepositoryObject.ObjectType: TodoObject {
-    
-    typealias ObjectType = RepositoryObject.ObjectType
+protocol TodoRepository {
+    func getAll(where predicate: NSPredicate?) -> [TodoObject]
+    func insert(item: TodoObject) throws
+    func update(item: TodoObject) throws
+    func delete(item: TodoObject) throws
+    func deleteAll() throws
+}
+
+final class RealmTodoRepository: TodoRepository {
     
     private let realm: Realm
     
-    init() {
-        self.realm = try! Realm()
+    init(realm: Realm) {
+        self.realm = realm
     }
     
-    func getAll(where predicate: NSPredicate?) -> [RepositoryObject] {
-        var objects = realm.objects(ObjectType.self)
+    func getAll(where predicate: NSPredicate?) -> [TodoObject] {
+        var objects = realm.objects(TodoObject.self)
         
         if let predicate = predicate {
             objects = objects.filter(predicate)
         }
         
         return objects
-            .compactMap { $0 }
-            .compactMap { $0.model as? RepositoryObject }
+            .map { $0 }
     }
     
-    func insert(item: RepositoryObject) throws {
+    func insert(item: TodoObject) throws {
         try realm.write {
-            realm.add(item.toObject())
+            realm.add(item)
             self.postTodoRepositoryUpdated()
         }
     }
     
-    func update(item: RepositoryObject) throws {
+    func update(item: TodoObject) throws {
         try delete(item: item)
         try insert(item: item)
         self.postTodoRepositoryUpdated()
     }
     
-    func delete(item: RepositoryObject) throws {
+    func delete(item: TodoObject) throws {
         try realm.write {
-            if let object = realm.objects(ObjectType.self)
-                .filter("createdAt == %@", item.toObject().createdAt)
+            if let object = realm.objects(TodoObject.self)
+                .filter("createdAt == %@", item.createdAt)
                 .first {
                 realm.delete(object)
                 self.postTodoRepositoryUpdated()

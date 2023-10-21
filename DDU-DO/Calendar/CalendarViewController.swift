@@ -62,11 +62,11 @@ final class CalendarViewController: UIViewController {
         case .selectDates(let date):
             self.calendarView.selectDate(date)
             
-        case let .showRecordView(repository, targetDate):
-            self.showRecordView(repository: repository, targetDate: targetDate)
+        case let .showRecordView(useCase, targetDate):
+            self.showRecordView(todoUseCase: useCase, targetDate: targetDate)
             
-        case let .showDetailView(repository, entity):
-            self.showDetailView(repository: repository, entity: entity)
+        case let .showDetailView(useCase, entity):
+            self.showDetailView(todoUseCase: useCase, entity: entity)
             
         case .updateEmptyView(let isHidden):
             if isHidden {
@@ -223,15 +223,15 @@ final class CalendarViewController: UIViewController {
         self.viewModel.todayButtonDidTap()
     }
     
-    private func showRecordView(repository: TodoRepository<TodoEntity>, targetDate: Date) {
-        let recordViewModel = RecordViewModel(todoRepository: repository, targetDate: targetDate)
+    private func showRecordView(todoUseCase: TodoUseCase, targetDate: Date) {
+        let recordViewModel = RecordViewModel(todoUseCase: todoUseCase, targetDate: targetDate)
         let recordViewController = RecordViewController(viewModel: recordViewModel)
         recordViewController.delegate = self
         recordViewController.presentWithAnimation(from: self)
     }
     
-    private func showDetailView(repository: TodoRepository<TodoEntity>, entity: TodoEntity) {
-        let detailViewModel = TodoDetailViewModel(repository: repository, entity: entity)
+    private func showDetailView(todoUseCase: TodoUseCase, entity: TodoEntity) {
+        let detailViewModel = TodoDetailViewModel(todoUseCase: todoUseCase, entity: entity)
         let detailViewController = TodoDetailViewController(viewModel: detailViewModel)
         detailViewController.presentWithAnimation(from: self)
         detailViewController.delegate = self

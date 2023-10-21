@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import RxSwift
 import RxRelay
 import Then
@@ -40,8 +41,8 @@ final class SettingViewModel {
         
     }
     
-    init(todoRepository: TodoRepository<TodoEntity>) {
-        self.todoRepository = todoRepository
+    init(todoUseCase: TodoUseCase) {
+        self.todoUseCase = todoUseCase
         self.sections = self.makeSections(settings: self.settings)
         self.viewModelEventRelay.accept(.reloadData)
     }
@@ -87,7 +88,7 @@ final class SettingViewModel {
     
     func bottomModalViewButtonDidTap() {
         do {
-            try self.todoRepository.deleteAll()
+            try self.todoUseCase
             self.viewModelEventRelay.accept(.didFinish(message: "성공적으로 제거했습니다"))
         } catch {
             self.viewModelEventRelay.accept(.didFail(message: "데이터 제거에 실패했습니다"))
@@ -134,7 +135,7 @@ final class SettingViewModel {
     
     private let settings: [Setting] = [.appVersion, .review, .mail, .deleteAll]
     private var sections: [Section] = []
-    private let todoRepository: TodoRepository<TodoEntity>
+    private let todoUseCase: TodoUseCase
     
     private let viewModelEventRelay = PublishRelay<SettingViewModelEvent>()
     

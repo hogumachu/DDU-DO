@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -23,8 +24,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             $0.isNavigationBarHidden = true
             $0.hidesBottomBarWhenPushed = true
         }
-        let todoRepository = TodoRepository<TodoEntity>()
-        let rootViewController = RootViewController(todoRepository: todoRepository)
+        let realm = try! Realm()
+        let useCase = DefaultTodoUseCase(repository: RealmTodoRepository(realm: realm))
+        let rootViewController = RootViewController(todoUseCase: useCase)
         navigationController.viewControllers = [rootViewController]
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
