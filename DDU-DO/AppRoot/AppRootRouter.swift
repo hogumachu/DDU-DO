@@ -18,7 +18,7 @@ protocol AppRootViewControllable: ViewControllable {
 
 final class AppRootRouter: LaunchRouter<AppRootInteractable, AppRootViewControllable>, AppRootRouting {
     
-    private var homeBuildable: HomeBuildable
+    private let homeBuildable: HomeBuildable
     private var homeRouting: Routing?
     
     init(
@@ -37,7 +37,7 @@ final class AppRootRouter: LaunchRouter<AppRootInteractable, AppRootViewControll
         self.homeRouting = homeRouter
         attachChild(homeRouter)
         viewController.setViewControllers([
-            homeRouter.viewControllable
+            NavigationControllable(root: homeRouter.viewControllable)
         ])
     }
     

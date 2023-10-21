@@ -8,7 +8,7 @@
 import Foundation
 import RIBs
 
-protocol HomeInteractable: Interactable {
+protocol HomeInteractable: Interactable, SettingListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -17,13 +17,32 @@ protocol HomeViewControllable: ViewControllable {}
 
 final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, HomeRouting {
     
-    override init(interactor: HomeInteractable, viewController: HomeViewControllable) {
+    private let settingBuildable: SettingBuildable
+    private var settingRouting: Routing?
+    
+    init(
+        interactor: HomeInteractable,
+        viewController: HomeViewControllable,
+        settingBuildable: SettingBuildable
+    ) {
+        self.settingBuildable = settingBuildable
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
     
     func attachSetting() {
-        print("# Attach Setting")
+        guard settingRouting == nil else { return }
+        let settingRouter = settingBuildable.build(withListener: interactor)
+        self.settingRouting = settingRouter
+        attachChild(settingRouter)
+        viewController.pushViewController(settingRouter.viewControllable, animated: true)
+    }
+    
+    func detachSetting() {
+        guard let settingRouting else { return }
+        viewController.popViewController(animated: true)
+        detachChild(settingRouting)
+        self.settingRouting = nil
     }
     
     func attachRecord(target: Date) {

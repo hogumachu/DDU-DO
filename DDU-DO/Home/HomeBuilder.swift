@@ -10,11 +10,13 @@ import RIBs
 protocol HomeDependency: Dependency {
     var todoUseCase: TodoUseCase { get }
     var calculator: CalendarCalculator { get }
+    var settingBuildable: SettingBuildable { get }
 }
 
 final class HomeComponent: Component<HomeDependency>, HomeInteractorDependency {
     var todoUseCase: TodoUseCase { dependency.todoUseCase }
     var calculator: CalendarCalculator { dependency.calculator }
+    var settingBuildable: SettingBuildable { dependency.settingBuildable }
 }
 
 // MARK: - Builder
@@ -37,6 +39,10 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
             dependency: component
         )
         interactor.listener = listener
-        return HomeRouter(interactor: interactor, viewController: viewController)
+        return HomeRouter(
+            interactor: interactor,
+            viewController: viewController,
+            settingBuildable: component.settingBuildable
+        )
     }
 }

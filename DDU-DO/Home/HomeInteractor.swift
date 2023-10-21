@@ -11,6 +11,7 @@ import RxSwift
 
 protocol HomeRouting: ViewableRouting {
     func attachSetting()
+    func detachSetting()
     func attachRecord(target: Date)
     func attachDetail(entity: TodoEntity)
 }
@@ -52,6 +53,10 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     
     override func willResignActive() {
         super.willResignActive()
+    }
+    
+    func settingDidTapClose() {
+        router?.detachSetting()
     }
     
     func didTapSetting() {

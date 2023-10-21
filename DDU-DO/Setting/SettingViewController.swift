@@ -2,68 +2,53 @@
 //  SettingViewController.swift
 //  DDU-DO
 //
-//  Created by 홍성준 on 2023/02/15.
+//  Created by 홍성준 on 2023/10/21.
 //
 
-import UIKit
-import SnapKit
-import Then
+import RIBs
 import RxSwift
+import UIKit
 
-final class SettingViewController: UIViewController {
+protocol SettingPresentableListener: AnyObject {
+    func didTapClose()
+    func didSelect(at indexPath: IndexPath)
+}
+
+final class SettingViewController: UIViewController, SettingPresentable, SettingViewControllable {
+
+    weak var listener: SettingPresentableListener?
     
-    init(viewModel: SettingViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-        self.setupSettingView()
-        self.bind(viewModel: viewModel)
+    private let settingView = SettingView(frame: .zero)
+    
+    private var sections: [SettingSection] = []
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupLayout()
+        setupAttributes()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func updateSections(_ sections: [SettingSection]) {
+        self.sections = sections
+        settingView.reloadData()
     }
     
-    private func bind(viewModel: SettingViewModel) {
-        viewModel
-            .viewModelEvent
-            .withUnretained(self)
-            .observe(on: MainScheduler.asyncInstance)
-            .subscribe(onNext: { viewController, event in viewController.handle(event) })
-            .disposed(by: self.disposeBag)
-        
-    }
-    
-    private func handle(_ event: SettingViewModelEvent) {
-        switch event {
-        case .reloadData:
-            self.settingView.reloadData()
-            
-        case .showModalView(let viewModel):
-            self.showModalView(viewModel)
-            
-        case .didFinish(let message):
-            self.showToast(message, isSuccess: true)
-            self.navigationController?.popViewController(animated: true)
-            
-        case .didFail(let message):
-            self.showToast(message, isSuccess: false)
-        }
-    }
-    
-    private func setupSettingView() {
-        self.view.addSubview(self.settingView)
-        self.settingView.snp.makeConstraints { make in
+    private func setupLayout() {
+        view.addSubview(settingView)
+        settingView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        self.settingView.delegate = self
-        self.settingView.dataSource = self
+    }
+    
+    private func setupAttributes() {
+        settingView.delegate = self
+        settingView.dataSource = self
     }
     
     private func showModalView(_ viewModel: BottomModalViewModel) {
         let modalViewController = BottomModalViewController(viewModel: viewModel)
         modalViewController.presentWithAnimation(from: self)
-        modalViewController.delegate = self
+//        modalViewController.delegate = self
     }
     
     private func showToast(_ message: String?, isSuccess: Bool) {
@@ -72,16 +57,12 @@ final class SettingViewController: UIViewController {
         ToastManager.showToast(model)
     }
     
-    private let settingView = SettingView(frame: .zero)
-    private let viewModel: SettingViewModel
-    private let disposeBag = DisposeBag()
-    
 }
 
 extension SettingViewController: SettingViewDelegate {
     
     func navigationViewDidTapLeftButton(_ view: NavigationView) {
-        self.navigationController?.popViewController(animated: true)
+        listener?.didTapClose()
     }
     
     func navigationViewDidTapRightButton(_ view: NavigationView) {
@@ -89,7 +70,7 @@ extension SettingViewController: SettingViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.viewModel.didSelectRow(at: indexPath)
+        listener?.didSelect(at: indexPath)
     }
     
 }
@@ -97,15 +78,17 @@ extension SettingViewController: SettingViewDelegate {
 extension SettingViewController: SettingViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        self.viewModel.numberOfSections
+        return sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.viewModel.numberOfRowsInSection(section)
+        return sections[safe: section]?.items.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let item = self.viewModel.cellItem(at: indexPath) else { return UITableViewCell() }
+        guard let item = sections[safe: indexPath.section]?.items[safe: indexPath.row] else {
+            return UITableViewCell()
+        }
         switch item {
         case .title(let model):
             let cell = tableView.dequeueReusableCell(cell: SettingTableViewCell.self, for: indexPath)
@@ -124,7 +107,7 @@ extension SettingViewController: SettingViewDataSource {
 extension SettingViewController: BottomModalViewControllerDelegate {
     
     func bottomModalViewControllerDidTapButton(_ viewController: BottomModalViewController) {
-        self.viewModel.bottomModalViewButtonDidTap()
+//        self.viewModel.bottomModalViewButtonDidTap()
     }
     
 }
