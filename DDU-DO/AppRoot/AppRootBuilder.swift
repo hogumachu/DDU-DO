@@ -25,6 +25,11 @@ final class AppRootBuilder: Builder<AppRootDependency>, AppRootBuildable {
         let component = AppRootComponent(dependency: dependency)
         let viewController = AppRootViewController()
         let interactor = AppRootInteractor(presenter: viewController)
-        return AppRootRouter(interactor: interactor, viewController: viewController)
+        return AppRootRouter(
+            interactor: interactor,
+            viewController: viewController,
+            homeBuildable: HomeBuilder(dependency: component)
+        )
     }
+    
 }

@@ -13,8 +13,11 @@ extension UITableView {
         self.register(cell, forCellReuseIdentifier: String(describing: cell))
     }
     
-    func dequeueReusableCell<T: UITableViewCell>(cell: T.Type, for indexPath: IndexPath) -> T? {
-        return self.dequeueReusableCell(withIdentifier: String(describing: cell), for: indexPath) as? T
+    func dequeueReusableCell<T: UITableViewCell>(cell: T.Type, for indexPath: IndexPath) -> T {
+        guard let cell = self.dequeueReusableCell(withIdentifier: String(describing: cell), for: indexPath) as? T else {
+            fatalError("Can't Dequeue Reusable Cell: \(cell)")
+        }
+        return cell
     }
     
     func scrollToBottom() {
