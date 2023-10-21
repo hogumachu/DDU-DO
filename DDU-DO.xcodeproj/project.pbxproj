@@ -83,6 +83,7 @@
 		F1F9EBF32AE3B3BC002FA542 /* AppRootInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBEF2AE3B3BC002FA542 /* AppRootInteractor.swift */; };
 		F1F9EBF52AE3B56B002FA542 /* AppRootComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBF42AE3B56B002FA542 /* AppRootComponent.swift */; };
 		F1F9EBFB2AE3BB63002FA542 /* TodoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBFA2AE3BB63002FA542 /* TodoUseCase.swift */; };
+		F1F9EBFE2AE3C412002FA542 /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9EBFD2AE3C412002FA542 /* AppComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,6 +168,7 @@
 		F1F9EBEF2AE3B3BC002FA542 /* AppRootInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootInteractor.swift; sourceTree = "<group>"; };
 		F1F9EBF42AE3B56B002FA542 /* AppRootComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootComponent.swift; sourceTree = "<group>"; };
 		F1F9EBFA2AE3BB63002FA542 /* TodoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoUseCase.swift; sourceTree = "<group>"; };
+		F1F9EBFD2AE3C412002FA542 /* AppComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,6 +371,7 @@
 		F1F12F292964250D00D8CE21 /* DDU-DO */ = {
 			isa = PBXGroup;
 			children = (
+				F1F9EBFC2AE3C3F7002FA542 /* App */,
 				F1F9EBEB2AE3B3B2002FA542 /* AppRoot */,
 				F1F12F2A2964250D00D8CE21 /* AppDelegate.swift */,
 				F1F12F2C2964250D00D8CE21 /* SceneDelegate.swift */,
@@ -414,6 +417,14 @@
 				F1F9EBF42AE3B56B002FA542 /* AppRootComponent.swift */,
 			);
 			path = AppRoot;
+			sourceTree = "<group>";
+		};
+		F1F9EBFC2AE3C3F7002FA542 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F1F9EBFD2AE3C412002FA542 /* AppComponent.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -595,6 +606,7 @@
 				F13798AB299683BE0053DE9C /* NotificationName.swift in Sources */,
 				F1BD6B9B2987C49A00BE6825 /* TodoDetailView.swift in Sources */,
 				F15FFC0C297D4A2C00EF2E69 /* TodoObject.swift in Sources */,
+				F1F9EBFE2AE3C412002FA542 /* AppComponent.swift in Sources */,
 				F13798B729979B290053DE9C /* NSMutableAttributedString+.swift in Sources */,
 				F1BD6B972987C48F00BE6825 /* TodoDetailViewController.swift in Sources */,
 				F14B4D8A299DED270055B842 /* Setting.swift in Sources */,
