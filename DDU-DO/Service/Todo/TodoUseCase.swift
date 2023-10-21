@@ -19,9 +19,9 @@ protocol TodoUseCase: AnyObject {
 
 final class DefaultTodoUseCase: TodoUseCase {
     
-    private let repository: TodoRepositoryType
+    private let repository: TodoRepository
     
-    init(repository: TodoRepositoryType) {
+    init(repository: TodoRepository) {
         self.repository = repository
     }
     
