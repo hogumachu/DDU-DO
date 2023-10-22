@@ -28,7 +28,8 @@ final class AppRootBuilder: Builder<AppRootDependency>, AppRootBuildable {
         return AppRootRouter(
             interactor: interactor,
             viewController: viewController,
-            homeBuildable: HomeBuilder(dependency: component)
+            homeBuildable: HomeBuilder(dependency: component),
+            calendarBuildable: CalendarBuilder(dependency: component)
         )
     }
     
