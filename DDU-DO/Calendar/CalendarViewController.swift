@@ -276,22 +276,6 @@ extension CalendarViewController: CalendarListTableViewCellDelegate {
     
 }
 
-extension CalendarViewController: TodoDetailViewControllerDelegate {
-    
-    func todoDetailViewControllerDidFinish(_ viewController: TodoDetailViewController, message: String) {
-        //        let toastModel = ToastModel(message: message, type: .success)
-        //        ToastManager.showToast(toastModel)
-        //        self.notifictaionOccured(type: .success)
-    }
-    
-    func todoDetailViewControllerDidFail(_ viewController: TodoDetailViewController, message: String) {
-        //        let toastModel = ToastModel(message: message, type: .fail)
-        //        ToastManager.showToast(toastModel)
-        //        self.notifictaionOccured(type: .error)
-    }
-    
-}
-
 extension CalendarViewController: TopScrollable {
     
     func scrollToTop() {

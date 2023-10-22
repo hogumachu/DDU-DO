@@ -15,6 +15,7 @@ protocol HomeRouting: ViewableRouting {
     func attachRecord(target: Date)
     func detachRecord()
     func attachDetail(entity: TodoEntity)
+    func detachDetail()
 }
 
 protocol HomePresentable: Presentable {
@@ -29,7 +30,7 @@ protocol HomeInteractorDependency: Dependency {
     var calculator: CalendarCalculator { get }
 }
 
-final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteractable, HomePresentableListener, RecordListener {
+final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteractable, HomePresentableListener {
     
     weak var router: HomeRouting?
     weak var listener: HomeListener?
@@ -155,6 +156,12 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     
     func recordDidFinishRecord(target: Date) {
         router?.detachRecord()
+    }
+    
+    // MARK: - TodoDetailListener
+    
+    func todoDetailDidFinish() {
+        router?.detachDetail()
     }
     
     
