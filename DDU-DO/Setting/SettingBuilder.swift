@@ -31,6 +31,7 @@ final class SettingBuilder: Builder<SettingDependency>, SettingBuildable {
     func build(withListener listener: SettingListener) -> SettingRouting {
         let component = SettingComponent(dependency: dependency)
         let viewController = SettingViewController()
+        viewController.hidesBottomBarWhenPushed = true
         let interactor = SettingInteractor(presenter: viewController, dependency: component)
         interactor.listener = listener
         return SettingRouter(interactor: interactor, viewController: viewController)

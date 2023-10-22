@@ -2,131 +2,108 @@
 //  CalendarViewController.swift
 //  DDU-DO
 //
-//  Created by 홍성준 on 2023/01/21.
+//  Created by 홍성준 on 2023/10/21.
 //
 
+import RIBs
+import RxSwift
 import UIKit
 import SnapKit
 import Then
 import JTAppleCalendar
-import RxSwift
 
-final class CalendarViewController: UIViewController {
+protocol CalendarDataSource: AnyObject {
+    var startDate: Date { get }
+    var endDate: Date { get }
+    func calendarItem(state: CellState) -> CalendarDateCellModel
+}
+
+protocol CalendarPresentableListener: AnyObject {
+    func didTapCreate()
+    func didTapToday()
+    func didSelect(at indexPath: IndexPath)
+    func didSelect(date: Date)
+    func didSelectComplete(at indexPath: IndexPath)
+    func willDisplay(date: Date)
+}
+
+final class CalendarViewController: UIViewController, CalendarPresentable, CalendarViewControllable {
     
-    init(viewModel: CalendarViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-        self.setupLayout()
-        self.setupAttributes()
-        self.setupFeedbackGenerator()
-        self.bind(viewModel)
-    }
+    weak var listener: CalendarPresentableListener?
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    weak var calendarDataSource: CalendarDataSource?
+    
+    private let statusView = UIView(frame: .zero)
+    private let navigationView = NavigationView(frame: .zero)
+    private let calendarView = CalendarView(frame: .zero)
+    private let calendarListView = CalendarListView(frame: .zero)
+    private let dateView = CalendarFloatingView(frame: .zero)
+    private let createView = CalendarFloatingView(frame: .zero)
+    private let todayView = CalendarFloatingView(frame: .zero)
+    
+    private var sections: [CalendarSection] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let date = Date()
-        self.calendarView.scrollToDate(date)
-        self.calendarView.selectDate(date)
+        setupLayout()
+        setupAttributes()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.calendarListView.maskRoundedRect(cornerRadius: 20, corners: [.topLeft, .topRight])
+    func updateSections(_ sections: [CalendarSection]) {
+        self.sections = sections
+        calendarView.reloadData()
+        calendarListView.reloadData()
     }
     
-    private func bind(_ viewModel: CalendarViewModel) {
-        viewModel
-            .viewModelEvent
-            .withUnretained(self)
-            .observe(on: MainScheduler.asyncInstance)
-            .subscribe(onNext: { viewController, event in viewController.handle(event) })
-            .disposed(by: self.disposeBag)
+    func reloadData(date: Date) {
+        calendarView.reloadData(date: date)
     }
     
-    private func handle(_ event: CalendarViewModelEvent) {
-        switch event {
-        case .reloadData:
-            self.calendarView.reloadData()
-            self.calendarListView.reloadData()
-            
-        case .reloadDataWithDate(let date):
-            self.calendarView.reloadData(date: date)
-            
-        case .scrollToDate(let date, let animated):
-            self.calendarView.scrollToDate(date, animated: animated)
-            
-        case .selectDates(let date):
-            self.calendarView.selectDate(date)
-            
-        case let .showRecordView(useCase, targetDate):
-            self.showRecordView(todoUseCase: useCase, targetDate: targetDate)
-            
-        case let .showDetailView(useCase, entity):
-            self.showDetailView(todoUseCase: useCase, entity: entity)
-            
-        case .updateEmptyView(let isHidden):
-            if isHidden {
-                self.calendarListView.hideEmptyView()
-            } else {
-                self.calendarListView.showEmptyView()
-            }
-            
-        case .updateTitle(let text):
-            self.navigationView.updateTitle(text)
-            
-        case .updateDateTitle(let text):
-            self.dateView.showTitle(text)
-            
-        case .updateTodayButton(let isHidden):
-            self.todayView.isHidden = isHidden
-        }
+    func updateTitle(_ title: String) {
+        navigationView.updateTitle(title)
     }
     
     private func setupLayout() {
-        self.view.addSubview(self.statusView)
-        self.statusView.snp.makeConstraints { make in
+        view.addSubview(statusView)
+        statusView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.bottom.equalTo(self.view.safeArea.top)
         }
         
-        self.view.addSubview(self.navigationView)
-        self.navigationView.snp.makeConstraints { make in
+        view.addSubview(navigationView)
+        navigationView.snp.makeConstraints { make in
             make.top.equalTo(self.statusView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(44)
         }
         
-        self.view.addSubview(self.calendarView)
-        self.calendarView.snp.makeConstraints { make in
-            make.top.equalTo(self.navigationView.snp.bottom)
+        view.addSubview(calendarView)
+        calendarView.snp.makeConstraints { make in
+            make.top.equalTo(navigationView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(35 * 7)
         }
         
-        self.view.addSubview(self.calendarListView)
-        self.calendarListView.snp.makeConstraints { make in
-            make.top.equalTo(self.calendarView.snp.bottom)
+        view.addSubview(calendarListView)
+        calendarListView.snp.makeConstraints { make in
+            make.top.equalTo(calendarView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
         
-        self.view.addSubview(self.dateView)
-        self.dateView.snp.makeConstraints { make in
-            make.top.leading.equalTo(self.calendarListView).inset(10)
+        view.addSubview(dateView)
+        dateView.snp.makeConstraints { make in
+            make.top.leading.equalTo(calendarListView).inset(10)
             make.size.equalTo(CGSize(width: 108, height: 55))
         }
         
-        self.view.addSubview(self.createView)
-        self.createView.snp.makeConstraints { make in
+        view.addSubview(createView)
+        createView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 70, height: 70))
             make.trailing.bottom.equalToSuperview().inset(15)
         }
         
-        self.view.addSubview(self.todayView)
-        self.todayView.snp.makeConstraints { make in
+        view.addSubview(todayView)
+        todayView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 80, height: 55))
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().inset(10)
@@ -134,29 +111,29 @@ final class CalendarViewController: UIViewController {
     }
     
     private func setupAttributes() {
-        self.view.backgroundColor = .gray0
+        view.backgroundColor = .gray0
         
-        self.statusView.do {
+        statusView.do {
             $0.backgroundColor = .gray0
         }
         
-        self.navigationView.do {
+        navigationView.do {
             $0.configure(.init(type: .none))
             $0.backgroundColor = .gray0
             $0.updateTintColor(.blueBlack)
         }
         
-        self.calendarView.do {
+        calendarView.do {
             $0.delegate = self
             $0.dataSource = self
         }
         
-        self.calendarListView.do {
+        calendarListView.do {
             $0.delegate = self
             $0.dataSource = self
         }
         
-        self.dateView.do {
+        dateView.do {
             $0.updateRadius(16)
             $0.updateBackgroundColor(.green2)
             $0.updateTintColor(.white)
@@ -165,7 +142,7 @@ final class CalendarViewController: UIViewController {
             $0.showTitle("")
         }
         
-        self.createView.do {
+        createView.do {
             $0.updateRadius(25)
             $0.updateBackgroundColor(.green2)
             let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 17, weight: .heavy))
@@ -177,7 +154,7 @@ final class CalendarViewController: UIViewController {
             $0.addGestureRecognizer(tapGesture)
         }
         
-        self.todayView.do {
+        todayView.do {
             $0.updateRadius(16)
             $0.updateBackgroundColor(.gray2)
             let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 13, weight: .heavy))
@@ -190,96 +167,45 @@ final class CalendarViewController: UIViewController {
         }
     }
     
-    private func setupFeedbackGenerator() {
-        self.selectionFeedbackGenerator = UISelectionFeedbackGenerator()
-        self.selectionFeedbackGenerator?.prepare()
-        
-        self.impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-        self.impactFeedbackGenerator?.prepare()
-        
-        self.notificationFeedbackGenerator = UINotificationFeedbackGenerator()
-        self.notificationFeedbackGenerator?.prepare()
-    }
-    
-    private func selectionChanged() {
-        self.selectionFeedbackGenerator?.selectionChanged()
-        self.selectionFeedbackGenerator?.prepare()
-    }
-    
-    private func impactOccurred() {
-        self.impactFeedbackGenerator?.impactOccurred()
-        self.impactFeedbackGenerator?.prepare()
-    }
-    
-    private func notifictaionOccured(type: UINotificationFeedbackGenerator.FeedbackType) {
-        self.notificationFeedbackGenerator?.notificationOccurred(type)
-    }
-    
     @objc private func createViewDidTap(_ sender: UIGestureRecognizer) {
-        self.viewModel.createButtonDidTap()
+        listener?.didTapCreate()
     }
     
     @objc private func todayViewDidTap(_ sender: UIButton) {
-        self.viewModel.todayButtonDidTap()
+        listener?.didTapToday()
     }
-    
-    private func showRecordView(todoUseCase: TodoUseCase, targetDate: Date) {
-        let recordViewModel = RecordViewModel(todoUseCase: todoUseCase, targetDate: targetDate)
-        let recordViewController = RecordViewController(viewModel: recordViewModel)
-        recordViewController.delegate = self
-        recordViewController.presentWithAnimation(from: self)
-    }
-    
-    private func showDetailView(todoUseCase: TodoUseCase, entity: TodoEntity) {
-        let detailViewModel = TodoDetailViewModel(todoUseCase: todoUseCase, entity: entity)
-        let detailViewController = TodoDetailViewController(viewModel: detailViewModel)
-        detailViewController.presentWithAnimation(from: self)
-        detailViewController.delegate = self
-    }
-    
-    private var selectionFeedbackGenerator: UISelectionFeedbackGenerator?
-    private var impactFeedbackGenerator: UIImpactFeedbackGenerator?
-    private var notificationFeedbackGenerator: UINotificationFeedbackGenerator?
-    
-    private let statusView = UIView(frame: .zero)
-    private let navigationView = NavigationView(frame: .zero)
-    private let calendarView = CalendarView(frame: .zero)
-    private let calendarListView = CalendarListView(frame: .zero)
-    private let dateView = CalendarFloatingView(frame: .zero)
-    private let createView = CalendarFloatingView(frame: .zero)
-    private let todayView = CalendarFloatingView(frame: .zero)
-    private let viewModel: CalendarViewModel
-    private let disposeBag = DisposeBag()
     
 }
 
 extension CalendarViewController: CalendarViewDelegate {
     
     func calendar(_ calendar: JTACMonthView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTACDayCell {
-        guard let cell = calendar.dequeueReusableCell(cell: CalendarDateCell.self, for: indexPath) else {
+        guard let cell = calendar.dequeueReusableCell(cell: CalendarDateCell.self, for: indexPath),
+              let item = calendarDataSource?.calendarItem(state: cellState)
+        else {
             return JTACDayCell()
         }
-        let item = self.viewModel.calendarItem(state: cellState)
         cell.configure(item)
         return cell
     }
     
     func calendar(_ calendar: JTACMonthView, willDisplay cell: JTACDayCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
-        guard let cell = cell as? CalendarDateCell else { return }
-        let item = self.viewModel.calendarItem(state: cellState)
+        guard let cell = cell as? CalendarDateCell,
+              let item = calendarDataSource?.calendarItem(state: cellState)
+        else {
+            return
+        }
         cell.configure(item)
     }
     
     func calendar(_ calendar: JTACMonthView, didSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
-        guard let cell = cell as? CalendarDateCell else { return }
-        let item = self.viewModel.calendarItem(state: cellState)
+        guard let cell = cell as? CalendarDateCell, let item = calendarDataSource?.calendarItem(state: cellState) else { return }
         cell.configure(item)
-        self.viewModel.didSelectDate(date: date)
+        listener?.didSelect(date: date)
     }
     
     func calendar(_ calendar: JTACMonthView, didDeselectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
-        guard let cell = cell as? CalendarDateCell else { return }
-        let item = self.viewModel.calendarItem(state: cellState)
+        guard let cell = cell as? CalendarDateCell, let item = calendarDataSource?.calendarItem(state: cellState) else { return }
         cell.configure(item)
     }
     
@@ -289,7 +215,7 @@ extension CalendarViewController: CalendarViewDelegate {
     
     func calendar(_ calendar: JTACMonthView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
         guard let date = visibleDates.monthDates.first?.date else { return }
-        self.viewModel.willDisplay(date: date)
+        listener?.willDisplay(date: date)
     }
     
 }
@@ -297,9 +223,11 @@ extension CalendarViewController: CalendarViewDelegate {
 extension CalendarViewController: CalendarViewDataSource {
     
     func configureCalendar(_ calendar: JTACMonthView) -> ConfigurationParameters {
+        let startDate = calendarDataSource?.startDate ?? Date()
+        let endDate = calendarDataSource?.endDate ?? Date()
         return ConfigurationParameters(
-            startDate: self.viewModel.startDate,
-            endDate: self.viewModel.endDate,
+            startDate: startDate,
+            endDate: endDate,
             numberOfRows: 6,
             generateInDates: .forAllMonths,
             generateOutDates: .tillEndOfRow,
@@ -312,7 +240,7 @@ extension CalendarViewController: CalendarViewDataSource {
 extension CalendarViewController: CalendarListViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.viewModel.didSelectRow(at: indexPath)
+        listener?.didSelect(at: indexPath)
     }
     
 }
@@ -320,24 +248,22 @@ extension CalendarViewController: CalendarListViewDelegate {
 extension CalendarViewController: CalendarListViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        self.viewModel.numberOfSections
+        return sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.viewModel.numberOfRowsInSection(section)
+        return sections[safe: section]?.items.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let item = self.viewModel.cellItem(at: indexPath) else { return UITableViewCell() }
-        
-        switch item {
-        case .content(let model, _):
-            let cell = tableView.dequeueReusableCell(cell: CalendarListTableViewCell.self, for: indexPath)
-            cell.configure(model)
-            cell.delegate = self
-            cell.indexPath = indexPath
-            return cell
+        guard let item = sections[safe: indexPath.section]?.items[safe: indexPath.row] else {
+            return UITableViewCell()
         }
+        let cell = tableView.dequeueReusableCell(cell: CalendarListTableViewCell.self, for: indexPath)
+        cell.configure(item.model)
+        cell.delegate = self
+        cell.indexPath = indexPath
+        return cell
     }
     
 }
@@ -345,8 +271,7 @@ extension CalendarViewController: CalendarListViewDataSource {
 extension CalendarViewController: CalendarListTableViewCellDelegate {
     
     func calendarListTableViewCellDidSelectComplete(_ cell: CalendarListTableViewCell, didSelectAt indexPath: IndexPath) {
-        self.viewModel.didSelectComplete(at: indexPath)
-        self.selectionChanged()
+        listener?.didSelectComplete(at: indexPath)
     }
     
 }
@@ -354,15 +279,15 @@ extension CalendarViewController: CalendarListTableViewCellDelegate {
 extension CalendarViewController: RecordViewControllerDelegate {
     
     func recordViewControllerDidFinishRecord(_ viewController: RecordViewController, targetDate: Date) {
-        let toastModel = ToastModel(message: "추가되었습니다", type: .success)
-        ToastManager.showToast(toastModel)
-        self.notifictaionOccured(type: .success)
+        //        let toastModel = ToastModel(message: "추가되었습니다", type: .success)
+        //        ToastManager.showToast(toastModel)
+        //        self.notifictaionOccured(type: .success)
     }
     
     func recordViewControllerDidFailRecord(_ viewController: RecordViewController, message: String) {
-        let toastModel = ToastModel(message: message, type: .fail)
-        ToastManager.showToast(toastModel)
-        self.notifictaionOccured(type: .error)
+        //        let toastModel = ToastModel(message: message, type: .fail)
+        //        ToastManager.showToast(toastModel)
+        //        self.notifictaionOccured(type: .error)
     }
     
     func recordViewControllerDidCancelRecord(_ viewController: RecordViewController) {
@@ -374,15 +299,15 @@ extension CalendarViewController: RecordViewControllerDelegate {
 extension CalendarViewController: TodoDetailViewControllerDelegate {
     
     func todoDetailViewControllerDidFinish(_ viewController: TodoDetailViewController, message: String) {
-        let toastModel = ToastModel(message: message, type: .success)
-        ToastManager.showToast(toastModel)
-        self.notifictaionOccured(type: .success)
+        //        let toastModel = ToastModel(message: message, type: .success)
+        //        ToastManager.showToast(toastModel)
+        //        self.notifictaionOccured(type: .success)
     }
     
     func todoDetailViewControllerDidFail(_ viewController: TodoDetailViewController, message: String) {
-        let toastModel = ToastModel(message: message, type: .fail)
-        ToastManager.showToast(toastModel)
-        self.notifictaionOccured(type: .error)
+        //        let toastModel = ToastModel(message: message, type: .fail)
+        //        ToastManager.showToast(toastModel)
+        //        self.notifictaionOccured(type: .error)
     }
     
 }
@@ -390,7 +315,7 @@ extension CalendarViewController: TodoDetailViewControllerDelegate {
 extension CalendarViewController: TopScrollable {
     
     func scrollToTop() {
-        self.calendarListView.scrollToTop()
+        calendarListView.scrollToTop()
     }
     
 }
