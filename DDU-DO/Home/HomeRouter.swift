@@ -8,7 +8,7 @@
 import Foundation
 import RIBs
 
-protocol HomeInteractable: Interactable, SettingListener, RecordListener {
+protocol HomeInteractable: Interactable, SettingListener, RecordListener, TodoDetailListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -23,14 +23,19 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
     private let recordBuildable: RecordBuildable
     private var recordRouting: Routing?
     
+    private let todoDetailBuildable: TodoDetailBuildable
+    private var todoDetailRouting: Routing?
+    
     init(
         interactor: HomeInteractable,
         viewController: HomeViewControllable,
         settingBuildable: SettingBuildable,
-        recordBuildable: RecordBuildable
+        recordBuildable: RecordBuildable,
+        todoDetailBuildable: TodoDetailBuildable
     ) {
         self.settingBuildable = settingBuildable
         self.recordBuildable = recordBuildable
+        self.todoDetailBuildable = todoDetailBuildable
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -66,7 +71,18 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
     }
     
     func attachDetail(entity: TodoEntity) {
-        print("# Attach Detail: \(entity)")
+        guard todoDetailRouting == nil else { return }
+        let detailRouter = todoDetailBuildable.build(withListener: interactor, entity: entity)
+        self.todoDetailRouting = detailRouter
+        attachChild(detailRouter)
+        viewController.pushViewController(detailRouter.viewControllable, animated: true)
+    }
+    
+    func detachDetail() {
+        guard let todoDetailRouting else { return }
+        viewController.popViewController(animated: true)
+        detachChild(todoDetailRouting)
+        self.todoDetailRouting = nil
     }
     
 }

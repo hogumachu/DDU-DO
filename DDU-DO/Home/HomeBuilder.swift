@@ -12,6 +12,7 @@ protocol HomeDependency: Dependency {
     var calculator: CalendarCalculator { get }
     var settingBuildable: SettingBuildable { get }
     var recordBuildable: RecordBuildable { get }
+    var todoDetailBuidable: TodoDetailBuildable { get }
 }
 
 final class HomeComponent: Component<HomeDependency>, HomeInteractorDependency {
@@ -19,6 +20,7 @@ final class HomeComponent: Component<HomeDependency>, HomeInteractorDependency {
     var calculator: CalendarCalculator { dependency.calculator }
     var settingBuildable: SettingBuildable { dependency.settingBuildable }
     var recordBuildable: RecordBuildable { dependency.recordBuildable }
+    var todoDetailBuidable: TodoDetailBuildable { dependency.todoDetailBuidable }
 }
 
 // MARK: - Builder
@@ -45,7 +47,8 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
             interactor: interactor,
             viewController: viewController,
             settingBuildable: component.settingBuildable,
-            recordBuildable: component.recordBuildable
+            recordBuildable: component.recordBuildable,
+            todoDetailBuildable: component.todoDetailBuidable
         )
     }
 }

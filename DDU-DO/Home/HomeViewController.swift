@@ -149,22 +149,6 @@ extension HomeViewController: HomeTodoTableViewCellDelegate {
     
 }
 
-extension HomeViewController: TodoDetailViewControllerDelegate {
-    
-    func todoDetailViewControllerDidFinish(_ viewController: TodoDetailViewController, message: String) {
-//        let toastModel = ToastModel(message: message, type: .success)
-//        ToastManager.showToast(toastModel)
-//        self.notifictaionOccured(type: .success)
-    }
-    
-    func todoDetailViewControllerDidFail(_ viewController: TodoDetailViewController, message: String) {
-//        let toastModel = ToastModel(message: message, type: .fail)
-//        ToastManager.showToast(toastModel)
-//        self.notifictaionOccured(type: .error)
-    }
-    
-}
-
 extension HomeViewController: NavigationViewDelegate {
     
     func navigationViewDidTapLeftButton(_ view: NavigationView) {
