@@ -149,26 +149,6 @@ extension HomeViewController: HomeTodoTableViewCellDelegate {
     
 }
 
-extension HomeViewController: RecordViewControllerDelegate {
-    
-    func recordViewControllerDidFinishRecord(_ viewController: RecordViewController, targetDate: Date) {
-//        let toastModel = ToastModel(message: "추가되었습니다", type: .success)
-//        ToastManager.showToast(toastModel)
-//        self.notifictaionOccured(type: .success)
-    }
-    
-    func recordViewControllerDidFailRecord(_ viewController: RecordViewController, message: String) {
-//        let toastModel = ToastModel(message: message, type: .fail)
-//        ToastManager.showToast(toastModel)
-//        self.notifictaionOccured(type: .error)
-    }
-    
-    func recordViewControllerDidCancelRecord(_ viewController: RecordViewController) {
-        print("## recordViewControllerDidCancelRecord")
-    }
-    
-}
-
 extension HomeViewController: TodoDetailViewControllerDelegate {
     
     func todoDetailViewControllerDidFinish(_ viewController: TodoDetailViewController, message: String) {

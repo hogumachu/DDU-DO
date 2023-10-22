@@ -11,12 +11,14 @@ protocol HomeDependency: Dependency {
     var todoUseCase: TodoUseCase { get }
     var calculator: CalendarCalculator { get }
     var settingBuildable: SettingBuildable { get }
+    var recordBuildable: RecordBuildable { get }
 }
 
 final class HomeComponent: Component<HomeDependency>, HomeInteractorDependency {
     var todoUseCase: TodoUseCase { dependency.todoUseCase }
     var calculator: CalendarCalculator { dependency.calculator }
     var settingBuildable: SettingBuildable { dependency.settingBuildable }
+    var recordBuildable: RecordBuildable { dependency.recordBuildable }
 }
 
 // MARK: - Builder
@@ -42,7 +44,8 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
         return HomeRouter(
             interactor: interactor,
             viewController: viewController,
-            settingBuildable: component.settingBuildable
+            settingBuildable: component.settingBuildable,
+            recordBuildable: component.recordBuildable
         )
     }
 }

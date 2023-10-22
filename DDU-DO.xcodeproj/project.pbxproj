@@ -27,6 +27,10 @@
 		F1485B152AE407300027C001 /* CalendarBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1485B112AE407300027C001 /* CalendarBuilder.swift */; };
 		F1485B162AE407300027C001 /* CalendarInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1485B122AE407300027C001 /* CalendarInteractor.swift */; };
 		F1485B182AE40B830027C001 /* CalendarSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1485B172AE40B830027C001 /* CalendarSection.swift */; };
+		F1485B212AE515800027C001 /* RecordRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1485B1D2AE515800027C001 /* RecordRouter.swift */; };
+		F1485B222AE515800027C001 /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1485B1E2AE515800027C001 /* RecordViewController.swift */; };
+		F1485B232AE515800027C001 /* RecordBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1485B1F2AE515800027C001 /* RecordBuilder.swift */; };
+		F1485B242AE515800027C001 /* RecordInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1485B202AE515800027C001 /* RecordInteractor.swift */; };
 		F14B4D88299DE9F80055B842 /* AppBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14B4D87299DE9F80055B842 /* AppBundle.swift */; };
 		F14B4D8A299DED270055B842 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14B4D89299DED270055B842 /* Setting.swift */; };
 		F14B4D8C299E21110055B842 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14B4D8B299E21110055B842 /* UIDevice.swift */; };
@@ -48,9 +52,6 @@
 		F15FFC2D297D649800EF2E69 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC2C297D649800EF2E69 /* Array+.swift */; };
 		F15FFC3229800A6B00EF2E69 /* CalendarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC3129800A6B00EF2E69 /* CalendarListView.swift */; };
 		F15FFC3529800E0400EF2E69 /* CalendarListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC3429800E0400EF2E69 /* CalendarListTableViewCell.swift */; };
-		F15FFC38298529F200EF2E69 /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC37298529F200EF2E69 /* RecordViewController.swift */; };
-		F15FFC3A298529F900EF2E69 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC39298529F900EF2E69 /* RecordViewModel.swift */; };
-		F15FFC3C298529FF00EF2E69 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC3B298529FF00EF2E69 /* RecordView.swift */; };
 		F15FFC3E2985394000EF2E69 /* TextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FFC3D2985394000EF2E69 /* TextInputView.swift */; };
 		F1A6D39029BAFB3600832C5F /* TodoRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A6D38F29BAFB3500832C5F /* TodoRepositoryTests.swift */; };
 		F1BD6B912987BA1E00BE6825 /* CalendarCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BD6B902987BA1E00BE6825 /* CalendarCalculator.swift */; };
@@ -129,6 +130,10 @@
 		F1485B112AE407300027C001 /* CalendarBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBuilder.swift; sourceTree = "<group>"; };
 		F1485B122AE407300027C001 /* CalendarInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarInteractor.swift; sourceTree = "<group>"; };
 		F1485B172AE40B830027C001 /* CalendarSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSection.swift; sourceTree = "<group>"; };
+		F1485B1D2AE515800027C001 /* RecordRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRouter.swift; sourceTree = "<group>"; };
+		F1485B1E2AE515800027C001 /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
+		F1485B1F2AE515800027C001 /* RecordBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordBuilder.swift; sourceTree = "<group>"; };
+		F1485B202AE515800027C001 /* RecordInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordInteractor.swift; sourceTree = "<group>"; };
 		F14B4D87299DE9F80055B842 /* AppBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBundle.swift; sourceTree = "<group>"; };
 		F14B4D89299DED270055B842 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		F14B4D8B299E21110055B842 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
@@ -150,9 +155,6 @@
 		F15FFC2C297D649800EF2E69 /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
 		F15FFC3129800A6B00EF2E69 /* CalendarListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarListView.swift; sourceTree = "<group>"; };
 		F15FFC3429800E0400EF2E69 /* CalendarListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarListTableViewCell.swift; sourceTree = "<group>"; };
-		F15FFC37298529F200EF2E69 /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
-		F15FFC39298529F900EF2E69 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
-		F15FFC3B298529FF00EF2E69 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		F15FFC3D2985394000EF2E69 /* TextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputView.swift; sourceTree = "<group>"; };
 		F1A6D38F29BAFB3500832C5F /* TodoRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoRepositoryTests.swift; sourceTree = "<group>"; };
 		F1BD6B902987BA1E00BE6825 /* CalendarCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCalculator.swift; sourceTree = "<group>"; };
@@ -359,9 +361,10 @@
 		F15FFC36298529D600EF2E69 /* Record */ = {
 			isa = PBXGroup;
 			children = (
-				F15FFC37298529F200EF2E69 /* RecordViewController.swift */,
-				F15FFC39298529F900EF2E69 /* RecordViewModel.swift */,
-				F15FFC3B298529FF00EF2E69 /* RecordView.swift */,
+				F1485B1D2AE515800027C001 /* RecordRouter.swift */,
+				F1485B1E2AE515800027C001 /* RecordViewController.swift */,
+				F1485B1F2AE515800027C001 /* RecordBuilder.swift */,
+				F1485B202AE515800027C001 /* RecordInteractor.swift */,
 			);
 			path = Record;
 			sourceTree = "<group>";
@@ -617,7 +620,6 @@
 				F1485B182AE40B830027C001 /* CalendarSection.swift in Sources */,
 				F13798AF299774760053DE9C /* CalendarDateBadgeView.swift in Sources */,
 				F13798C5299A6C540053DE9C /* NavigationView.swift in Sources */,
-				F15FFC38298529F200EF2E69 /* RecordViewController.swift in Sources */,
 				F1F12F96297BCB1500D8CE21 /* CalendarView.swift in Sources */,
 				F15FFBF9297BD99600EF2E69 /* UICollectionView+.swift in Sources */,
 				F13798D2299D1A560053DE9C /* SettingTableViewCell.swift in Sources */,
@@ -631,22 +633,23 @@
 				F15FFC01297BEEE600EF2E69 /* UIView+.swift in Sources */,
 				F14B4D88299DE9F80055B842 /* AppBundle.swift in Sources */,
 				F1F9EC222AE3D736002FA542 /* NavigationControllable.swift in Sources */,
+				F1485B212AE515800027C001 /* RecordRouter.swift in Sources */,
 				F13798C3299A3AE60053DE9C /* UIColor+DesignSystem.swift in Sources */,
 				F15FFC0E297D4A3000EF2E69 /* TodoRepository.swift in Sources */,
 				F1F9EBF32AE3B3BC002FA542 /* AppRootInteractor.swift in Sources */,
+				F1485B242AE515800027C001 /* RecordInteractor.swift in Sources */,
 				F1F9EBF22AE3B3BC002FA542 /* AppRootBuilder.swift in Sources */,
 				F13798A92994D8F50053DE9C /* TodoDetailContentView.swift in Sources */,
 				F1F9EC1E2AE3D4EE002FA542 /* SettingInteractor.swift in Sources */,
 				F1BD6BA02988E13A00BE6825 /* ToastManager.swift in Sources */,
-				F15FFC3C298529FF00EF2E69 /* RecordView.swift in Sources */,
 				F1BD6BA22988E19900BE6825 /* UIScreen+.swift in Sources */,
 				F1F9EC112AE3C802002FA542 /* HomeBuilder.swift in Sources */,
 				F1F9EC102AE3C802002FA542 /* HomeViewController.swift in Sources */,
 				F1F9EBF12AE3B3BC002FA542 /* AppRootViewController.swift in Sources */,
-				F15FFC3A298529F900EF2E69 /* RecordViewModel.swift in Sources */,
 				F1F9EC202AE3D57F002FA542 /* SettingSection.swift in Sources */,
 				F13798BD299A22630053DE9C /* HomeTodoTableViewCell.swift in Sources */,
 				F1F12F2B2964250D00D8CE21 /* AppDelegate.swift in Sources */,
+				F1485B222AE515800027C001 /* RecordViewController.swift in Sources */,
 				F15FFC06297D498900EF2E69 /* Entity.swift in Sources */,
 				F15FFBF6297BCE6100EF2E69 /* CalendarDateCell.swift in Sources */,
 				F1485B132AE407300027C001 /* CalendarRouter.swift in Sources */,
@@ -674,6 +677,7 @@
 				F1F12F2D2964250D00D8CE21 /* SceneDelegate.swift in Sources */,
 				F14B4D8F299E27EA0055B842 /* BottomModalViewController.swift in Sources */,
 				F1F9EBF52AE3B56B002FA542 /* AppRootComponent.swift in Sources */,
+				F1485B232AE515800027C001 /* RecordBuilder.swift in Sources */,
 				F15FFC1E297D550C00EF2E69 /* TextOnlyTableViewCell.swift in Sources */,
 				F15FFC08297D498E00EF2E69 /* Repository.swift in Sources */,
 				F13798BF299A23840053DE9C /* HomeTodoItemView.swift in Sources */,

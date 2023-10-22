@@ -8,7 +8,7 @@
 import Foundation
 import RIBs
 
-protocol HomeInteractable: Interactable, SettingListener {
+protocol HomeInteractable: Interactable, SettingListener, RecordListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -20,12 +20,17 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
     private let settingBuildable: SettingBuildable
     private var settingRouting: Routing?
     
+    private let recordBuildable: RecordBuildable
+    private var recordRouting: Routing?
+    
     init(
         interactor: HomeInteractable,
         viewController: HomeViewControllable,
-        settingBuildable: SettingBuildable
+        settingBuildable: SettingBuildable,
+        recordBuildable: RecordBuildable
     ) {
         self.settingBuildable = settingBuildable
+        self.recordBuildable = recordBuildable
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -46,7 +51,18 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
     }
     
     func attachRecord(target: Date) {
-        print("# Attach Record: \(target)")
+        guard recordRouting == nil else { return }
+        let recordRouter = recordBuildable.build(withListener: interactor, targetDate: target)
+        self.recordRouting = recordRouter
+        attachChild(recordRouter)
+        viewController.pushViewController(recordRouter.viewControllable, animated: true)
+    }
+    
+    func detachRecord() {
+        guard let recordRouting else { return }
+        viewController.popViewController(animated: true)
+        detachChild(recordRouting)
+        self.recordRouting = nil
     }
     
     func attachDetail(entity: TodoEntity) {
